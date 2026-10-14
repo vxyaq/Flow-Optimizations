@@ -80,7 +80,7 @@ function Home() {
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      invoke({ channel: "get-restore-points" })
+      invoke({ channel: "get-restore-points", timeoutMs: 30_000 })
         .then((res: any) => {
           const count = Array.isArray(res?.points) ? res.points.length : 0
           setRestoreCount(count)
@@ -88,7 +88,7 @@ function Home() {
         })
         .catch(() => {})
 
-      invoke({ channel: "cleaner:get-sizes" })
+      invoke({ channel: "cleaner:get-sizes", timeoutMs: 60_000 })
         .then((sizes: any) => {
           const total =
             sizes && typeof sizes === "object"
@@ -119,7 +119,7 @@ function Home() {
         }
       }
 
-      invoke({ channel: "get-system-info" })
+      invoke({ channel: "get-system-info", timeoutMs: 30_000 })
         .then((info) => {
           useSystemStore.setState((state) => {
             const merged = { ...state.systemInfo, ...info }

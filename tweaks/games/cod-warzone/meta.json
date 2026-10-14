@@ -1,0 +1,11 @@
+{
+  "id": "cod-warzone",
+  "title": "Call of Duty: Warzone",
+  "background": "cod-warzone-background.webp",
+  "description": "Warzone FPS optimizer with process priority boost, GPU performance mode, render worker optimization, and config tweaks for maximum frames in heated gunfights. Reduces stutters and input lag for competitive battle royale dominance.",
+  "notRunningMarker": "WARZONE_NOT_RUNNING",
+  "notRunningText": "Launch Call of Duty: Warzone and click the button again.",
+  "missingMarker": "WARZONE_CONFIG_MISSING",
+  "missingText": "Warzone optimization applied. Config file not found.",
+  "successText": "Call of Duty: Warzone FPS boost applied successfully."
+}

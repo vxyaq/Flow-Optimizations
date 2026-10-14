@@ -1,0 +1,9 @@
+{
+  "id": "forza-horizon-5",
+  "title": "Forza Horizon 5",
+  "background": "forza-horizon-5-background.webp",
+  "description": "Boosts FPS and eliminates frame drops during open-world driving while reducing input lag for precise steering control.",
+  "notRunningMarker": "FH5_NOT_RUNNING",
+  "notRunningText": "Launch Forza Horizon 5 and click the button again.",
+  "successText": "Forza Horizon 5 FPS boost applied successfully."
+}

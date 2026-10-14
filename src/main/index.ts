@@ -90,6 +90,9 @@ function createWindow(): void {
         devTools: app.isPackaged ? false : true,
         sandbox: false,
         spellcheck: false,
+        contextIsolation: true,
+        webSecurity: true,
+        allowRunningInsecureContent: false,
       },
     })
     console.log("[K3d Tweaks]: BrowserWindow created")
@@ -123,7 +126,6 @@ function createWindow(): void {
     },
   )
 }
-app.commandLine.appendSwitch("no-sandbox")
 app
   .whenReady()
   .then(() => {
@@ -189,10 +191,17 @@ app
 
     if (mainWindow) {
       mainWindow.webContents.on("will-navigate", (event, url) => {
-        if (!url.startsWith("http://localhost:") && !url.startsWith("file://")) {
+        const devUrl = is.dev ? process.env["ELECTRON_RENDERER_URL"] : undefined
+        const allowed =
+          url.startsWith("file://") || (devUrl != null && url.startsWith(devUrl))
+        if (!allowed) {
           event.preventDefault()
         }
       })
+      mainWindow.webContents.session.setPermissionRequestHandler((_wc, _perm, callback) => {
+        callback(false)
+      })
+      mainWindow.webContents.session.setPermissionCheckHandler(() => false)
     }
 
     app.on("activate", function () {

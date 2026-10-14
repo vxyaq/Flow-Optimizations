@@ -133,8 +133,12 @@ export const setupBackupHandlers = (): void => {
   ipcMain.handle(
     "restore-restore-point",
     async (_event: IpcMainInvokeEvent, sequenceNumber: number): Promise<BackupResult> => {
+      const seq = Math.floor(Number(sequenceNumber))
+      if (!Number.isInteger(seq) || seq <= 0) {
+        return { success: false, error: "Invalid restore point." }
+      }
       try {
-        await runPowerShell(`Restore-Computer -RestorePoint ${sequenceNumber}`)
+        await runPowerShell(`Restore-Computer -RestorePoint ${seq}`)
         return { success: true }
       } catch (error: any) {
         console.error(error)

@@ -1,0 +1,9 @@
+{
+  "id": "rainbow-six-siege",
+  "title": "Rainbow Six Siege",
+  "background": "rainbow-six-siege-background.webp",
+  "description": "Reduces input latency to near-zero for precise peeks while maximizing FPS for smoother operator movement and accurate destruction.",
+  "notRunningMarker": "R6_NOT_RUNNING",
+  "notRunningText": "Launch Rainbow Six Siege and click the button again.",
+  "successText": "Rainbow Six Siege FPS boost applied successfully."
+}

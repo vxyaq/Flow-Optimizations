@@ -13,9 +13,23 @@ export function close() {
 export async function invoke({
   channel,
   payload,
+  timeoutMs,
 }: {
   channel: string
   payload?: any
+  timeoutMs?: number
 }): Promise<any> {
-  return window.electron.ipcRenderer.invoke(channel, payload)
+  const pending = window.electron.ipcRenderer.invoke(channel, payload)
+  if (!timeoutMs || timeoutMs <= 0) return pending
+  let timer: ReturnType<typeof setTimeout> | undefined
+  try {
+    return await Promise.race([
+      pending,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`Request timed out (${channel}).`)), timeoutMs)
+      }),
+    ])
+  } finally {
+    if (timer) clearTimeout(timer)
+  }
 }

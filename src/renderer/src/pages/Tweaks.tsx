@@ -3,7 +3,6 @@ import {
   Wrench,
   Search,
   AlertTriangle,
-  Monitor,
   Shield,
   Gamepad,
   Network,
@@ -16,6 +15,8 @@ import { toast } from "react-toastify"
 import RootDiv from "@/components/rootdiv"
 import Tooltip from "@/components/ui/tooltip"
 import Modal from "@/components/ui/modal"
+import RamModal from "@/components/RamModal"
+import type { RamApplyProfile } from "@/components/RamModal"
 import { invoke } from "@/lib/electron"
 import useRestartStore from "@/store/restartState"
 import useSystemStore from "@/store/systemInfo"
@@ -61,6 +62,7 @@ function Tweaks() {
   const [isAltHeld, setIsAltHeld] = useState(false)
   const [biosFacts, setBiosFacts] = useState<any>(null)
   const [isPro, setIsPro] = useState(false)
+  const [isRamOpen, setIsRamOpen] = useState(false)
 
   const { setNeedsRestart } = useRestartStore()
   const systemInfo = useSystemStore((state) => state.systemInfo)
@@ -305,8 +307,68 @@ function Tweaks() {
 
   const isReversible = (tweak: any) => tweak.reversible == null || tweak.reversible === true
 
+  const applyRamProfile = async ({
+    ramGb,
+    pfInitial,
+    pfMaximum,
+    keepKernel,
+    disableSysMain,
+  }: RamApplyProfile) => {
+    const tweak: any = tweaks.find((t) => t.name === "optimize-ram")
+    if (!tweak) throw new Error("Optimize RAM is not available.")
+
+    toast.dismiss()
+    const newStates = { ...toggleStates, [tweak.name]: true }
+    setToggleStates(newStates)
+
+    const loadingToastId = toast.loading(`Applying tweak: ${tweak.title}`)
+
+    try {
+      await saveToggleStates(newStates)
+
+      const result = await invoke({
+        channel: "tweak:apply",
+        payload: { name: tweak.name, ramGb, pfInitial, pfMaximum, keepKernel, disableSysMain },
+      })
+      if (result?.success === false) {
+        throw new Error(result.error || `Failed to apply tweak: ${tweak.title}`)
+      }
+      if (tweak.restart) {
+        setNeedsRestart(true)
+      }
+      toast.update(loadingToastId, {
+        render: `Applied tweak: ${tweak.title} (${ramGb} GB profile)`,
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      })
+    } catch (error) {
+      console.error(`Error applying tweak ${tweak.title}:`, error)
+      log.error(`Error applying tweak ${tweak.title}:`, error)
+
+      const revertedStates = { ...newStates, [tweak.name]: false }
+      setToggleStates(revertedStates)
+      await saveToggleStates(revertedStates)
+
+      toast.update(loadingToastId, {
+        render: `Failed to apply tweak: ${tweak.title}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      })
+
+      throw error
+    }
+  }
+
   const handleToggle = async (index) => {
     const tweak: any = tweaks[index]
+
+    if (tweak.name === "optimize-ram" && !toggleStates[tweak.name]) {
+      setSelectedTweak(tweak)
+      setIsRamOpen(true)
+      return
+    }
 
     if (tweak.modal && !toggleStates[tweak.name]) {
       setSelectedTweak(tweak)
@@ -458,6 +520,23 @@ function Tweaks() {
       return bRec - aRec
     })
   }, [filteredTweaks])
+
+  const tweakMeta = useMemo(() => {
+    const map = new Map<
+      string,
+      { index: number; cats: string[]; compatible: boolean; reason?: string }
+    >()
+    tweaks.forEach((t: any, index: number) => {
+      const compat: any = isTweakCompatible(t)
+      map.set(t.name, {
+        index,
+        cats: tweakCategories(t),
+        compatible: compat.compatible !== false,
+        reason: compat.reason,
+      })
+    })
+    return map
+  }, [tweaks, systemInfo, biosFacts, isPro])
 
   const categoryIcons = {
     Performance: <Zap className="w-4 h-4  text-k3d-primary" />,
@@ -650,6 +729,12 @@ function Tweaks() {
           </div>
         </div>
       </Modal>
+      <RamModal
+        open={isRamOpen}
+        onClose={() => setIsRamOpen(false)}
+        onApply={applyRamProfile}
+        detectedRamBytes={systemInfo?.memory_total}
+      />
       <RootDiv>
         <div className="max-w-450 mx-auto ">
           <div className="mb-4 flex items-center gap-3 flex-wrap">
@@ -689,7 +774,11 @@ function Tweaks() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
             {sortedTweaks.length > 0 ? (
               sortedTweaks.map((tweak, _) => {
-                const originalIndex = tweaks.indexOf(tweak)
+                const meta = tweakMeta.get(tweak.name)
+                const originalIndex = meta?.index ?? tweaks.indexOf(tweak)
+                const cats = meta?.cats ?? tweakCategories(tweak)
+                const compatible = meta?.compatible ?? true
+                const compatReason = meta?.reason
                 const cardBody = (
                   <div className="p-4 flex flex-col h-full">
                     <h2 className="font-semibold text-k3d-text text-sm leading-tight mb-2">{tweak.title}</h2>
@@ -699,7 +788,7 @@ function Tweaks() {
                     <div className="mt-auto flex items-start justify-between gap-2">
                       <div className="flex items-start gap-1.5 flex-wrap">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          {tweakCategories(tweak).map((cat) => (
+                          {cats.map((cat) => (
                             <Tooltip
                               key={cat}
                               content={`${cat} Optimization`}
@@ -711,7 +800,7 @@ function Tweaks() {
                               </div>
                             </Tooltip>
                           ))}
-                          {tweakCategories(tweak).includes("Pro") && !isPro && (
+                          {cats.includes("Pro") && !isPro && (
                             <Tooltip content="Requires Pro plan" delay={0.3} side="top">
                               <div className="flex items-center gap-1 px-1.5 py-1 rounded-md bg-amber-400/15 text-amber-400 text-[10px] font-bold">
                                 <Lock className="w-3 h-3" /> PRO
@@ -756,21 +845,13 @@ function Tweaks() {
                                 </div>
                               </Tooltip>
                             )}
-                          {!isTweakCompatible(tweak) && (
-                            <Tooltip content={isTweakCompatible(tweak).reason} delay={0.3} side="top">
-                              <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-muted hover:bg-k3d-border-secondary transition-colors">
-                                <Monitor className="w-3.5 h-3.5" />
-                              </div>
-                            </Tooltip>
-                          )}
                         </div>
                       </div>
                       {(() => {
-                        const compatibility = isTweakCompatible(tweak)
                         const reversible = isReversible(tweak)
                         const isApplied = !!toggleStates[tweak.name]
-                        const hint = !compatibility.compatible
-                          ? compatibility.reason
+                        const hint = !compatible
+                          ? compatReason
                           : !reversible
                             ? isApplied
                               ? "One-way tweak — applied, it can't be reverted"
@@ -781,8 +862,8 @@ function Tweaks() {
                             {isApplied && isAltHeld ? (
                               <Tooltip
                                 content={
-                                  !compatibility.compatible
-                                    ? compatibility.reason
+                                  !compatible
+                                    ? compatReason
                                     : "Force reapply"
                                 }
                               >
@@ -790,7 +871,7 @@ function Tweaks() {
                                   variant="outline"
                                   className="h-7 px-2.5 text-[11px] flex items-center justify-center gap-1 rounded-md border-k3d-border shrink-0"
                                   onClick={() => forceReapplyTweak(tweak)}
-                                  disabled={!compatibility.compatible}
+                                  disabled={!compatible}
                                 >
                                   <RotateCw className="w-3 h-3" /> Reapply
                                 </Button>
@@ -800,7 +881,7 @@ function Tweaks() {
                                 <Toggle
                                   checked={isApplied}
                                   onChange={() => handleToggle(originalIndex)}
-                                  disabled={!compatibility.compatible}
+                                  disabled={!compatible}
                                 />
                               </Tooltip>
                             )}

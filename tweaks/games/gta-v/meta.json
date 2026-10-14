@@ -1,0 +1,9 @@
+{
+  "id": "gta-v",
+  "title": "GTA V",
+  "background": "gta-v-background.webp",
+  "description": "Reduces CPU bottleneck and maximizes frame rates in dense city areas while improving texture streaming and reducing loading stutters.",
+  "notRunningMarker": "GTAV_NOT_RUNNING",
+  "notRunningText": "Launch GTA V and click the button again.",
+  "successText": "GTA V FPS boost applied successfully."
+}

@@ -79,6 +79,80 @@ function App() {
     return () => window.removeEventListener("auth:changed", handleAuthChanged)
   }, [])
 
+  const signedIn = account !== null
+
+  useEffect(() => {
+    if (!signedIn) return
+    let stopped = false
+    let source: EventSource | null = null
+    let retry: ReturnType<typeof setTimeout> | null = null
+    const syncPlan = () => {
+      invoke({ channel: "auth:refresh-plan" })
+        .then((refreshed) => {
+          if (stopped || !refreshed) return
+          setAccount((current) => {
+            if (current && current.plan !== refreshed.plan) {
+              if (refreshed.plan !== "pro") {
+                setBackgroundStyle("gray")
+                applyPlainGray()
+              }
+              queueMicrotask(() => window.dispatchEvent(new Event("auth:changed")))
+              return refreshed
+            }
+            return current
+          })
+        })
+        .catch(() => {})
+    }
+    const later = () => {
+      if (!stopped && retry === null) {
+        retry = setTimeout(() => {
+          retry = null
+          void subscribe()
+        }, 10000)
+      }
+    }
+    const subscribe = async () => {
+      if (stopped) return
+      try {
+        const [serverUrl, hwid] = await Promise.all([
+          invoke({ channel: "auth:get-server-url" }),
+          invoke({ channel: "get-system-uuid" }),
+        ])
+        if (stopped || !serverUrl || !hwid || hwid === "Unknown") {
+          later()
+          return
+        }
+        try {
+          source?.close()
+        } catch {}
+        source = new EventSource(`${serverUrl}/events?hwid=${encodeURIComponent(hwid)}`)
+        source.onmessage = () => syncPlan()
+        source.onerror = () => {
+          try {
+            source?.close()
+          } catch {}
+          source = null
+          later()
+        }
+      } catch {
+        later()
+      }
+    }
+    void subscribe()
+    const timer = setInterval(syncPlan, 60_000)
+    window.addEventListener("focus", syncPlan)
+    return () => {
+      stopped = true
+      try {
+        source?.close()
+      } catch {}
+      if (retry) clearTimeout(retry)
+      clearInterval(timer)
+      window.removeEventListener("focus", syncPlan)
+    }
+  }, [signedIn])
+
   const toggleSidebar = () => {
     const newCollapsed = !sidebarCollapsed
     setSidebarCollapsed(newCollapsed)

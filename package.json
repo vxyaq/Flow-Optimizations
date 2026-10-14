@@ -1,10 +1,9 @@
 {
   "name": "k3d-tweaks",
-  "version": "1.2.7",
+  "version": "2.0.0",
   "description": "K3d Tweaks",
   "main": "./out/main/index.js",
-  "author": "Parcoil",
-  "homepage": "https://getk3d.net",
+  "author": "Yeezy",
   "scripts": {
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -102,7 +101,6 @@
     "directories": {
       "buildResources": "build"
     },
-    "afterPack": "./scripts/afterPack.js",
     "files": [
       "!**/.vscode/*",
       "!src/*",
@@ -136,6 +134,7 @@
     "win": {
       "executableName": "k3dtweaks",
       "requestedExecutionLevel": "requireAdministrator",
+      "signAndEditExecutable": false,
       "icon": "resources/k3dtweaks.ico",
       "target": [
         "nsis"

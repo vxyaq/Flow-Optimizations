@@ -1,4 +1,4 @@
-import { ipcMain, shell } from "electron"
+import { app, ipcMain, shell } from "electron"
 import { createServer, type Server } from "node:http"
 import { randomBytes } from "node:crypto"
 import Store from "electron-store"
@@ -176,6 +176,7 @@ ipcMain.handle("auth:get-server-url", (): string => {
 })
 
 ipcMain.handle("auth:set-server-url", (_event, url: unknown): { ok: boolean; error?: string } => {
+  if (app.isPackaged) return { ok: false, error: "Custom auth server is disabled in this build." }
   if (typeof url !== "string") return { ok: false, error: "Invalid URL." }
   const normalized = normalizeServerUrl(url)
   if (!normalized)

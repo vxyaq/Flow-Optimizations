@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K3d Tweaks</title>
+    <script>
+      (function() {
+        'use strict';
+        
+        document.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }, true);
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'F12' ||
+              (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+              (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) ||
+              (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
+              (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.key === 'k')) ||
+              (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
+              (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
+              (e.metaKey && e.altKey && (e.key === 'i' || e.key === 'I')) ||
+              (e.metaKey && e.altKey && (e.key === 'c' || e.key === 'C')) ||
+              (e.metaKey && e.altKey && (e.key === 'j' || e.key === 'J'))) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        }, true);
+
+        document.addEventListener('selectstart', function(e) {
+          if (!e.target.matches('input, textarea, [contenteditable]')) {
+            e.preventDefault();
+            return false;
+          }
+        }, true);
+
+        if (typeof window.requestIdleCallback === 'undefined') {
+          window.requestIdleCallback = function(cb, opts) {
+            var start = Date.now();
+            return setTimeout(function() {
+              cb({
+                didTimeout: false,
+                timeRemaining: function() {
+                  return Math.max(0, 50 - (Date.now() - start));
+                }
+              });
+            }, 1);
+          };
+        }
+
+        if (typeof window.cancelIdleCallback === 'undefined') {
+          window.cancelIdleCallback = function(id) {
+            clearTimeout(id);
+          };
+        }
+      })();
+    </script>
+  </head>
+  <body class="">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

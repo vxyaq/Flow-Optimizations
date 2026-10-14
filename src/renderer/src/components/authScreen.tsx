@@ -28,9 +28,6 @@ export default function AuthScreen({ onAuthenticated }: AuthScreenProps): React.
     if (style === "image" || style === "image2") {
       void applyBackgroundImage(style)
     }
-    invoke({ channel: "get-system-info" }).catch(() => {})
-    invoke({ channel: "games:detect" }).catch(() => {})
-    invoke({ channel: "get-restore-points" }).catch(() => {})
   }, [])
 
   const handleLogin = async (provider: AccountProfile["provider"]) => {

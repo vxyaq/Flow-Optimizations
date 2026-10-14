@@ -113,14 +113,6 @@ function isNvidiaTweak(tweak: Tweak): boolean {
   return tweak.name === "optimize-nvidia-settings"
 }
 
-function isAmdTweak(tweak: Tweak): boolean {
-  return tweak.name === "optimize-amd-settings"
-}
-
-function isIntelTweak(tweak: Tweak): boolean {
-  return tweak.name === "optimize-intel-settings"
-}
-
 function isProTweak(tweak: Tweak): boolean {
   return !!(tweak.category && tweak.category.includes("Pro"))
 }
@@ -136,9 +128,64 @@ const EXPLORER_RESTART_TWEAKS = new Set([
   "show-seconds-in-system-clock",
 ])
 
+interface ApplyPayload {
+  name: string
+  ramGb?: number
+  pfInitial?: number
+  pfMaximum?: number
+  keepKernel?: boolean | number
+  disableSysMain?: boolean | number
+}
+
+interface ParsedApplyPayload {
+  name: string
+  preamble: string
+}
+
+const parseApplyPayload = (payload: string | ApplyPayload): ParsedApplyPayload => {
+  if (typeof payload === "string") return { name: payload, preamble: "" }
+  if (!payload || typeof payload.name !== "string") {
+    throw new Error("Invalid tweak payload.")
+  }
+
+  const assignments: string[] = []
+  const assign = (variable: string, value: unknown, min: number, max: number): void => {
+    const numeric = typeof value === "number" ? value : Number(value)
+    if (!Number.isFinite(numeric)) return
+    assignments.push(`$${variable} = ${Math.min(Math.max(Math.round(numeric), min), max)}`)
+  }
+  const assignFlag = (variable: string, value: unknown): void => {
+    if (value === true || value === 1 || value === "1") assignments.push(`$${variable} = 1`)
+    else if (value === false || value === 0 || value === "0")
+      assignments.push(`$${variable} = 0`)
+  }
+
+  assign("K3D_RAM_GB", payload.ramGb, 1, 1024)
+  assign("K3D_PF_INITIAL", payload.pfInitial, 64, 1048576)
+  assign("K3D_PF_MAXIMUM", payload.pfMaximum, 64, 1048576)
+  assignFlag("K3D_KEEP_KERNEL", payload.keepKernel)
+  assignFlag("K3D_DISABLE_SYSMAIN", payload.disableSysMain)
+
+  return {
+    name: payload.name,
+    preamble: assignments.length > 0 ? `${assignments.join("\n")}\n` : "",
+  }
+}
+
 function NvidiaProfileInspector(): Promise<string> {
   const exePath = getExePath("nvidiaProfileInspector.exe")
   const nipPath = getNipPath()
+
+  if (!fsSync.existsSync(exePath)) {
+    throw new Error(
+      `NVIDIA Profile Inspector is missing (${exePath}). Reinstall K3d Tweaks to restore it.`,
+    )
+  }
+  if (!fsSync.existsSync(nipPath)) {
+    throw new Error(
+      `NVIDIA profile is missing (${nipPath}). Reinstall K3d Tweaks to restore it.`,
+    )
+  }
 
   return new Promise((resolve, reject) => {
     exec(`"${exePath}" -silentImport "${nipPath}"`, (error, stdout, stderr) => {
@@ -146,9 +193,13 @@ function NvidiaProfileInspector(): Promise<string> {
       console.log("stderr:", stderr)
       if (error) {
         console.error("Error:", error)
-        reject(error)
+        reject(
+          new Error(
+            `NVIDIA Control Panel import failed: ${stderr || error.message} (driver tweaks below still apply)`,
+          ),
+        )
       } else {
-        resolve(stdout || "Completed with no output.")
+        resolve(stdout || "NVIDIA Control Panel profile imported.")
       }
     })
   })
@@ -187,7 +238,8 @@ export const setupTweaksHandlers = (): void => {
     return await loadTweaks()
   })
 
-  ipcMain.handle("tweak:apply", async (_: any, name: string): Promise<any> => {
+  ipcMain.handle("tweak:apply", async (_: any, payload: string | ApplyPayload): Promise<any> => {
+    const { name, preamble } = parseApplyPayload(payload)
     const tweaks = await loadTweaks()
     const tweak = tweaks.find((t) => t.name === name)
     if (!tweak) {
@@ -214,23 +266,38 @@ export const setupTweaksHandlers = (): void => {
       if (isNvidiaTweak(tweak) && !gpuInfo.isNvidia) {
         throw new Error(`This tweak is only for NVIDIA GPUs, but no NVIDIA GPU was detected.`)
       }
-      if (isAmdTweak(tweak) && !gpuInfo.isAmd) {
-        throw new Error(`This tweak is only for AMD GPUs, but no AMD GPU was detected.`)
-      }
-      if (isIntelTweak(tweak) && !gpuInfo.isIntel) {
-        throw new Error(`This tweak is only for Intel GPUs, but no Intel GPU was detected.`)
-      }
 
-      if (gpuInfo.wglIssue && (isNvidiaTweak(tweak) || isIntelTweak(tweak))) {
+      if (gpuInfo.wglIssue && isNvidiaTweak(tweak)) {
         console.warn(`Warning: This GPU may have WGL compatibility issues. The tweak may not work correctly.`)
       }
     }
 
     if (name === "optimize-nvidia-settings") {
       console.log(logo, "Running Nvidia settings optimization...")
-      await NvidiaProfileInspector()
+      try {
+        const nipOutput = await NvidiaProfileInspector()
+        console.log(logo, nipOutput)
+      } catch (nipError) {
+        console.warn(logo, (nipError as Error)?.message ?? nipError)
+        const result = await executePowerShell({
+          script: preamble ? `${preamble}${tweak.psapply}` : tweak.psapply,
+          name,
+        })
+        if (result.success) {
+          return {
+            success: true,
+            output: `${result.output ?? ""}\nWARNING: ${(nipError as Error)?.message ?? nipError}`,
+          }
+        }
+        throw new Error(
+          `${result.error ?? "Failed to apply NVIDIA tweaks."} Also: ${(nipError as Error)?.message ?? nipError}`,
+        )
+      }
     }
-    const result = await executePowerShell({ script: tweak.psapply, name })
+    const result = await executePowerShell({
+      script: preamble ? `${preamble}${tweak.psapply}` : tweak.psapply,
+      name,
+    })
     if (EXPLORER_RESTART_TWEAKS.has(name)) {
       restartExplorer()
     }

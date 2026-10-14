@@ -1,0 +1,11 @@
+{
+  "id": "cs2",
+  "title": "Counter-Strike 2",
+  "background": "cs2-background.webp",
+  "description": "Optimization specifically designed for Counter-Strike 2, focused on maximizing FPS, reducing input delay, improving system responsiveness, and optimizing network performance for a smoother, more stable, and consistent gaming experience.",
+  "notRunningMarker": "CS2_NOT_RUNNING",
+  "notRunningText": "Launch CS2 and click the button again.",
+  "missingMarker": "CS2_VIDEO_MISSING",
+  "missingText": "CS2 optimization applied. Video settings skipped (config not found).",
+  "successText": "CS2 mega FPS boost applied successfully."
+}

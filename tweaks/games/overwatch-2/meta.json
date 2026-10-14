@@ -1,0 +1,11 @@
+{
+  "id": "overwatch-2",
+  "title": "Overwatch 2",
+  "background": "overwatch-2-background.webp",
+  "description": "Overwatch 2 performance optimization for ultra-smooth 144+ FPS gameplay. Boosts process priority, sets GPU to maximum performance, disables overlays, reduces input lag, and optimizes render scale for competitive advantage in fast-paced team fights.",
+  "notRunningMarker": "OW2_NOT_RUNNING",
+  "notRunningText": "Launch Overwatch 2 and click the button again.",
+  "missingMarker": "OW2_CONFIG_MISSING",
+  "missingText": "Overwatch 2 optimization applied. Config not found.",
+  "successText": "Overwatch 2 FPS boost applied successfully."
+}

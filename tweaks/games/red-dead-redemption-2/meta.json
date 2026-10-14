@@ -1,0 +1,9 @@
+{
+  "id": "red-dead-redemption-2",
+  "title": "Red Dead Redemption 2",
+  "background": "red-dead-redemption-2-background.webp",
+  "description": "Eliminates the notorious stutters and frame drops in RDR2's demanding open world while boosting average FPS and reducing CPU bottlenecks.",
+  "notRunningMarker": "RDR2_NOT_RUNNING",
+  "notRunningText": "Launch Red Dead Redemption 2 and click the button again.",
+  "successText": "Red Dead Redemption 2 FPS boost applied successfully."
+}

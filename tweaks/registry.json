@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-09T11:18:14.948Z",
+  "version": "2026-10-12T09:45:48.266Z",
   "tweaks": [
     {
       "id": "24-hour-clock",
@@ -580,6 +580,18 @@
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-obs",
       "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-obs/meta.json"
+    },
+    {
+      "id": "optimize-ram",
+      "title": "Optimize RAM",
+      "description": "Sizes the paging file from the amount of RAM you pick, so Windows stops growing one on demand and your commit limit stays predictable.",
+      "category": [
+        "Performance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getk3d.net/tweaks/optimize-ram",
+      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-ram/meta.json"
     },
     {
       "id": "pbo-ryzen",

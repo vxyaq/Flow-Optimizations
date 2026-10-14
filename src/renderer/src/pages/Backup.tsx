@@ -50,11 +50,14 @@ export default function RestorePoints() {
   const [customModalOpen, setCustomModalOpen] = useState(false)
   const [customName, setCustomName] = useState("")
   const [confirmDeleteAll, setConfirmDeleteAll] = useState(false)
+  const [appliedTweaks, setAppliedTweaks] = useState<{ name: string; title: string }[]>([])
+  const [tweaksLoading, setTweaksLoading] = useState(false)
+  const [reverting, setReverting] = useState<string | null>(null)
 
   const fetchRestorePoints = async () => {
     setLoading(true)
     try {
-      const response = await invoke({ channel: "get-restore-points" })
+      const response = await invoke({ channel: "get-restore-points", timeoutMs: 30_000 })
       if (response.success && Array.isArray(response.points)) {
         setRestorePoints(response.points)
       } else {
@@ -75,8 +78,9 @@ export default function RestorePoints() {
   const handleCreateRestorePoint = async () => {
     setProcessing(true)
     try {
-      await invoke({ channel: "create-k3d-restore-point" })
-      toast.success("Restore point created")
+      const res: any = await invoke({ channel: "create-k3d-restore-point" })
+      if (res?.success === false) throw new Error(res?.error || "Failed to create restore point")
+      toast.success(res?.message || "Restore point created")
       await fetchRestorePoints()
     } catch (err) {
       toast.error("Failed to create restore point")
@@ -90,12 +94,18 @@ export default function RestorePoints() {
   }
 
   const executeRestore = async () => {
+    const seq = Number(modalState.restorePoint?.SequenceNumber)
+    if (!Number.isInteger(seq) || seq <= 0) {
+      toast.error("Invalid restore point")
+      return
+    }
     setProcessing(true)
     try {
-      await invoke({
+      const res: any = await invoke({
         channel: "restore-restore-point",
-        payload: modalState.restorePoint.SequenceNumber,
+        payload: seq,
       })
+      if (res?.success === false) throw new Error(res?.error || "Failed to start system restore")
       toast.success("System restore started. Your PC may restart.")
     } catch (err) {
       toast.error("Failed to start system restore")
@@ -112,8 +122,9 @@ export default function RestorePoints() {
     }
     setProcessing(true)
     try {
-      await invoke({ channel: "create-restore-point", payload: customName })
-      toast.success("Restore point created")
+      const res: any = await invoke({ channel: "create-restore-point", payload: customName })
+      if (res?.success === false) throw new Error(res?.error || "Failed to create restore point")
+      toast.success(res?.message || "Restore point created")
       setCustomModalOpen(false)
       setCustomName("")
       await fetchRestorePoints()
@@ -127,7 +138,8 @@ export default function RestorePoints() {
   const handleDeleteAll = async () => {
     setProcessing(true)
     try {
-      await invoke({ channel: "delete-all-restore-points" })
+      const res: any = await invoke({ channel: "delete-all-restore-points" })
+      if (res?.success === false) throw new Error(res?.error || "Failed to delete restore points")
       toast.success("All restore points deleted")
       await fetchRestorePoints()
     } catch (err) {
@@ -136,6 +148,40 @@ export default function RestorePoints() {
     }
     setProcessing(false)
     setConfirmDeleteAll(false)
+  }
+
+  const fetchAppliedTweaks = async () => {
+    setTweaksLoading(true)
+    try {
+      const [statesRaw, tweaks]: any[] = await Promise.all([
+        invoke({ channel: "tweak-states:load" }),
+        invoke({ channel: "tweaks:fetch" }),
+      ])
+      const states = JSON.parse(statesRaw ?? "{}")
+      const active = (Array.isArray(tweaks) ? tweaks : [])
+        .filter((t: any) => states[t.name])
+        .map((t: any) => ({ name: t.name, title: t.title ?? t.name }))
+      setAppliedTweaks(active)
+    } catch (err) {
+      log.error("Failed to load applied tweaks:", err)
+    } finally {
+      setTweaksLoading(false)
+    }
+  }
+
+  const handleRevertTweak = async (name: string) => {
+    setReverting(name)
+    try {
+      const res: any = await invoke({ channel: "tweak:unapply", payload: name })
+      if (res?.success === false) throw new Error(res?.error || `Failed to revert ${name}`)
+      toast.success("Tweak reverted")
+      await fetchAppliedTweaks()
+    } catch (err) {
+      toast.error("Failed to revert tweak")
+      log.error("Failed to revert tweak:", err)
+    } finally {
+      setReverting(null)
+    }
   }
 
   const filteredRestorePoints = restorePoints
@@ -155,7 +201,10 @@ export default function RestorePoints() {
           Restore Points
         </button>
         <button
-          onClick={() => setActiveTab("tweaks")}
+          onClick={() => {
+            setActiveTab("tweaks")
+            fetchAppliedTweaks()
+          }}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all active:scale-95 ${
             activeTab === "tweaks"
               ? "bg-k3d-primary text-white shadow"
@@ -364,12 +413,51 @@ export default function RestorePoints() {
 
       {activeTab === "tweaks" && (
         <div key="tweaks" className="transition-opacity duration-200">
-          <div className="bg-k3d-card border border-k3d-border rounded-lg p-6 text-center">
-            <RotateCw size={32} className="text-k3d-text-secondary mx-auto mb-3 animate-spin" />
-            <h3 className="text-lg font-medium text-k3d-text mb-2">Revert Applied Tweaks</h3>
-            <p className="text-k3d-text-secondary">
-              This section is under construction
-            </p>
+          <div className="bg-k3d-card border border-k3d-border rounded-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-k3d-text">Revert Applied Tweaks</h3>
+              <Button
+                variant="secondary"
+                onClick={fetchAppliedTweaks}
+                disabled={tweaksLoading}
+                className="flex items-center gap-2"
+              >
+                <RotateCw size={16} className={tweaksLoading ? "animate-spin" : ""} /> Refresh
+              </Button>
+            </div>
+            {tweaksLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 size={28} className="text-k3d-primary animate-spin" />
+              </div>
+            ) : appliedTweaks.length === 0 ? (
+              <p className="text-k3d-text-secondary text-center py-6">
+                No applied tweaks. Apply tweaks first, then revert them here.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {appliedTweaks.map((t) => (
+                  <div
+                    key={t.name}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-k3d-border px-3 py-2"
+                  >
+                    <span className="text-sm text-k3d-text truncate">{t.title}</span>
+                    <Button
+                      variant="outline"
+                      onClick={() => handleRevertTweak(t.name)}
+                      disabled={reverting !== null}
+                      className="flex items-center gap-2 shrink-0"
+                    >
+                      {reverting === t.name ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        <RotateCcw size={14} />
+                      )}
+                      Revert
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

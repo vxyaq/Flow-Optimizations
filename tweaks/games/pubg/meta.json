@@ -1,0 +1,11 @@
+{
+  "id": "pubg",
+  "title": "PUBG: Battlegrounds",
+  "background": "pubg-background.webp",
+  "description": "Reduces scan stutters in large maps and maximizes FPS during intense gunfights while improving object load distances and input responsiveness.",
+  "notRunningMarker": "PUBG_NOT_RUNNING",
+  "notRunningText": "Launch PUBG: Battlegrounds and click the button again.",
+  "missingMarker": "PUBG_CONFIG_MISSING",
+  "missingText": "PUBG config file not found. Launch the game at least once to generate it.",
+  "successText": "PUBG: Battlegrounds FPS boost applied successfully."
+}

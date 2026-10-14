@@ -5,6 +5,7 @@ import RootDiv from "@/components/rootdiv"
 import Button from "@/components/ui/button"
 import Card from "@/components/ui/Card"
 import { invoke } from "@/lib/electron"
+import { toast } from "react-toastify"
 
 type AccountProfile = {
   provider: "discord" | "google"
@@ -25,6 +26,7 @@ function Account() {
     try {
       await invoke({ channel: "auth:logout" })
     } catch {
+      toast.error("Failed to sign out")
       return
     }
     setAccount(null)
@@ -129,7 +131,7 @@ function Account() {
             icon={<Fingerprint />}
             label="HWID (click to copy)"
             value={systemUuid}
-            valueClassName="break-all font-mono text-xs blur-xs select-all"
+            valueClassName="break-all font-mono text-xs blur-sm select-all"
             onClick={() => copyHwid(systemUuid)}
           />
           <InfoCard icon={<ShieldCheck />} label="Signed in with" value={providerName} />

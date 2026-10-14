@@ -1,0 +1,9 @@
+{
+  "id": "witcher-3",
+  "title": "The Witcher 3",
+  "background": "witcher-3-background.webp",
+  "description": "Smooths FPS in dense forests and cities while reducing GPU bottleneck and eliminating micro-stutters for a fluid open-world experience.",
+  "notRunningMarker": "WITCHER3_NOT_RUNNING",
+  "notRunningText": "Launch The Witcher 3 and click the button again.",
+  "successText": "The Witcher 3 FPS boost applied successfully."
+}

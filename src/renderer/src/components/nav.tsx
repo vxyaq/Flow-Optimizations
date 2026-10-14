@@ -1,7 +1,16 @@
 import { invoke } from "@/lib/electron"
 import { broom } from "@lucide/lab"
 import { clsx } from "clsx"
-import { CircleUserRound, Folder, Gamepad2, Home, Icon, RotateCw, Settings, Wrench } from "lucide-react"
+import {
+  CircleUserRound,
+  DatabaseBackup,
+  Gamepad2,
+  Icon,
+  LayoutDashboard,
+  RotateCw,
+  SlidersHorizontal,
+  Wrench,
+} from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import useRestartStore from "../store/restartState"
@@ -11,13 +20,13 @@ import Modal from "./ui/modal"
 import Tooltip from "./ui/tooltip"
 
 const tabIcons = {
-  home: <Home size={20} />,
+  home: <LayoutDashboard size={20} />,
   tweaks: <Wrench size={20} />,
   clean: <Icon iconNode={broom} size={20} />,
   games: <Gamepad2 size={20} />,
-  backup: <Folder size={20} />,
+  backup: <DatabaseBackup size={20} />,
   account: <CircleUserRound size={20} />,
-  settings: <Settings size={20} />,
+  settings: <SlidersHorizontal size={20} />,
 }
 
 const tabs = {

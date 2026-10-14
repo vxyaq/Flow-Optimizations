@@ -1,0 +1,9 @@
+{
+  "id": "cyberpunk-2077",
+  "title": "Cyberpunk 2077",
+  "background": "cyberpunk-2077-background.webp",
+  "description": "Maximizes FPS in Night City's dense environments while reducing CPU overhead from NPCs and traffic and smoothing frame delivery for immersive gameplay.",
+  "notRunningMarker": "CP2077_NOT_RUNNING",
+  "notRunningText": "Launch Cyberpunk 2077 and click the button again.",
+  "successText": "Cyberpunk 2077 FPS boost applied successfully."
+}
