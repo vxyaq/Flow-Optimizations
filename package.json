@@ -160,6 +160,7 @@
       "createStartMenuShortcut": true,
       "oneClick": true,
       "perMachine": false,
+      "deleteAppDataOnUninstall": true,
       "installerSidebar": "build/k3dtweaks-installer-sidebar.bmp",
       "uninstallerSidebar": "build/k3dtweaks-installer-sidebar.bmp",
       "installerHeader": "build/k3dtweaks-installer-header.bmp"
