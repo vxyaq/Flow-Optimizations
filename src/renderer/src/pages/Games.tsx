@@ -2,8 +2,8 @@ import { useEffect, useState, useCallback, memo } from "react"
 import { LoaderCircle } from "lucide-react"
 import { toast } from "react-toastify"
 import { invoke } from "@/lib/electron"
-import Button from "@/components/ui/button"
 import Card from "@/components/ui/Card"
+import Toggle from "@/components/ui/Toggle"
 import RootDiv from "@/components/rootdiv"
 import cs2Background from "../assets/cs2-background.webp"
 import fortniteBackground from "../assets/fortnite-background.webp"
@@ -74,52 +74,50 @@ const OPTIMIZE_TIMEOUT_MS = 90000
 interface GameCardProps {
   game: GameEntry
   isInstalled: boolean
+  isApplied: boolean
   isBusy: boolean
-  onRun: (game: GameEntry, revert: boolean) => void
+  onToggle: (game: GameEntry, apply: boolean) => void
 }
 
-const GameCard = memo(function GameCard({ game, isInstalled, isBusy, onRun }: GameCardProps) {
+const GameCard = memo(function GameCard({
+  game,
+  isInstalled,
+  isApplied,
+  isBusy,
+  onToggle,
+}: GameCardProps) {
   const bg = game.background?.startsWith("http")
     ? game.background
     : BACKGROUNDS[game.background]
   return (
     <Card
-      className="relative h-52 overflow-hidden border border-flow-border bg-cover bg-center p-0 [content-visibility:auto] [contain-intrinsic-size:auto_208px]"
-      style={{
-        borderRadius: "13px",
-        ...(bg ? { backgroundImage: `url(${bg})` } : {}),
-      }}
+      className="group relative h-52 overflow-hidden border border-flow-border bg-flow-accent p-0 [content-visibility:auto] [contain-intrinsic-size:auto_208px]"
+      style={{ borderRadius: "13px" }}
     >
+      {bg && (
+        <img
+          src={bg}
+          alt=""
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-black/10" />
       <div className="relative flex h-full flex-col p-4">
         <h2 className="text-sm font-semibold leading-tight text-white">{game.title}</h2>
         <div className="pointer-events-none absolute inset-0 flex items-center bg-black/75 p-4 text-xs leading-relaxed text-white/85 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           {game.description}
         </div>
-        {isInstalled === true && (
-          <div className="absolute bottom-4 right-4 flex gap-2">
-            {game.psunapply && (
-              <Button
-                onClick={() => onRun(game, true)}
-                disabled={isBusy}
-                variant=""
-                className="h-7 border border-white/40 bg-transparent px-2.5 text-[11px] font-semibold text-white hover:bg-white/10"
-              >
-                Revert
-              </Button>
-            )}
-            <Button
-              onClick={() => onRun(game, false)}
+        {isInstalled && (
+          <div className="absolute bottom-4 right-4 flex items-center gap-2.5 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5">
+            {isBusy && <LoaderCircle size={14} className="animate-spin text-white/80" />}
+            <Toggle
+              checked={isApplied}
               disabled={isBusy}
-              variant=""
-              className="h-7 border border-white bg-white px-2.5 text-[11px] font-semibold text-black shadow-lg shadow-black/40 hover:bg-gray-200 hover:border-gray-200"
-            >
-              {isBusy ? (
-                <LoaderCircle size={13} className="animate-spin" />
-              ) : (
-                "Optimize"
-              )}
-            </Button>
+              onChange={(checked) => onToggle(game, checked)}
+            />
           </div>
         )}
       </div>
@@ -143,6 +141,14 @@ type GameEntry = {
 export default function Games(): React.ReactElement {
   const [games, setGames] = useState<GameEntry[]>([])
   const [installed, setInstalled] = useState<Record<string, boolean | null>>({})
+  const [applied, setApplied] = useState<Record<string, boolean>>(() => {
+    try {
+      const raw = localStorage.getItem("flow:gameOptimized")
+      return raw ? JSON.parse(raw) : {}
+    } catch {
+      return {}
+    }
+  })
   const [busy, setBusy] = useState<Record<string, boolean>>({})
   const [loading, setLoading] = useState(true)
 
@@ -163,40 +169,62 @@ export default function Games(): React.ReactElement {
     })
   }, [])
 
-  const runGameScript = useCallback(async (game: GameEntry, revert: boolean) => {
-    setBusy((prev) => ({ ...prev, [game.id]: true }))
-    try {
-      const result = await Promise.race([
-        invoke({
-          channel: revert ? "game:unapply" : "game:apply",
-          payload: game.id,
-        }),
-        new Promise<never>((_, reject) => {
-          setTimeout(() => reject(new Error("Optimization timed out. Try again.")), OPTIMIZE_TIMEOUT_MS)
-        }),
-      ])
-
-      if (!result?.success) {
-        throw new Error(result?.error || "Failed to apply the optimization.")
+  const persistApplied = useCallback((id: string, value: boolean) => {
+    setApplied((prev) => {
+      const next = { ...prev, [id]: value }
+      try {
+        localStorage.setItem("flow:gameOptimized", JSON.stringify(next))
+      } catch {
+        /* ignore */
       }
-
-      if (!revert && game.notRunningMarker && result.output?.includes(game.notRunningMarker)) {
-        toast.info(game.notRunningText || "Launch the game and click the button again.")
-        return
-      }
-
-      if (!revert && game.missingMarker && result.output?.includes(game.missingMarker)) {
-        toast.success(game.missingText || game.successText)
-        return
-      }
-
-      toast.success(revert ? `${game.title} optimization reverted.` : game.successText)
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : String(error))
-    } finally {
-      setBusy((prev) => ({ ...prev, [game.id]: false }))
-    }
+      return next
+    })
   }, [])
+
+  const runGameScript = useCallback(
+    async (game: GameEntry, apply: boolean) => {
+      if (!apply && !game.psunapply) {
+        toast.info(`${game.title} can't be reverted automatically.`)
+        return
+      }
+      setBusy((prev) => ({ ...prev, [game.id]: true }))
+      try {
+        const result = await Promise.race([
+          invoke({
+            channel: apply ? "game:apply" : "game:unapply",
+            payload: game.id,
+          }),
+          new Promise<never>((_, reject) => {
+            setTimeout(
+              () => reject(new Error("Optimization timed out. Try again.")),
+              OPTIMIZE_TIMEOUT_MS,
+            )
+          }),
+        ])
+
+        if (!result?.success) {
+          throw new Error(result?.error || "Failed to apply the optimization.")
+        }
+
+        if (apply && game.notRunningMarker && result.output?.includes(game.notRunningMarker)) {
+          toast.info(game.notRunningText || "Launch the game and click the button again.")
+          return
+        }
+
+        if (apply && game.missingMarker && result.output?.includes(game.missingMarker)) {
+          toast.success(game.missingText || game.successText)
+        } else {
+          toast.success(apply ? game.successText : `${game.title} optimization reverted.`)
+        }
+        persistApplied(game.id, apply)
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : String(error))
+      } finally {
+        setBusy((prev) => ({ ...prev, [game.id]: false }))
+      }
+    },
+    [persistApplied],
+  )
 
   if (loading) {
     return (
@@ -223,8 +251,9 @@ export default function Games(): React.ReactElement {
               key={game.id}
               game={game}
               isInstalled={installed[game.id] === true}
+              isApplied={!!applied[game.id]}
               isBusy={!!busy[game.id]}
-              onRun={runGameScript}
+              onToggle={runGameScript}
             />
           ))}
         </div>
