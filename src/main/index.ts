@@ -25,15 +25,10 @@ console.warn = log.warn
 
 log.initialize()
 
-app.commandLine.appendSwitch("disk-cache-size", String(64 * 1024 * 1024))
-app.commandLine.appendSwitch("disable-gpu-shader-disk-cache")
 app.commandLine.appendSwitch(
   "disable-features",
   "MediaRouter,GlobalMediaControls,Translate,HardwareMediaKeyHandling,AutofillServerCommunication",
 )
-app.commandLine.appendSwitch("enable-features", "CalculateNativeWinOcclusion")
-app.commandLine.appendSwitch("enable-low-end-device-mode")
-app.commandLine.appendSwitch("js-flags", "--max-old-space-size=512")
 
 const store = new Store()
 
