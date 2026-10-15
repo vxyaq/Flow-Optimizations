@@ -1,0 +1,16 @@
+{
+  "title": "Optimize Medal",
+  "name": "optimize-medal",
+  "risk": "safe",
+  "reversible": true,
+  "recommended": false,
+  "category": ["Gaming", "Performance"],
+  "description": "Keeps Medal's clipping from tanking your FPS: lowers its CPU priority, moves it to the integrated GPU and clears its caches to free RAM.",
+  "deepDescription": "Medal continuously records a replay buffer, which uses RAM and GPU time that your game needs. This tweak:\n\n- Sets every **Medal.exe** process to **BelowNormal** priority so the game always wins the CPU.\n- Routes Medal to the **integrated GPU** (GpuPreference=1), keeping the dedicated GPU free for the game.\n- Clears Medal's **Cache**, **Code Cache**, **GPUCache** and log folders to free RAM and disk space.\n\nFully reversible — priorities and the GPU preference are restored on revert.",
+  "links": [
+    {
+      "name": "Medal (medal.tv)",
+      "url": "https://medal.tv/"
+    }
+  ]
+}

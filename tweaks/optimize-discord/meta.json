@@ -1,0 +1,16 @@
+{
+  "title": "Optimize Discord",
+  "name": "optimize-discord",
+  "risk": "safe",
+  "reversible": true,
+  "recommended": false,
+  "category": ["Gaming", "Performance"],
+  "description": "Stops Discord from stealing FPS: lowers its CPU priority, sends it to the integrated GPU and clears its caches to free RAM.",
+  "deepDescription": "Discord keeps a Chromium renderer, the overlay and the voice engine running, which eats RAM and competes with your game for CPU and GPU time. This tweak:\n\n- Sets every **Discord.exe** process to **BelowNormal** priority so the game always wins the CPU.\n- Routes Discord to the **integrated GPU** (GpuPreference=1), keeping the dedicated GPU free for the game.\n- Disables Discord **hardware acceleration** (backed up first, restored on revert) to reduce GPU contention.\n- Clears Discord's **Cache**, **Code Cache**, **GPUCache**, **Service Worker** and **blob_storage** folders.\n\nFully reversible — the original settings file is backed up before any change.",
+  "links": [
+    {
+      "name": "Discord hardware acceleration",
+      "url": "https://support.discord.com/hc/en-us/articles/214227267-How-do-I-fix-my-screen-sharing-video-"
+    }
+  ]
+}
