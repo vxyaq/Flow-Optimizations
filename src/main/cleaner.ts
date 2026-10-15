@@ -18,6 +18,10 @@ function localAppData(): string {
   return process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local")
 }
 
+function appData(): string {
+  return process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming")
+}
+
 const SIZE_WORKERS = 32
 
 export async function getFolderSize(root: string): Promise<number> {
@@ -87,6 +91,67 @@ export async function emptyFolderContents(root: string): Promise<number> {
     }),
   )
   return freed.reduce((sum, size) => sum + size, 0)
+}
+
+export async function foldersSize(dirs: string[]): Promise<number> {
+  const sizes = await Promise.all(dirs.map((dir) => getFolderSize(dir)))
+  return sizes.reduce((sum, size) => sum + size, 0)
+}
+
+export async function emptyFolders(dirs: string[]): Promise<number> {
+  const freed = await Promise.all(dirs.map((dir) => emptyFolderContents(dir)))
+  return freed.reduce((sum, size) => sum + size, 0)
+}
+
+async function subdirs(root: string): Promise<string[]> {
+  const entries = await fsp.readdir(root, { withFileTypes: true }).catch(() => [])
+  return entries.filter((entry) => entry.isDirectory()).map((entry) => path.join(root, entry.name))
+}
+
+const CHROMIUM_CACHE_NAMES = [
+  "Cache",
+  "Code Cache",
+  "GPUCache",
+  "ShaderCache",
+  "DawnGraphiteCache",
+  "DawnWebGPUCache",
+]
+
+async function chromiumCacheDirs(userData: string): Promise<string[]> {
+  const profiles = await subdirs(userData)
+  const dirs: string[] = []
+  for (const profile of profiles) {
+    for (const name of CHROMIUM_CACHE_NAMES) {
+      dirs.push(path.join(profile, name))
+    }
+  }
+  return dirs
+}
+
+async function firefoxCacheDirs(): Promise<string[]> {
+  const profiles = await subdirs(path.join(localAppData(), "Mozilla", "Firefox", "Profiles"))
+  const dirs: string[] = []
+  for (const profile of profiles) {
+    dirs.push(path.join(profile, "cache2"))
+    dirs.push(path.join(profile, "startupCache"))
+    dirs.push(path.join(profile, "shader-cache"))
+    dirs.push(path.join(profile, "jumpListCache"))
+  }
+  return dirs
+}
+
+async function operaGxCacheDirs(): Promise<string[]> {
+  const roots = [
+    path.join(localAppData(), "Opera Software", "Opera GX Stable"),
+    path.join(appData(), "Opera Software", "Opera GX Stable"),
+  ]
+  const dirs: string[] = []
+  for (const root of roots) {
+    for (const name of CHROMIUM_CACHE_NAMES) {
+      dirs.push(path.join(root, name))
+    }
+  }
+  return dirs
 }
 
 async function thumbnailFiles(): Promise<string[]> {
@@ -184,6 +249,23 @@ const targets: CleanerTarget[] = [
     id: "errorreports",
     size: () => getFolderSize(path.join(localAppData(), "CrashDumps")),
     clean: () => emptyFolderContents(path.join(localAppData(), "CrashDumps")),
+  },
+  {
+    id: "firefox",
+    size: async () => foldersSize(await firefoxCacheDirs()),
+    clean: async () => emptyFolders(await firefoxCacheDirs()),
+  },
+  {
+    id: "chrome",
+    size: async () =>
+      foldersSize(await chromiumCacheDirs(path.join(localAppData(), "Google", "Chrome", "User Data"))),
+    clean: async () =>
+      emptyFolders(await chromiumCacheDirs(path.join(localAppData(), "Google", "Chrome", "User Data"))),
+  },
+  {
+    id: "opera-gx",
+    size: async () => foldersSize(await operaGxCacheDirs()),
+    clean: async () => emptyFolders(await operaGxCacheDirs()),
   },
 ]
 

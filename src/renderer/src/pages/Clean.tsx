@@ -13,6 +13,9 @@ import {
   Image,
   Bug,
   LoaderCircle,
+  Flame,
+  Compass,
+  Globe,
 } from "lucide-react"
 import { broom } from "@lucide/lab"
 import { toast } from "react-toastify"
@@ -70,6 +73,27 @@ const cleanups: CleanupItem[] = [
     description: "Remove error report and crash dump files.",
     icon: <Bug className="w-5 h-5" />,
   },
+  {
+    id: "firefox",
+    label: "Clear Firefox Cache",
+    path: "C:\\Users\\<User>\\AppData\\Local\\Mozilla\\Firefox\\Profiles\\<profile>\\cache2",
+    description: "Remove Firefox browser cache across all profiles.",
+    icon: <Flame className="w-5 h-5" />,
+  },
+  {
+    id: "chrome",
+    label: "Clear Google Chrome Cache",
+    path: "C:\\Users\\<User>\\AppData\\Local\\Google\\Chrome\\User Data\\<profile>\\Cache",
+    description: "Remove Google Chrome cache across all profiles.",
+    icon: <Compass className="w-5 h-5" />,
+  },
+  {
+    id: "opera-gx",
+    label: "Clear Opera GX Cache",
+    path: "C:\\Users\\<User>\\AppData\\Local\\Opera Software\\Opera GX Stable\\Cache",
+    description: "Remove Opera GX browser cache.",
+    icon: <Globe className="w-5 h-5" />,
+  },
 ]
 
 const cleanupLabels: Record<string, string> = {
@@ -79,6 +103,9 @@ const cleanupLabels: Record<string, string> = {
   "windows-update": "Windows Update cache",
   thumbnails: "Thumbnail cache",
   errorreports: "Error reports",
+  firefox: "Firefox cache",
+  chrome: "Google Chrome cache",
+  "opera-gx": "Opera GX cache",
 }
 
 function Clean() {
