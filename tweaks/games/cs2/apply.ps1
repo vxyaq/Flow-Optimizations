@@ -67,7 +67,7 @@ if (Test-Path $userdataDir) {
         $cfgDir = Join-Path $_.FullName "730\local\cfg"
         $videoFile = Join-Path $cfgDir "cs2_video.txt"
         if (Test-Path $videoFile) {
-            Copy-Item $videoFile "$videoFile.k3d.bak" -Force -ErrorAction SilentlyContinue
+            Copy-Item $videoFile "$videoFile.flow.bak" -Force -ErrorAction SilentlyContinue
             $content = [System.IO.File]::ReadAllText($videoFile)
             foreach ($key in $videoSettings.Keys) {
                 $pattern = '(?m)^"' + $key + '"\s+"[^"]*"$'

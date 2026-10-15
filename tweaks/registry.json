@@ -12,7 +12,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/24-hour-clock",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/24-hour-clock/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/24-hour-clock/meta.json"
     },
     {
       "id": "align-taskbar-left",
@@ -25,7 +25,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/align-taskbar-left",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/align-taskbar-left/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/align-taskbar-left/meta.json"
     },
     {
       "id": "cstates-off",
@@ -37,12 +37,12 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/cstates-off",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/cstates-off/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/cstates-off/meta.json"
     },
     {
       "id": "debloat-windows",
       "title": "Debloat Windows",
-      "description": "Choose between K3d Tweaks Debloat script or Raphire's Win11Debloat script to remove built-in Windows apps and bloatware.",
+      "description": "Choose between Flow Optimizations Debloat script or Raphire's Win11Debloat script to remove built-in Windows apps and bloatware.",
       "category": [
         "Performance",
         "Privacy"
@@ -51,7 +51,7 @@
       "reversible": false,
       "updatedversion": "2.14.0",
       "docsurl": "https://docs.getk3d.net/tweaks/debloat-windows",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/debloat-windows/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/debloat-windows/meta.json"
     },
     {
       "id": "detailed-bsod",
@@ -64,7 +64,7 @@
       "reversible": true,
       "updatedversion": "2.21.1",
       "docsurl": "https://docs.getk3d.net/tweaks/detailed-bsod",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/detailed-bsod/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/detailed-bsod/meta.json"
     },
     {
       "id": "disable-background-ms-store-apps",
@@ -77,7 +77,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-background-ms-store-apps",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-background-ms-store-apps/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-background-ms-store-apps/meta.json"
     },
     {
       "id": "consumer-features",
@@ -90,7 +90,7 @@
       "reversible": true,
       "addedversion": "2.14.1",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-consumer-features",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-consumer-features/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-consumer-features/meta.json"
     },
     {
       "id": "disable-copilot",
@@ -104,7 +104,7 @@
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-copilot",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-copilot/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-copilot/meta.json"
     },
     {
       "id": "disable-core-isolation",
@@ -117,7 +117,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-core-isolation",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-core-isolation/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-core-isolation/meta.json"
     },
     {
       "id": "disable-core-parking",
@@ -130,7 +130,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-core-parking",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-core-parking/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-core-parking/meta.json"
     },
     {
       "id": "disable-defender-rtp",
@@ -143,7 +143,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-defender-rtp",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-defender-rtp/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-defender-rtp/meta.json"
     },
     {
       "id": "disable-dynamic-ticking",
@@ -155,7 +155,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-dynamic-ticking",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-dynamic-ticking/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-dynamic-ticking/meta.json"
     },
     {
       "id": "disable-fast-startup",
@@ -168,7 +168,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-fast-startup",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-fast-startup/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-fast-startup/meta.json"
     },
     {
       "id": "disable-gamebar",
@@ -180,7 +180,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-gamebar",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-gamebar/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-gamebar/meta.json"
     },
     {
       "id": "disable-hibernation",
@@ -193,7 +193,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-hibernation",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-hibernation/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-hibernation/meta.json"
     },
     {
       "id": "disable-location-tracking",
@@ -206,7 +206,7 @@
       "reversible": true,
       "updatedversion": "2.21.1",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-location-tracking",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-location-tracking/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-location-tracking/meta.json"
     },
     {
       "id": "disable-lockscreen-tips",
@@ -218,7 +218,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-lockscreen-tips",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-lockscreen-tips/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-lockscreen-tips/meta.json"
     },
     {
       "id": "disable-mouse-acceleration",
@@ -231,7 +231,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-mouse-acceleration",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-mouse-acceleration/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-mouse-acceleration/meta.json"
     },
     {
       "id": "disable-mpo-overlay",
@@ -244,7 +244,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-mpo-overlay",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-mpo-overlay/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-mpo-overlay/meta.json"
     },
     {
       "id": "disable-nagle",
@@ -257,7 +257,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-nagle",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-nagle/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-nagle/meta.json"
     },
     {
       "id": "disable-power-throttling",
@@ -270,7 +270,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-power-throttling",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-power-throttling/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-power-throttling/meta.json"
     },
     {
       "id": "disable-rdp-warnings",
@@ -284,7 +284,7 @@
       "reversible": true,
       "addedversion": "2.19.0",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-rdp-warnings",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-rdp-warnings/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-rdp-warnings/meta.json"
     },
     {
       "id": "disable-windows-recall",
@@ -298,7 +298,7 @@
       "reversible": true,
       "addedversion": "2.14.2",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-recall",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-recall/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-recall/meta.json"
     },
     {
       "id": "disable-taskbar-seach",
@@ -312,7 +312,7 @@
       "reversible": true,
       "addedversion": "2.22.0",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-taskbar-seach",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-taskbar-seach/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-taskbar-seach/meta.json"
     },
     {
       "id": "disable-telemetry",
@@ -327,7 +327,7 @@
       "addedversion": "2.14.0",
       "updatedversion": "2.21.1",
       "docsurl": "https://docs.getk3d.net/tweaks/disable-telemetry",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-telemetry/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-telemetry/meta.json"
     },
     {
       "id": "disable-wifi-sense",
@@ -340,7 +340,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/disable-wifi-sense",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/disable-wifi-sense/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/disable-wifi-sense/meta.json"
     },
     {
       "id": "enable-dark-mode",
@@ -353,7 +353,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/enable-dark-mode",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/enable-dark-mode/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/enable-dark-mode/meta.json"
     },
     {
       "id": "enable-end-task-right-click",
@@ -365,7 +365,7 @@
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/enable-end-task-right-click",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/enable-end-task-right-click/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/enable-end-task-right-click/meta.json"
     },
     {
       "id": "enable-game-mode",
@@ -379,7 +379,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/enable-game-mode",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/enable-game-mode/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/enable-game-mode/meta.json"
     },
     {
       "id": "enable-hags",
@@ -393,7 +393,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/enable-hags",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/enable-hags/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/enable-hags/meta.json"
     },
     {
       "id": "enable-optimization-for-windowed-games",
@@ -407,7 +407,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/enable-optimization-for-windowed-games",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json"
     },
     {
       "id": "fast-dns",
@@ -420,7 +420,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/fast-dns",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/fast-dns/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/fast-dns/meta.json"
     },
     {
       "id": "gpu-priority-boost",
@@ -433,7 +433,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/gpu-priority-boost",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/gpu-priority-boost/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/gpu-priority-boost/meta.json"
     },
     {
       "id": "hide-taskview-and-widgets",
@@ -446,7 +446,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/hide-taskview-and-widgets",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/hide-taskview-and-widgets/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/hide-taskview-and-widgets/meta.json"
     },
     {
       "id": "mce-intel",
@@ -458,7 +458,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/mce-intel",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/mce-intel/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/mce-intel/meta.json"
     },
     {
       "id": "menu-show-delay-zero",
@@ -471,7 +471,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/menu-show-delay-zero",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/menu-show-delay-zero/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/menu-show-delay-zero/meta.json"
     },
     {
       "id": "network-throttling-off",
@@ -484,7 +484,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/network-throttling-off",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/network-throttling-off/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/network-throttling-off/meta.json"
     },
     {
       "id": "optimize-amd-settings",
@@ -498,7 +498,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-amd-settings",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-amd-settings/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-amd-settings/meta.json"
     },
     {
       "id": "optimize-discord",
@@ -511,7 +511,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-discord",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-discord/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-discord/meta.json"
     },
     {
       "id": "optimize-intel-settings",
@@ -525,7 +525,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-intel-settings",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-intel-settings/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-intel-settings/meta.json"
     },
     {
       "id": "optimize-medal",
@@ -538,7 +538,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-medal",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-medal/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-medal/meta.json"
     },
     {
       "id": "optimize-network-settings",
@@ -552,7 +552,7 @@
       "reversible": true,
       "updatedversion": "2.9.0",
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-network-settings",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-network-settings/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-network-settings/meta.json"
     },
     {
       "id": "optimize-nvidia-settings",
@@ -566,7 +566,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-nvidia-settings",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-nvidia-settings/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-nvidia-settings/meta.json"
     },
     {
       "id": "optimize-obs",
@@ -579,7 +579,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-obs",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-obs/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-obs/meta.json"
     },
     {
       "id": "optimize-ram",
@@ -591,7 +591,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/optimize-ram",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/optimize-ram/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/optimize-ram/meta.json"
     },
     {
       "id": "pbo-ryzen",
@@ -603,7 +603,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/pbo-ryzen",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/pbo-ryzen/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/pbo-ryzen/meta.json"
     },
     {
       "id": "reboot-to-uefi",
@@ -615,7 +615,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/reboot-to-uefi",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/reboot-to-uefi/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/reboot-to-uefi/meta.json"
     },
     {
       "id": "remove-edge",
@@ -628,7 +628,7 @@
       "reversible": true,
       "addedversion": "2.22.0",
       "docsurl": "https://docs.getk3d.net/tweaks/remove-edge",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/remove-edge/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/remove-edge/meta.json"
     },
     {
       "id": "remove-gaming-apps",
@@ -641,7 +641,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/remove-gaming-apps",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/remove-gaming-apps/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/remove-gaming-apps/meta.json"
     },
     {
       "id": "remove-ms-bing-integration",
@@ -654,7 +654,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/remove-ms-bing-integration",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/remove-ms-bing-integration/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/remove-ms-bing-integration/meta.json"
     },
     {
       "id": "remove-onedrive",
@@ -668,7 +668,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/remove-onedrive",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/remove-onedrive/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/remove-onedrive/meta.json"
     },
     {
       "id": "resizable-bar",
@@ -680,7 +680,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/resizable-bar",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/resizable-bar/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/resizable-bar/meta.json"
     },
     {
       "id": "revert-context-menu",
@@ -693,7 +693,7 @@
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/revert-context-menu",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/revert-context-menu/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/revert-context-menu/meta.json"
     },
     {
       "id": "set-powershell7-default",
@@ -705,7 +705,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/set-powershell7-default",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/set-powershell7-default/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/set-powershell7-default/meta.json"
     },
     {
       "id": "set-services-to-manual",
@@ -719,7 +719,7 @@
       "reversible": true,
       "updatedversion": "2.21.1",
       "docsurl": "https://docs.getk3d.net/tweaks/set-services-to-manual",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/set-services-to-manual/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/set-services-to-manual/meta.json"
     },
     {
       "id": "set-time-utc",
@@ -731,7 +731,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/set-time-utc",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/set-time-utc/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/set-time-utc/meta.json"
     },
     {
       "id": "set-win32-priority-separation",
@@ -743,7 +743,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/set-win32-priority-separation",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/set-win32-priority-separation/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/set-win32-priority-separation/meta.json"
     },
     {
       "id": "show-seconds-in-taskbar-clock",
@@ -756,7 +756,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/show-seconds-in-system-clock",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/show-seconds-in-system-clock/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/show-seconds-in-system-clock/meta.json"
     },
     {
       "id": "system-responsiveness",
@@ -769,7 +769,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/system-responsiveness",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/system-responsiveness/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/system-responsiveness/meta.json"
     },
     {
       "id": "uefi-csm",
@@ -781,7 +781,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/uefi-csm",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/uefi-csm/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/uefi-csm/meta.json"
     },
     {
       "id": "ultimate-performance-plan",
@@ -794,7 +794,7 @@
       "recommended": true,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/ultimate-performance-plan",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/ultimate-performance-plan/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/ultimate-performance-plan/meta.json"
     },
     {
       "id": "virtualization-off",
@@ -806,7 +806,7 @@
       "recommended": false,
       "reversible": true,
       "docsurl": "https://docs.getk3d.net/tweaks/virtualization-off",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/virtualization-off/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/virtualization-off/meta.json"
     },
     {
       "id": "wpbt",
@@ -819,7 +819,7 @@
       "reversible": true,
       "addedversion": "2.14.1",
       "docsurl": "https://docs.getk3d.net/tweaks/wpbt",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/wpbt/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/wpbt/meta.json"
     },
     {
       "id": "xmp-expo-ram",
@@ -831,7 +831,7 @@
       "recommended": false,
       "reversible": false,
       "docsurl": "https://docs.getk3d.net/tweaks/xmp-expo-ram",
-      "source": "https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/xmp-expo-ram/meta.json"
+      "source": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/xmp-expo-ram/meta.json"
     }
   ]
 }

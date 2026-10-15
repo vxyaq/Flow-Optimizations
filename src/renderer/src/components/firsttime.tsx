@@ -31,7 +31,7 @@ export default function FirstTime(): React.ReactElement {
     })
 
     try {
-      await invoke({ channel: "create-k3d-restore-point" })
+      await invoke({ channel: "create-flow-restore-point" })
 
       toast.update(toastId, {
         render: "Restore point created successfully. You can now apply tweaks.",
@@ -60,22 +60,22 @@ export default function FirstTime(): React.ReactElement {
 
   return (
     <Modal open={open} onClose={undefined}>
-      <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-2xl max-w-2xl w-full mx-4 flex flex-col items-center text-center">
-        <h1 className="text-3xl font-bold text-k3d-text mb-4">Welcome to K3d Tweaks</h1>
+      <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-2xl max-w-2xl w-full mx-4 flex flex-col items-center text-center">
+        <h1 className="text-3xl font-bold text-flow-text mb-4">Welcome to Flow Optimizations</h1>
 
-        <p className="text-k3d-text-secondary mb-6">
+        <p className="text-flow-text-secondary mb-6">
           It looks like this is your first time here. <br />
           Would you like to create a restore point before you start?
         </p>
 
-        <p className="text-k3d-text-secondary mb-4 text-sm">
+        <p className="text-flow-text-secondary mb-4 text-sm">
           <span className="font-medium">
-            By clicking <strong>Yes</strong>, K3d Tweaks will create a system restore point and disable the
+            By clicking <strong>Yes</strong>, Flow Optimizations will create a system restore point and disable the
             cooldown for future restore points.
           </span>
         </p>
 
-        <p className="text-k3d-text-secondary mb-8 text-sm">
+        <p className="text-flow-text-secondary mb-8 text-sm">
           A restore point protects your system in case any tweak causes issues.
         </p>
 

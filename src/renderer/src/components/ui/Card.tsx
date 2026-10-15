@@ -4,7 +4,7 @@ function Card({ children, className, ...props }) {
   return (
     <div
       className={cn(
-        "bg-k3d-card border border-k3d-border rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-150 group",
+        "bg-flow-card border border-flow-border rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-150 group",
         className,
       )}
       {...props}

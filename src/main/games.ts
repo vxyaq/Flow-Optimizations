@@ -101,7 +101,7 @@ export const setupGamesHandlers = (): void => {
     return executePowerShell({ script: game.psunapply, name: `game-${id}-revert` })
   })
 
-  console.log("[K3d Tweaks main/games.ts]: Games handlers setup complete")
+  console.log("[Flow Optimizations main/games.ts]: Games handlers setup complete")
 }
 
 export const cleanupGamesHandlers = (): void => {

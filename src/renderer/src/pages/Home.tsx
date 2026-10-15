@@ -19,10 +19,10 @@ interface StatCardProps {
 
 function StatCard({ icon: Icon, value, label, action, onAction }: StatCardProps) {
   return (
-    <Card className="p-5 bg-k3d-card rounded-xl border border-k3d-border hover:shadow-xs">
+    <Card className="p-5 bg-flow-card rounded-xl border border-flow-border hover:shadow-xs">
       <div className="flex items-start justify-between gap-3 mb-5">
-        <div className="p-2.5 rounded-full bg-k3d-accent ring-1 ring-inset ring-k3d-border">
-          <Icon className="text-k3d-primary" size={20} />
+        <div className="p-2.5 rounded-full bg-flow-accent ring-1 ring-inset ring-flow-border">
+          <Icon className="text-flow-primary" size={20} />
         </div>
         <Button
           variant="secondary"
@@ -33,8 +33,8 @@ function StatCard({ icon: Icon, value, label, action, onAction }: StatCardProps)
           <ChevronRight size={14} />
         </Button>
       </div>
-      <p className="text-3xl font-bold text-k3d-text tracking-tight">{value}</p>
-      <p className="text-sm text-k3d-text-secondary mt-1">{label}</p>
+      <p className="text-3xl font-bold text-flow-text tracking-tight">{value}</p>
+      <p className="text-sm text-flow-text-secondary mt-1">{label}</p>
     </Card>
   )
 }
@@ -43,7 +43,7 @@ function Home() {
   const [userName, setUserName] = useState("")
   const [loading, setLoading] = useState(() => {
     try {
-      return !localStorage.getItem("k3d:systemInfo")
+      return !localStorage.getItem("flow:systemInfo")
     } catch {
       return true
     }
@@ -52,7 +52,7 @@ function Home() {
   const [usingCache, setUsingCache] = useState(false)
   const [activeTweaks, setActiveTweaks] = useState(() => {
     try {
-      const cached = localStorage.getItem("k3d:activeTweaks")
+      const cached = localStorage.getItem("flow:activeTweaks")
       return cached ? JSON.parse(cached) : []
     } catch {
       return []
@@ -63,18 +63,18 @@ function Home() {
     try {
       const active = await invoke({ channel: "tweak:active" })
       setActiveTweaks(active)
-      localStorage.setItem("k3d:activeTweaks", JSON.stringify(active))
+      localStorage.setItem("flow:activeTweaks", JSON.stringify(active))
     } catch (err) {
       console.error("Failed to fetch active tweaks:", err)
     }
   }
 
   const [restoreCount, setRestoreCount] = useState(() => {
-    const cached = localStorage.getItem("k3d:restoreCount")
+    const cached = localStorage.getItem("flow:restoreCount")
     return cached ? Number(cached) || 0 : 0
   })
   const [junkSize, setJunkSize] = useState(() => {
-    const cached = localStorage.getItem("k3d:junkSize")
+    const cached = localStorage.getItem("flow:junkSize")
     return cached ? Number(cached) || 0 : 0
   })
 
@@ -95,7 +95,7 @@ function Home() {
         .then((res: any) => {
           const count = Array.isArray(res?.points) ? res.points.length : 0
           setRestoreCount(count)
-          localStorage.setItem("k3d:restoreCount", String(count))
+          localStorage.setItem("flow:restoreCount", String(count))
         })
         .catch(() => {})
 
@@ -108,7 +108,7 @@ function Home() {
                 }, 0)
               : 0
           setJunkSize(total)
-          localStorage.setItem("k3d:junkSize", String(total))
+          localStorage.setItem("flow:junkSize", String(total))
         })
         .catch(() => {})
     })
@@ -118,7 +118,7 @@ function Home() {
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
-      const cached = localStorage.getItem("k3d:systemInfo")
+      const cached = localStorage.getItem("flow:systemInfo")
       if (cached) {
         try {
           const parsed = JSON.parse(cached)
@@ -134,7 +134,7 @@ function Home() {
         .then((info) => {
           useSystemStore.setState((state) => {
             const merged = { ...state.systemInfo, ...info }
-            localStorage.setItem("k3d:systemInfo", JSON.stringify(merged))
+            localStorage.setItem("flow:systemInfo", JSON.stringify(merged))
             return { systemInfo: merged }
           })
           setUsingCache(false)
@@ -162,7 +162,7 @@ function Home() {
     const handleExtraInfo = (_event: any, extra: Record<string, any>) => {
       useSystemStore.setState((state) => {
         const merged = { ...state.systemInfo, ...extra }
-        localStorage.setItem("k3d:systemInfo", JSON.stringify(merged))
+        localStorage.setItem("flow:systemInfo", JSON.stringify(merged))
         return { systemInfo: merged }
       })
     }
@@ -180,19 +180,19 @@ function Home() {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-40 flex items-center justify-center bg-k3d-bg">
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-flow-bg">
         <div className="flex items-center justify-center h-64 flex-col gap-4">
           <div className="relative w-10 h-10">
-            <div className="absolute inset-0 border-[3px] border-k3d-border rounded-full"></div>
+            <div className="absolute inset-0 border-[3px] border-flow-border rounded-full"></div>
             <div
-              className="absolute inset-0 border-[3px] border-transparent border-t-k3d-primary rounded-full animate-spin"
+              className="absolute inset-0 border-[3px] border-transparent border-t-flow-primary rounded-full animate-spin"
               role="status"
               aria-label="loading"
             ></div>
           </div>
           <div className="flex flex-col items-center gap-1.5 text-center">
-            <p className="text-k3d-text-dark font-medium">Loading system information</p>
-            <p className="text-k3d-text-muted text-sm">
+            <p className="text-flow-text-dark font-medium">Loading system information</p>
+            <p className="text-flow-text-muted text-sm">
               This may take a while depending on your system
             </p>
           </div>
@@ -204,10 +204,10 @@ function Home() {
   return (
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
-        <h1 className="text-3xl font-bold text-k3d-text">
+        <h1 className="text-3xl font-bold text-flow-text">
           Welcome back{userName ? `, ${userName}` : ""}!
         </h1>
-        <p className="text-sm text-k3d-text-secondary mt-1 mb-5">How's your PC running today?</p>
+        <p className="text-sm text-flow-text-secondary mt-1 mb-5">How's your PC running today?</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           <StatCard
@@ -233,7 +233,7 @@ function Home() {
           />
         </div>
 
-        <p className="text-xs text-k3d-text-secondary text-center mt-4">
+        <p className="text-xs text-flow-text-secondary text-center mt-4">
           {usingCache ? "Loading latest system data..." : ""}
         </p>
       </div>

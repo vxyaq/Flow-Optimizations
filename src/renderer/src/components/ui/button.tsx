@@ -31,11 +31,11 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "bg-k3d-primary text-white border border-k3d-primary hover:brightness-110 shadow-[0_4px_14px_-8px_var(--color-k3d-primary)]",
+      "bg-flow-primary text-white border border-flow-primary hover:brightness-110 shadow-[0_4px_14px_-8px_var(--color-flow-primary)]",
     outline:
-      "border border-k3d-primary/60 text-k3d-primary hover:bg-k3d-primary hover:text-white hover:border-k3d-primary",
+      "border border-flow-primary/60 text-flow-primary hover:bg-flow-primary hover:text-white hover:border-flow-primary",
     secondary:
-      "bg-k3d-card border border-k3d-border-secondary text-k3d-text hover:bg-k3d-accent hover:border-k3d-border",
+      "bg-flow-card border border-flow-border-secondary text-flow-text hover:bg-flow-accent hover:border-flow-border",
     danger:
       "bg-red-600 text-white border border-red-700 hover:bg-red-700 hover:border-red-800 focus:ring-red-500",
     "": "",

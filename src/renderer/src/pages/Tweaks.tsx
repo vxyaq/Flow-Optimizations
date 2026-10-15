@@ -48,14 +48,14 @@ const tweakCategories = (tweak: any): string[] => {
 const isReversible = (tweak: any) => tweak.reversible == null || tweak.reversible === true
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  Performance: <Zap className="w-4 h-4  text-k3d-primary" />,
-  GPU: <Gpu className="w-4 h-4 text-k3d-primary" />,
-  Privacy: <Shield className="w-4 h-4 text-k3d-primary" />,
-  Network: <Network className="w-4 h-4 text-k3d-primary" />,
-  Appearance: <Paintbrush className="w-4 h-4 text-k3d-primary" />,
-  Gaming: <Gamepad className="w-4 h-4 text-k3d-primary" />,
-  General: <Wrench className="w-4 h-4 text-k3d-primary" />,
-  BIOS: <HardDrive className="w-4 h-4 text-k3d-primary" />,
+  Performance: <Zap className="w-4 h-4  text-flow-primary" />,
+  GPU: <Gpu className="w-4 h-4 text-flow-primary" />,
+  Privacy: <Shield className="w-4 h-4 text-flow-primary" />,
+  Network: <Network className="w-4 h-4 text-flow-primary" />,
+  Appearance: <Paintbrush className="w-4 h-4 text-flow-primary" />,
+  Gaming: <Gamepad className="w-4 h-4 text-flow-primary" />,
+  General: <Wrench className="w-4 h-4 text-flow-primary" />,
+  BIOS: <HardDrive className="w-4 h-4 text-flow-primary" />,
   Pro: <Lock className="w-4 h-4 text-amber-400" />,
 }
 
@@ -118,8 +118,8 @@ const TweakCard = memo(function TweakCard({
       : null
   const cardBody = (
     <div className="p-4 flex flex-col h-full">
-      <h2 className="font-semibold text-k3d-text text-sm leading-tight mb-2">{tweak.title}</h2>
-      <p className="text-k3d-text-secondary text-xs leading-relaxed flex-1 overflow-y-auto custom-scrollbar pr-1">
+      <h2 className="font-semibold text-flow-text text-sm leading-tight mb-2">{tweak.title}</h2>
+      <p className="text-flow-text-secondary text-xs leading-relaxed flex-1 overflow-y-auto custom-scrollbar pr-1">
         {tweak.description}
       </p>
       <div className="mt-auto flex items-start justify-between gap-2">
@@ -138,7 +138,7 @@ const TweakCard = memo(function TweakCard({
                   delay={0.3}
                   side="top"
                 >
-                  <div className="p-1 bg-k3d-accent rounded-md hover:bg-k3d-border-secondary transition-colors text-k3d-text-secondary">
+                  <div className="p-1 bg-flow-accent rounded-md hover:bg-flow-border-secondary transition-colors text-flow-text-secondary">
                     {categoryIcons[cat] || categoryIcons["General"]}
                   </div>
                 </Tooltip>
@@ -167,11 +167,11 @@ const TweakCard = memo(function TweakCard({
             {tweak.addedversion &&
               isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
                 <Tooltip
-                  content={`New in K3d Tweaks ${tweak.addedversion}`}
+                  content={`New in Flow Optimizations ${tweak.addedversion}`}
                   delay={0.3}
                   side="top"
                 >
-                  <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
+                  <div className="p-1 rounded-md bg-flow-accent text-flow-text-secondary hover:bg-flow-border-secondary transition-colors">
                     <Plus className="w-3.5 h-3.5" />
                   </div>
                 </Tooltip>
@@ -179,11 +179,11 @@ const TweakCard = memo(function TweakCard({
             {tweak.updatedversion &&
               isUpdatedInCurrentVersion(tweak.updatedversion, CURRENT_VERSION) && (
                 <Tooltip
-                  content={`Updated in K3d Tweaks ${tweak.updatedversion}`}
+                  content={`Updated in Flow Optimizations ${tweak.updatedversion}`}
                   delay={0.3}
                   side="top"
                 >
-                  <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
+                  <div className="p-1 rounded-md bg-flow-accent text-flow-text-secondary hover:bg-flow-border-secondary transition-colors">
                     <RotateCw className="w-3.5 h-3.5" />
                   </div>
                 </Tooltip>
@@ -194,7 +194,7 @@ const TweakCard = memo(function TweakCard({
           <Tooltip content={!compatible ? compatReason : "Force reapply"}>
             <Button
               variant="outline"
-              className="h-7 px-2.5 text-[11px] flex items-center justify-center gap-1 rounded-md border-k3d-border shrink-0"
+              className="h-7 px-2.5 text-[11px] flex items-center justify-center gap-1 rounded-md border-flow-border shrink-0"
               onClick={() => onReapply(tweak)}
               disabled={!compatible}
             >
@@ -218,7 +218,7 @@ const TweakCard = memo(function TweakCard({
       className="rounded-xl p-[1px]"
       style={{
         background:
-          "linear-gradient(135deg, var(--color-k3d-primary) 0%, color-mix(in srgb, var(--color-k3d-primary) 55%, white) 55%, color-mix(in srgb, var(--color-k3d-primary) 75%, black) 100%)",
+          "linear-gradient(135deg, var(--color-flow-primary) 0%, color-mix(in srgb, var(--color-flow-primary) 55%, white) 55%, color-mix(in srgb, var(--color-flow-primary) 75%, black) 100%)",
       }}
     >
       <Card className="border-0 p-0 h-52">{cardBody}</Card>
@@ -357,7 +357,7 @@ function Tweaks() {
 
   const loadTweaks = async () => {
     try {
-      const cached = localStorage.getItem("k3d:tweakInfo")
+      const cached = localStorage.getItem("flow:tweakInfo")
       if (cached) {
         const parsed = JSON.parse(cached)
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -371,7 +371,7 @@ function Tweaks() {
       })
       if (Array.isArray(fetchedTweaks) && fetchedTweaks.length > 0) {
         setTweaks(fetchedTweaks)
-        localStorage.setItem("k3d:tweakInfo", JSON.stringify(fetchedTweaks))
+        localStorage.setItem("flow:tweakInfo", JSON.stringify(fetchedTweaks))
       }
     } catch (error) {
       console.error("Error fetching tweaks:", error)
@@ -758,11 +758,11 @@ function Tweaks() {
   return (
     <>
       <Modal open={isRecommendedModalOpen} onClose={() => setIsRecommendedModalOpen(false)}>
-        <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 max-w-xl w-full mx-4 max-h-2xl">
-          <h3 className="text-xl font-semibold text-k3d-text mb-3">Apply Recommended Tweaks</h3>
-          <div className="text-k3d-text-secondary text-sm leading-6 whitespace-pre-wrap max-h-64 overflow-y-auto custom-scrollbar mb-6">
+        <div className="bg-flow-card border border-flow-border rounded-2xl p-4 max-w-xl w-full mx-4 max-h-2xl">
+          <h3 className="text-xl font-semibold text-flow-text mb-3">Apply Recommended Tweaks</h3>
+          <div className="text-flow-text-secondary text-sm leading-6 whitespace-pre-wrap max-h-64 overflow-y-auto custom-scrollbar mb-6">
             Select the tweaks you want to apply:
-            <p className="text-xs text-k3d-text-secondary ">
+            <p className="text-xs text-flow-text-secondary ">
               Debloating Windows is highly recommended — apply recommended tweaks first, then use the
               separate Debloat page.
             </p>
@@ -770,7 +770,7 @@ function Tweaks() {
               {recommendedTweaksToApply.map((tweak) => (
                 <li
                   key={tweak.name}
-                  className="flex flex-col rounded-lg border border-k3d-border p-3 mr-2"
+                  className="flex flex-col rounded-lg border border-flow-border p-3 mr-2"
                 >
                   <label className="flex items-center cursor-pointer">
                     <Checkbox
@@ -782,11 +782,11 @@ function Tweaks() {
                         setSelectedRecommendedTweaks(newSelected)
                       }}
                     />
-                    <h2 className="font-medium text-k3d-text">{tweak.title}</h2>
+                    <h2 className="font-medium text-flow-text">{tweak.title}</h2>
                   </label>
 
                   {tweak.description && (
-                    <p className="ml-7 text-sm text-k3d-text-secondary leading-snug">
+                    <p className="ml-7 text-sm text-flow-text-secondary leading-snug">
                       {tweak.description}
                     </p>
                   )}
@@ -819,9 +819,9 @@ function Tweaks() {
           setIsModalOpen(false)
         }}
       >
-        <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
-          <h3 className="text-xl font-semibold text-k3d-text mb-3">{selectedTweak?.title}</h3>
-          <div className="text-k3d-text-secondary text-sm leading-6 max-h-64 overflow-y-auto custom-scrollbar mb-6 prose prose-green marker:text-k3d-secondary">
+        <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
+          <h3 className="text-xl font-semibold text-flow-text mb-3">{selectedTweak?.title}</h3>
+          <div className="text-flow-text-secondary text-sm leading-6 max-h-64 overflow-y-auto custom-scrollbar mb-6 prose prose-green marker:text-flow-secondary">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{String(modalContent)}</ReactMarkdown>
           </div>
           {selectedTweak && tweakCategories(selectedTweak).includes("BIOS") && (
@@ -920,8 +920,8 @@ function Tweaks() {
                   key={category}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 active:scale-95 flex gap-1.5 items-center ` +
                     (activeCategory === category
-                      ? "bg-k3d-accent/90 text-k3d-text shadow-sm border border-k3d-border"
-                      : "bg-k3d-card/60 text-k3d-text-secondary hover:bg-k3d-border hover:text-k3d-text border border-k3d-border-secondary")
+                      ? "bg-flow-accent/90 text-flow-text shadow-sm border border-flow-border"
+                      : "bg-flow-card/60 text-flow-text-secondary hover:bg-flow-border hover:text-flow-text border border-flow-border-secondary")
                   }
                   onClick={() => setActiveCategory(category)}
                 >
@@ -937,8 +937,8 @@ function Tweaks() {
                   disabled={isApplyingRecommended}
                   className={`shrink-0 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 active:scale-95 flex items-center gap-1.5 ${
                     isApplyingRecommended
-                      ? "bg-k3d-accent/90 text-k3d-text-secondary cursor-not-allowed"
-                      : "bg-k3d-accent/90 text-k3d-text shadow-sm border border-k3d-border hover:bg-k3d-border hover:text-k3d-text"
+                      ? "bg-flow-accent/90 text-flow-text-secondary cursor-not-allowed"
+                      : "bg-flow-accent/90 text-flow-text shadow-sm border border-flow-border hover:bg-flow-border hover:text-flow-text"
                   }`}
                 >
                   Apply Recommended Tweaks
@@ -963,13 +963,13 @@ function Tweaks() {
               ))
             ) : (
               <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
-                <div className="bg-k3d-card p-6 rounded-xl mb-4">
-                  <Search className="w-10 h-10 text-k3d-text-secondary" />
+                <div className="bg-flow-card p-6 rounded-xl mb-4">
+                  <Search className="w-10 h-10 text-flow-text-secondary" />
                 </div>
-                <h3 className="text-sm font-medium mb-2 text-k3d-text">
+                <h3 className="text-sm font-medium mb-2 text-flow-text">
                   No tweaks Found
                 </h3>
-                <p className="text-k3d-text-secondary">Try adjusting your search or filters</p>
+                <p className="text-flow-text-secondary">Try adjusting your search or filters</p>
               </div>
             )}
           </div>

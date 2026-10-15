@@ -323,7 +323,7 @@ const server = createServer(async (req, res) => {
   }
 
   if (req.method === "GET" && url.pathname === "/") {
-    return json(res, 200, { ok: true, service: "k3d-auth" })
+    return json(res, 200, { ok: true, service: "flow-auth" })
   }
 
   if (req.method === "GET" && url.pathname === "/events") {
@@ -657,4 +657,4 @@ const server = createServer(async (req, res) => {
   return json(res, 404, { error: "Not found." })
 })
 
-server.listen(PORT, "0.0.0.0", () => console.log(`k3d auth server on :${PORT}`))
+server.listen(PORT, "0.0.0.0", () => console.log(`flow auth server on :${PORT}`))

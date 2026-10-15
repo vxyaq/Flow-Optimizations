@@ -1,6 +1,6 @@
 Write-Host "Reverting Fortnite optimization..."
 $configFile = Join-Path $env:LOCALAPPDATA "FortniteGame\Saved\Config\WindowsClient\GameUserSettings.ini"
-$backupFile = "$configFile.k3d.bak"
+$backupFile = "$configFile.flow.bak"
 if (Test-Path $backupFile) {
     Copy-Item $backupFile $configFile -Force -ErrorAction SilentlyContinue
 }

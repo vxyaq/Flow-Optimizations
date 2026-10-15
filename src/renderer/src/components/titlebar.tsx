@@ -25,15 +25,15 @@ function TitleBar(): React.ReactElement {
         style={{ WebkitAppRegion: "no-drag" } as any}
       >
         <div
-            className="flex items-center gap-2 h-8 w-96 max-w-[40vw] rounded-lg bg-k3d-accent/60 border border-k3d-border px-2.5 transition-colors hover:border-k3d-border-secondary"
+            className="flex items-center gap-2 h-8 w-96 max-w-[40vw] rounded-lg bg-flow-accent/60 border border-flow-border px-2.5 transition-colors hover:border-flow-border-secondary"
         >
-          <Search size={14} className="text-k3d-text-secondary shrink-0" />
+          <Search size={14} className="text-flow-text-secondary shrink-0" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search tweaks..."
-            className="w-full min-w-0 bg-transparent border-none focus:outline-hidden text-sm text-k3d-text placeholder:text-k3d-text-secondary"
+            className="w-full min-w-0 bg-transparent border-none focus:outline-hidden text-sm text-flow-text placeholder:text-flow-text-secondary"
           />
           {searchQuery && (
             <button
@@ -41,7 +41,7 @@ function TitleBar(): React.ReactElement {
               aria-label="Clear search"
               title="Clear search"
               onClick={() => setSearchQuery("")}
-              className="p-0.5 rounded hover:bg-k3d-border text-k3d-text-secondary transition-colors shrink-0"
+              className="p-0.5 rounded hover:bg-flow-border text-flow-text-secondary transition-colors shrink-0"
             >
               <X size={12} />
             </button>
@@ -56,21 +56,21 @@ function TitleBar(): React.ReactElement {
         <button
           onClick={minimize}
           title="Minimize"
-          className="h-8 w-10 inline-flex items-center justify-center text-k3d-text-secondary rounded-lg hover:bg-k3d-accent hover:text-k3d-text transition-colors"
+          className="h-8 w-10 inline-flex items-center justify-center text-flow-text-secondary rounded-lg hover:bg-flow-accent hover:text-flow-text transition-colors"
         >
           <Minimize size={16} />
         </button>
         <button
           onClick={toggleMaximize}
           title="Maximize"
-          className="h-8 w-10 inline-flex items-center justify-center text-k3d-text-secondary rounded-lg hover:bg-k3d-accent hover:text-k3d-text transition-colors"
+          className="h-8 w-10 inline-flex items-center justify-center text-flow-text-secondary rounded-lg hover:bg-flow-accent hover:text-flow-text transition-colors"
         >
           <Maximize size={14} />
         </button>
         <button
           onClick={close}
           title="Close"
-          className="h-8 w-10 inline-flex items-center justify-center text-k3d-text-secondary rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+          className="h-8 w-10 inline-flex items-center justify-center text-flow-text-secondary rounded-lg hover:bg-red-600 hover:text-white transition-colors"
         >
           <X size={16} />
         </button>

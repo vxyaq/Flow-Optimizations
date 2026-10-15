@@ -179,11 +179,11 @@ function App() {
   }, [])
 
   return (
-    <div className="flex flex-col h-screen bg-k3d-bg text-k3d-text overflow-hidden">
+    <div className="flex flex-col h-screen bg-flow-bg text-flow-text overflow-hidden">
       {!authLoading && account && <FirstTime />}
       {authLoading ? (
         <main className="flex min-h-0 flex-1 items-center justify-center pt-[50px]">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-k3d-border border-t-k3d-primary" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-flow-border border-t-flow-primary" />
         </main>
       ) : !account ? (
         <AuthScreen onAuthenticated={setAccount} />
@@ -203,7 +203,7 @@ function App() {
               <Suspense
                 fallback={
                   <div className="flex min-h-64 items-center justify-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-k3d-border border-t-k3d-primary" />
+                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-flow-border border-t-flow-primary" />
                   </div>
                 }
               >

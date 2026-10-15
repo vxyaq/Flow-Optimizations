@@ -42,14 +42,14 @@ class ErrorBoundary extends Component<Props, State> {
       const errorStack = this.state.error instanceof Error ? this.state.error.stack : undefined
 
       return (
-        <div className="flex flex-col h-screen bg-k3d-bg text-k3d-text items-center justify-center p-8">
+        <div className="flex flex-col h-screen bg-flow-bg text-flow-text items-center justify-center p-8">
           <TitleBar />
-          <div className="max-w-xl w-full rounded-2xl border border-k3d-border bg-k3d-card p-8">
+          <div className="max-w-xl w-full rounded-2xl border border-flow-border bg-flow-card p-8">
             <h1 className="text-2xl font-semibold text-red-500 mb-2">Something went wrong</h1>
-            <p className="text-k3d-text-secondary mb-4">
-              K3d Tweaks encountered an unexpected error. The log folder has been opened for reference.
+            <p className="text-flow-text-secondary mb-4">
+              Flow Optimizations encountered an unexpected error. The log folder has been opened for reference.
             </p>
-            <pre className="mb-6 p-4 rounded-lg bg-k3d-accent text-xs text-k3d-text overflow-x-auto overflow-y-auto max-h-40 border border-k3d-border select-all">
+            <pre className="mb-6 p-4 rounded-lg bg-flow-accent text-xs text-flow-text overflow-x-auto overflow-y-auto max-h-40 border border-flow-border select-all">
               {errorMessage}
               {errorStack && `\n\n${errorStack}`}
             </pre>
@@ -61,7 +61,7 @@ class ErrorBoundary extends Component<Props, State> {
                 Try Again
               </Button>
             </div>
-            <p className="text-sm text-k3d-text-muted">
+            <p className="text-sm text-flow-text-muted">
               Restart the application if the issue persists.
             </p>
           </div>

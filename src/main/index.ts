@@ -99,11 +99,11 @@ function createWindow(): void {
         allowRunningInsecureContent: false,
       },
     })
-    console.log("[K3d Tweaks]: BrowserWindow created")
+    console.log("[Flow Optimizations]: BrowserWindow created")
     setMainWindow(mainWindow)
     mainWindow.webContents.setZoomFactor(0.9)
   } catch (err: any) {
-    console.error("[K3d Tweaks]: BrowserWindow creation failed:", err)
+    console.error("[Flow Optimizations]: BrowserWindow creation failed:", err)
     throw err
   }
 
@@ -112,44 +112,44 @@ function createWindow(): void {
   })
 
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    console.log("[K3d Tweaks]: Loading renderer from URL:", process.env["ELECTRON_RENDERER_URL"])
+    console.log("[Flow Optimizations]: Loading renderer from URL:", process.env["ELECTRON_RENDERER_URL"])
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"])
   } else {
-    console.log("[K3d Tweaks]: Loading renderer from file")
+    console.log("[Flow Optimizations]: Loading renderer from file")
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"))
   }
 
   mainWindow.once("ready-to-show", () => {
-    console.log("[K3d Tweaks]: Window ready to show")
+    console.log("[Flow Optimizations]: Window ready to show")
     mainWindow!.show()
   })
 
   mainWindow.webContents.on(
     "did-fail-load",
     (_event: Electron.Event, errorCode: number, errorDescription: string) => {
-      console.error("[K3d Tweaks]: Renderer failed to load:", errorCode, errorDescription)
+      console.error("[Flow Optimizations]: Renderer failed to load:", errorCode, errorDescription)
     },
   )
 }
 app
   .whenReady()
   .then(() => {
-    console.log("[K3d Tweaks]: App ready, creating window...")
+    console.log("[Flow Optimizations]: App ready, creating window...")
     try {
       createWindow()
-      console.log("[K3d Tweaks]: Window created successfully")
+      console.log("[Flow Optimizations]: Window created successfully")
     } catch (err: any) {
-      console.error("[K3d Tweaks]: createWindow failed:", err)
+      console.error("[Flow Optimizations]: createWindow failed:", err)
     }
     initAutoUpdater(() => mainWindow)
-    console.log("[K3d Tweaks]: Auto updater initialized")
+    console.log("[Flow Optimizations]: Auto updater initialized")
     if (store.get("showTray")) {
-      console.log("[K3d Tweaks]: Creating tray...")
+      console.log("[Flow Optimizations]: Creating tray...")
       try {
         trayInstance = createTray(mainWindow!)
-        console.log("[K3d Tweaks]: Tray created")
+        console.log("[Flow Optimizations]: Tray created")
       } catch (err: any) {
-        console.error("[K3d Tweaks]: Tray creation failed:", err)
+        console.error("[Flow Optimizations]: Tray creation failed:", err)
       }
     }
     setupPowerShellHandlers()
@@ -163,7 +163,7 @@ app
     if (store.get("rpcEnabled") !== false) {
       startDiscordRPC()
     }
-    console.log("[K3d Tweaks]: Handlers setup complete")
+    console.log("[Flow Optimizations]: Handlers setup complete")
 
     ipcMain.on("window-minimize", () => {
       if (mainWindow) mainWindow.minimize()
@@ -215,5 +215,5 @@ app
     })
   })
   .catch((err: any) => {
-    console.error("[K3d Tweaks]: app.whenReady failed:", err)
+    console.error("[Flow Optimizations]: app.whenReady failed:", err)
   })

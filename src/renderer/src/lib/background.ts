@@ -11,8 +11,8 @@ declare global {
   }
 }
 
-const STYLE_KEY = "k3d:backgroundStyle"
-const STYLE_V2_KEY = "k3d:backgroundStyleV2"
+const STYLE_KEY = "flow:backgroundStyle"
+const STYLE_V2_KEY = "flow:backgroundStyleV2"
 
 export const getBackgroundStyle = (): BackgroundStyle => {
   if (!localStorage.getItem(STYLE_V2_KEY)) {
@@ -34,7 +34,7 @@ const toFileUrl = (filePath: string): string => {
 }
 
 export const applyPlainGray = (): void => {
-  document.body.style.removeProperty("--k3d-bg-image")
+  document.body.style.removeProperty("--flow-bg-image")
   document.body.classList.add("bg-gray")
   document.body.classList.remove("bg-image", "bg-none")
   resetAccent()
@@ -44,7 +44,7 @@ const BLUE_ACCENT = "#2563eb"
 
 export const syncAccent = (style: BackgroundStyle): void => {
   if (style === "image3") {
-    document.documentElement.style.setProperty("--color-k3d-primary", BLUE_ACCENT)
+    document.documentElement.style.setProperty("--color-flow-primary", BLUE_ACCENT)
     document.documentElement.style.setProperty("--color-primary", BLUE_ACCENT)
   } else {
     resetAccent()
@@ -52,7 +52,7 @@ export const syncAccent = (style: BackgroundStyle): void => {
 }
 
 export const resetAccent = (): void => {
-  document.documentElement.style.removeProperty("--color-k3d-primary")
+  document.documentElement.style.removeProperty("--color-flow-primary")
   document.documentElement.style.removeProperty("--color-primary")
 }
 
@@ -80,7 +80,7 @@ export const applyBackgroundImage = async (style: BackgroundStyle = "image"): Pr
       return false
     }
 
-    document.body.style.setProperty("--k3d-bg-image", `url("${image}")`)
+    document.body.style.setProperty("--flow-bg-image", `url("${image}")`)
     document.body.classList.add("bg-image")
     document.body.classList.remove("bg-gray", "bg-none")
     syncAccent(style)

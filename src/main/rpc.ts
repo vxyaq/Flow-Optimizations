@@ -76,7 +76,7 @@ function buildActivity() {
     .setDetails(`${accountName()} is optimizing`)
     .setState(`${count} ${count === 1 ? "tweak" : "tweaks"} enabled`)
     .setStartTimestamp(Date.now())
-    .addButton("Download K3d Tweaks", "https://github.com/vxyaq/k3d-tweaks")
+    .addButton("Download Flow Optimizations", "https://github.com/vxyaq/Flow-Optimizations")
     .addButton("Join Discord", "https://discord.com/invite/En5YJYWj3Z")
     .build()
 }

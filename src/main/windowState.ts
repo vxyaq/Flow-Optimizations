@@ -1,6 +1,6 @@
 import type { BrowserWindow } from "electron"
 
-export const logo = "[K3d Tweaks]:"
+export const logo = "[Flow Optimizations]:"
 
 export let mainWindow: BrowserWindow | null = null
 

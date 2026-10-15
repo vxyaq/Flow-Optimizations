@@ -9,8 +9,8 @@ export function createTray(mainWindow: BrowserWindow): Tray {
     { label: "Quit", click: (): void => app.quit() },
   ])
 
-  tray.setToolTip("K3d Tweaks Optimizer")
-  tray.setTitle("K3d Tweaks Optimizer")
+  tray.setToolTip("Flow Optimizations")
+  tray.setTitle("Flow Optimizations")
   tray.setContextMenu(contextMenu)
   tray.on("click", (): void => toggleWindowState(mainWindow))
 

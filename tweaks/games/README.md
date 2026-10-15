@@ -1,8 +1,8 @@
-# 🎮 K3d Tweaks - Game Optimizations
+# 🎮 Flow Optimizations - Game Optimizations
 
 ## 📁 Structure
 
-This folder contains **32+ game-specific optimizations** for the Games tab in K3d Tweaks.
+This folder contains **32+ game-specific optimizations** for the Games tab in Flow Optimizations.
 
 Each game folder contains:
 - **meta.json** - Game metadata (id, title, description, markers, background)

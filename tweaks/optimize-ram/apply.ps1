@@ -3,9 +3,9 @@ $ErrorActionPreference = "SilentlyContinue"
 $memKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 
 $ramGb = 0
-if (Get-Variable -Name K3D_RAM_GB -Scope Script -ErrorAction SilentlyContinue) {
+if (Get-Variable -Name FLOW_RAM_GB -Scope Script -ErrorAction SilentlyContinue) {
     $parsed = 0
-    if ([int]::TryParse([string]$K3D_RAM_GB, [ref]$parsed)) { $ramGb = $parsed }
+    if ([int]::TryParse([string]$FLOW_RAM_GB, [ref]$parsed)) { $ramGb = $parsed }
 }
 if ($ramGb -lt 1) {
     $ramGb = [int][math]::Round((Get-CimInstance -ClassName Win32_ComputerSystem).TotalPhysicalMemory / 1GB)
@@ -23,25 +23,25 @@ if ($ramGb -le 8) {
     $pfMaximum = 8192
 }
 
-if (Get-Variable -Name K3D_PF_INITIAL -Scope Script -ErrorAction SilentlyContinue) {
+if (Get-Variable -Name FLOW_PF_INITIAL -Scope Script -ErrorAction SilentlyContinue) {
     $p = 0
-    if ([int]::TryParse([string]$K3D_PF_INITIAL, [ref]$p) -and $p -ge 64) { $pfInitial = $p }
+    if ([int]::TryParse([string]$FLOW_PF_INITIAL, [ref]$p) -and $p -ge 64) { $pfInitial = $p }
 }
-if (Get-Variable -Name K3D_PF_MAXIMUM -Scope Script -ErrorAction SilentlyContinue) {
+if (Get-Variable -Name FLOW_PF_MAXIMUM -Scope Script -ErrorAction SilentlyContinue) {
     $p = 0
-    if ([int]::TryParse([string]$K3D_PF_MAXIMUM, [ref]$p) -and $p -ge 64) { $pfMaximum = $p }
+    if ([int]::TryParse([string]$FLOW_PF_MAXIMUM, [ref]$p) -and $p -ge 64) { $pfMaximum = $p }
 }
 if ($pfMaximum -lt $pfInitial) { $pfMaximum = $pfInitial * 2 }
 
 $keepKernel = if ($ramGb -ge 16) { 1 } else { 0 }
-if (Get-Variable -Name K3D_KEEP_KERNEL -Scope Script -ErrorAction SilentlyContinue) {
-    if ([string]$K3D_KEEP_KERNEL -eq "1") { $keepKernel = 1 }
-    elseif ([string]$K3D_KEEP_KERNEL -eq "0") { $keepKernel = 0 }
+if (Get-Variable -Name FLOW_KEEP_KERNEL -Scope Script -ErrorAction SilentlyContinue) {
+    if ([string]$FLOW_KEEP_KERNEL -eq "1") { $keepKernel = 1 }
+    elseif ([string]$FLOW_KEEP_KERNEL -eq "0") { $keepKernel = 0 }
 }
 
 $disableSysMain = 1
-if (Get-Variable -Name K3D_DISABLE_SYSMAIN -Scope Script -ErrorAction SilentlyContinue) {
-    if ([string]$K3D_DISABLE_SYSMAIN -eq "0") { $disableSysMain = 0 }
+if (Get-Variable -Name FLOW_DISABLE_SYSMAIN -Scope Script -ErrorAction SilentlyContinue) {
+    if ([string]$FLOW_DISABLE_SYSMAIN -eq "0") { $disableSysMain = 0 }
 }
 
 $computerSystem = Get-CimInstance -ClassName Win32_ComputerSystem

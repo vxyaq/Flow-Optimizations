@@ -1,7 +1,7 @@
 {
-  "name": "k3d-tweaks",
+  "name": "flow-optimizations",
   "version": "2.0.1",
-  "description": "K3d Tweaks",
+  "description": "Flow Optimizations",
   "main": "./out/main/index.js",
   "author": "Yeezy",
   "scripts": {
@@ -69,7 +69,7 @@
     "vitest": "^4.1.11",
     "zustand": "^5.0.15"
   },
-  "repository": "https://github.com/vxyaq/k3d-tweaks Tweaks",
+  "repository": "https://github.com/vxyaq/Flow-Optimizations.git",
   "build": {
     "electronLanguages": [
       "en-US"
@@ -78,7 +78,7 @@
       {
         "provider": "github",
         "owner": "vxyaq",
-        "repo": "k3d-tweaks",
+        "repo": "Flow-Optimizations",
         "releaseType": "release"
       }
     ],
@@ -96,8 +96,8 @@
         ]
       }
     ],
-    "appId": "com.vxyaq.k3dtweaks",
-    "productName": "K3d Tweaks",
+    "appId": "com.vxyaq.flowoptimizations",
+    "productName": "Flow Optimizations",
     "directories": {
       "buildResources": "build"
     },
@@ -132,18 +132,18 @@
       "!chocolatey/**"
     ],
     "win": {
-      "executableName": "k3dtweaks",
+      "executableName": "flowoptimizations",
       "requestedExecutionLevel": "requireAdministrator",
       "signAndEditExecutable": false,
-      "icon": "resources/k3dtweaks.ico",
+      "icon": "resources/flow-optimizations.ico",
       "target": [
         "nsis"
       ]
     },
     "linux": {
-      "executableName": "k3dtweaks",
+      "executableName": "flowoptimizations",
       "syncDesktopName": true,
-      "icon": "resources/k3dtweaks-logo.png",
+      "icon": "resources/flow-optimizations-logo.png",
       "category": "Utility",
       "maintainer": "Parcoil <noreply@parcoil.com>",
       "synopsis": "Debloat and optimize your PC",
@@ -154,16 +154,16 @@
     },
     "nsis": {
       "artifactName": "${name}-${version}-setup.${ext}",
-      "shortcutName": "K3d Tweaks",
-      "uninstallDisplayName": "K3d Tweaks",
+      "shortcutName": "Flow Optimizations",
+      "uninstallDisplayName": "Flow Optimizations",
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "oneClick": true,
       "perMachine": false,
       "deleteAppDataOnUninstall": true,
-      "installerSidebar": "build/k3dtweaks-installer-sidebar.bmp",
-      "uninstallerSidebar": "build/k3dtweaks-installer-sidebar.bmp",
-      "installerHeader": "build/k3dtweaks-installer-header.bmp"
+      "installerSidebar": "build/flow-optimizations-installer-sidebar.bmp",
+      "uninstallerSidebar": "build/flow-optimizations-installer-sidebar.bmp",
+      "installerHeader": "build/flow-optimizations-installer-header.bmp"
     },
     "npmRebuild": false
   },

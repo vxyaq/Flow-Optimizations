@@ -78,7 +78,7 @@ export default function RestorePoints() {
   const handleCreateRestorePoint = async () => {
     setProcessing(true)
     try {
-      const res: any = await invoke({ channel: "create-k3d-restore-point" })
+      const res: any = await invoke({ channel: "create-flow-restore-point" })
       if (res?.success === false) throw new Error(res?.error || "Failed to create restore point")
       toast.success(res?.message || "Restore point created")
       await fetchRestorePoints()
@@ -193,8 +193,8 @@ export default function RestorePoints() {
           onClick={() => setActiveTab("restore")}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all active:scale-95 ${
             activeTab === "restore"
-              ? "bg-k3d-primary text-white shadow"
-              : "text-k3d-text-secondary hover:text-k3d-text bg-k3d-card/50"
+              ? "bg-flow-primary text-white shadow"
+              : "text-flow-text-secondary hover:text-flow-text bg-flow-card/50"
           }`}
         >
           <Shield size={16} className="inline mr-2" />
@@ -207,8 +207,8 @@ export default function RestorePoints() {
           }}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all active:scale-95 ${
             activeTab === "tweaks"
-              ? "bg-k3d-primary text-white shadow"
-              : "text-k3d-text-secondary hover:text-k3d-text bg-k3d-card/50"
+              ? "bg-flow-primary text-white shadow"
+              : "text-flow-text-secondary hover:text-flow-text bg-flow-card/50"
           }`}
         >
           <RotateCw size={16} className="inline mr-2" />
@@ -259,15 +259,15 @@ export default function RestorePoints() {
 
           {loading ? (
             <div className="flex items-center justify-center h-96">
-              <Loader2 size={32} className="text-k3d-primary animate-spin" />
+              <Loader2 size={32} className="text-flow-primary animate-spin" />
             </div>
           ) : filteredRestorePoints.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center bg-k3d-card border border-k3d-border rounded-lg">
-              <div className="p-4 bg-k3d-secondary rounded-full mb-4">
-                <Shield size={28} className="text-k3d-text" />
+            <div className="flex flex-col items-center justify-center py-12 text-center bg-flow-card border border-flow-border rounded-lg">
+              <div className="p-4 bg-flow-secondary rounded-full mb-4">
+                <Shield size={28} className="text-flow-text" />
               </div>
-              <h3 className="text-lg font-medium mb-2 text-k3d-text">No Restore Points</h3>
-              <p className="text-k3d-text-secondary max-w-sm mb-4">
+              <h3 className="text-lg font-medium mb-2 text-flow-text">No Restore Points</h3>
+              <p className="text-flow-text-secondary max-w-sm mb-4">
                 Create a restore point to preserve your system state. You can restore your system to any point when needed.
               </p>
               <Button
@@ -313,9 +313,9 @@ export default function RestorePoints() {
             onClose={() => setModalState({ isOpen: false, type: null, restorePoint: null })}
           >
             {modalState.type === "restore" && modalState.restorePoint && (
-              <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
-                <h3 className="text-lg font-medium text-k3d-text mb-4">Restore System</h3>
-                <p className="text-k3d-text-secondary mb-4">
+              <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
+                <h3 className="text-lg font-medium text-flow-text mb-4">Restore System</h3>
+                <p className="text-flow-text-secondary mb-4">
                   Restore your system to "{modalState.restorePoint.Description}"?
                   <br /><br />
                   Your files will not be affected, but recently installed applications and settings
@@ -346,8 +346,8 @@ export default function RestorePoints() {
           </Modal>
 
           <Modal open={customModalOpen} onClose={() => setCustomModalOpen(false)}>
-            <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
-              <h3 className="text-lg font-medium text-k3d-text mb-4">Create Custom Restore Point</h3>
+            <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
+              <h3 className="text-lg font-medium text-flow-text mb-4">Create Custom Restore Point</h3>
               <Input
                 type="text"
                 value={customName}
@@ -380,9 +380,9 @@ export default function RestorePoints() {
           </Modal>
 
           <Modal open={confirmDeleteAll} onClose={() => !processing && setConfirmDeleteAll(false)}>
-            <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
-              <h3 className="text-lg font-medium text-k3d-text mb-4">Delete All Restore Points</h3>
-              <p className="text-k3d-text-secondary mb-4">
+            <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
+              <h3 className="text-lg font-medium text-flow-text mb-4">Delete All Restore Points</h3>
+              <p className="text-flow-text-secondary mb-4">
                 Delete all {restorePoints.length} restore point
                 {restorePoints.length !== 1 ? "s" : ""}? This cannot be undone.
               </p>
@@ -413,9 +413,9 @@ export default function RestorePoints() {
 
       {activeTab === "tweaks" && (
         <div key="tweaks" className="transition-opacity duration-200">
-          <div className="bg-k3d-card border border-k3d-border rounded-lg p-6">
+          <div className="bg-flow-card border border-flow-border rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-medium text-k3d-text">Revert Applied Tweaks</h3>
+              <h3 className="text-lg font-medium text-flow-text">Revert Applied Tweaks</h3>
               <Button
                 variant="secondary"
                 onClick={fetchAppliedTweaks}
@@ -427,10 +427,10 @@ export default function RestorePoints() {
             </div>
             {tweaksLoading ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 size={28} className="text-k3d-primary animate-spin" />
+                <Loader2 size={28} className="text-flow-primary animate-spin" />
               </div>
             ) : appliedTweaks.length === 0 ? (
-              <p className="text-k3d-text-secondary text-center py-6">
+              <p className="text-flow-text-secondary text-center py-6">
                 No applied tweaks. Apply tweaks first, then revert them here.
               </p>
             ) : (
@@ -438,9 +438,9 @@ export default function RestorePoints() {
                 {appliedTweaks.map((t) => (
                   <div
                     key={t.name}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-k3d-border px-3 py-2"
+                    className="flex items-center justify-between gap-3 rounded-lg border border-flow-border px-3 py-2"
                   >
-                    <span className="text-sm text-k3d-text truncate">{t.title}</span>
+                    <span className="text-sm text-flow-text truncate">{t.title}</span>
                     <Button
                       variant="outline"
                       onClick={() => handleRevertTweak(t.name)}

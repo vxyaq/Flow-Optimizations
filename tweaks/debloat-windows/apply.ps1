@@ -13,7 +13,7 @@ function Test-IsAdmin {
 }
 
 if (-not (Test-IsAdmin)) {
-    Write-Host "[K3d Tweaks Debloat] This script must be run as Administrator." -ForegroundColor Red
+    Write-Host "[Flow Optimizations Debloat] This script must be run as Administrator." -ForegroundColor Red
     Read-Host "Press Enter to exit"
     exit 1
 }
@@ -171,7 +171,7 @@ function Show-ScriptSelectionDialog {
     [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="K3d Tweaks Debloat v$version"
+        Title="Flow Optimizations Debloat v$version"
         Height="300" Width="650"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
@@ -246,7 +246,7 @@ function Show-ScriptSelectionDialog {
                 Margin="0,0,0,20">
             <StackPanel>
                 <RadioButton x:Name="RadioInspire"
-                            Content="K3d Tweaks Debloat (Choose which apps to remove) - Recommended"
+                            Content="Flow Optimizations Debloat (Choose which apps to remove) - Recommended"
                             Margin="0,0,0,16"
                             IsChecked="True"/>
                 <RadioButton x:Name="RadioRaphire"
@@ -297,7 +297,7 @@ function Show-BehaviorChangeWarning {
     [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="K3d Tweaks Debloat - Important Change"
+        Title="Flow Optimizations Debloat - Important Change"
         Height="420" Width="550"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
@@ -427,7 +427,7 @@ function Show-AppSelectionDialog {
     [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="K3d Tweaks Debloat v$version"
+    Title="Flow Optimizations Debloat v$version"
     Height="750" Width="650"
     WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize"
@@ -627,7 +627,7 @@ function Show-AppSelectionDialog {
 function Remove-SelectedApps {
     param([string[]]$AppsToRemove)
 
-    Write-Host "Starting K3d Tweaks debloat..." -ForegroundColor Green
+    Write-Host "Starting Flow Optimizations debloat..." -ForegroundColor Green
 
     $removeNames = $AppsToRemove | ForEach-Object { Get-FriendlyName $_ }
     Write-Host "Apps that will be removed: $($removeNames -join ', ')" -ForegroundColor Yellow
@@ -663,13 +663,13 @@ function Remove-SelectedApps {
         }
     }
 
-    Write-Host "K3d Tweaks debloat completed!" -ForegroundColor Green
+    Write-Host "Flow Optimizations debloat completed!" -ForegroundColor Green
 }
 
 try {
     $script:appsWereRemoved = $false
 
-    Write-Host "Starting K3d Tweaks Debloat script..." -ForegroundColor Green
+    Write-Host "Starting Flow Optimizations Debloat script..." -ForegroundColor Green
     Write-Host "Script Choice: '$ScriptChoice'" -ForegroundColor Yellow
     Write-Host "Apps to Remove Count: $($AppsToRemove.Count)" -ForegroundColor Yellow
 
@@ -681,7 +681,7 @@ try {
     }
     elseif ($ScriptChoice -eq "custom") {
         if ($AppsToRemove.Count -gt 0) {
-            Write-Host "Running K3d Tweaks debloat to remove $($AppsToRemove.Count) apps..." -ForegroundColor Green
+            Write-Host "Running Flow Optimizations debloat to remove $($AppsToRemove.Count) apps..." -ForegroundColor Green
             Remove-SelectedApps -AppsToRemove $AppsToRemove
             $script:appsWereRemoved = $true
         }
@@ -748,12 +748,12 @@ try {
     }
     Write-Host "Debloat Script From https://getk3d.net" -ForegroundColor Cyan
 
-    if ($script:appsWereRemoved -and -not (Get-Process -Name "K3d Tweaks" -ErrorAction SilentlyContinue)) {
+    if ($script:appsWereRemoved -and -not (Get-Process -Name "flowoptimizations" -ErrorAction SilentlyContinue)) {
         [xml]$xaml = @"
 <Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="K3d Tweaks Debloat"
+    Title="Flow Optimizations Debloat"
     Height="200"
     Width="480"
     WindowStartupLocation="CenterScreen"

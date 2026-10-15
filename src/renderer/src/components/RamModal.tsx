@@ -76,18 +76,18 @@ export default function RamModal({ open, onClose, onApply, detectedRamBytes }: R
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className="bg-k3d-card border border-k3d-border rounded-2xl p-5 max-w-md w-full mx-4 shadow-xl">
+      <div className="bg-flow-card border border-flow-border rounded-2xl p-5 max-w-md w-full mx-4 shadow-xl">
         <div className="flex items-center gap-3 mb-1">
-          <div className="p-2 rounded-full bg-k3d-accent text-k3d-primary">
+          <div className="p-2 rounded-full bg-flow-accent text-flow-primary">
             <MemoryStick className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-k3d-text leading-tight">Optimize RAM</h3>
-            <p className="text-xs text-k3d-text-secondary">
+            <h3 className="text-lg font-semibold text-flow-text leading-tight">Optimize RAM</h3>
+            <p className="text-xs text-flow-text-secondary">
               {detectedGb !== null ? (
                 <>
                   Auto-detected:{" "}
-                  <span className="text-k3d-text font-medium">{detectedGb} GB</span>
+                  <span className="text-flow-text font-medium">{detectedGb} GB</span>
                   {detectedGb !== selectedRam && (
                     <span className="text-amber-400"> · selected {selectedRam} GB</span>
                   )}
@@ -99,7 +99,7 @@ export default function RamModal({ open, onClose, onApply, detectedRamBytes }: R
           </div>
         </div>
 
-        <p className="text-xs font-medium uppercase tracking-wider text-k3d-text-secondary mt-4 mb-2">
+        <p className="text-xs font-medium uppercase tracking-wider text-flow-text-secondary mt-4 mb-2">
           Memory size
         </p>
         <div className="grid grid-cols-3 gap-2">
@@ -111,8 +111,8 @@ export default function RamModal({ open, onClose, onApply, detectedRamBytes }: R
               onClick={() => setSelectedRam(size)}
               className={`px-3 py-2 rounded-lg text-sm font-semibold border transition-all active:scale-95 ${
                 selectedRam === size
-                  ? "bg-k3d-primary text-white border-k3d-primary shadow-[0_4px_14px_-8px_var(--color-k3d-primary)]"
-                  : "bg-k3d-accent/50 text-k3d-text-secondary border-k3d-border-secondary hover:bg-k3d-accent hover:text-k3d-text"
+                  ? "bg-flow-primary text-white border-flow-primary shadow-[0_4px_14px_-8px_var(--color-flow-primary)]"
+                  : "bg-flow-accent/50 text-flow-text-secondary border-flow-border-secondary hover:bg-flow-accent hover:text-flow-text"
               }`}
             >
               {size} GB
@@ -120,9 +120,9 @@ export default function RamModal({ open, onClose, onApply, detectedRamBytes }: R
           ))}
         </div>
 
-        <p className="mt-3 text-xs text-k3d-text-secondary leading-relaxed rounded-xl border border-k3d-border bg-k3d-accent/40 px-3 py-2">
+        <p className="mt-3 text-xs text-flow-text-secondary leading-relaxed rounded-xl border border-flow-border bg-flow-accent/40 px-3 py-2">
           App will set a fixed pagefile{" "}
-          <span className="text-k3d-text font-medium tabular-nums">
+          <span className="text-flow-text font-medium tabular-nums">
             {initialMb.toLocaleString()} / {maximumMb.toLocaleString()} MB
           </span>{" "}
           ({formatMb(maximumMb)} max)

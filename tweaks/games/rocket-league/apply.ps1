@@ -35,7 +35,7 @@ $perfSettings = @{
 
 $configFile = Join-Path $env:USERPROFILE "Documents\My Games\Rocket League\TAGame\Config\TASystemSettings.ini"
 if (Test-Path $configFile) {
-    Copy-Item $configFile "$configFile.k3d.bak" -Force -ErrorAction SilentlyContinue
+    Copy-Item $configFile "$configFile.flow.bak" -Force -ErrorAction SilentlyContinue
     $content = [System.IO.File]::ReadAllText($configFile)
     foreach ($key in $perfSettings.Keys) {
         $pattern = '(?m)^' + $key + '=.*$'

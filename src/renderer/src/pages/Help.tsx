@@ -3,7 +3,7 @@ import RootDiv from "@/components/rootdiv"
 import { Loader2, Send, ShieldCheck, UserRound } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { toast } from "react-toastify"
-import k3dTweaksLogo from "../assets/k3dtweaks-logo.svg"
+import flowOptimizationsLogo from "../assets/flow-optimizations-logo.svg"
 
 const CHAT_ADMIN_IDS = new Set(["1424802704210923711", "988127568295264286"])
 
@@ -34,7 +34,7 @@ function linkify(text: string) {
       <a
         key={i}
         href={part}
-        className="text-k3d-primary underline break-all hover:opacity-80"
+        className="text-flow-primary underline break-all hover:opacity-80"
         onClick={(e) => {
           e.preventDefault()
           void window.electron.ipcRenderer.invoke("open-external", part).catch(() => {
@@ -74,7 +74,7 @@ function ImageAttachment({ src }: { src: string }) {
         src={src}
         alt="attachment"
         onClick={() => setZoom(true)}
-        className="max-h-64 cursor-zoom-in rounded-xl border border-k3d-border object-contain transition-opacity hover:opacity-90"
+        className="max-h-64 cursor-zoom-in rounded-xl border border-flow-border object-contain transition-opacity hover:opacity-90"
       />
       {zoom && (
         <div
@@ -113,7 +113,7 @@ function MessageBubble({
           src={avatarUrl}
           alt={senderName}
           referrerPolicy="no-referrer"
-          className="h-8 w-8 shrink-0 rounded-full border border-k3d-border object-cover"
+          className="h-8 w-8 shrink-0 rounded-full border border-flow-border object-cover"
           onError={(e) => {
             e.currentTarget.style.display = "none"
           }}
@@ -121,17 +121,17 @@ function MessageBubble({
       ) : (
         <div
           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-            isMine ? "bg-k3d-primary/15 text-k3d-primary" : "bg-k3d-accent text-k3d-text"
+            isMine ? "bg-flow-primary/15 text-flow-primary" : "bg-flow-accent text-flow-text"
           }`}
         >
           {isMine ? <UserRound size={16} /> : <ShieldCheck size={16} />}
         </div>
       )}
       <div className={`flex max-w-[70%] flex-col gap-1 ${isMine ? "items-end" : "items-start"}`}>
-        {showSender && <span className="text-xs text-k3d-text-muted">{senderName}</span>}
+        {showSender && <span className="text-xs text-flow-text-muted">{senderName}</span>}
         <div
           className={`rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words ${
-            isMine ? "bg-k3d-primary/15 text-k3d-text" : "bg-k3d-accent text-k3d-text"
+            isMine ? "bg-flow-primary/15 text-flow-text" : "bg-flow-accent text-flow-text"
           }`}
         >
           {message.type === "image" ? (
@@ -139,7 +139,7 @@ function MessageBubble({
           ) : message.type === "link" ? (
             <a
               href={message.content}
-              className="text-k3d-primary underline break-all hover:opacity-80"
+              className="text-flow-primary underline break-all hover:opacity-80"
               onClick={(e) => {
                 e.preventDefault()
                 void window.electron.ipcRenderer
@@ -153,7 +153,7 @@ function MessageBubble({
             linkify(message.content)
           )}
         </div>
-        <span className="text-[11px] text-k3d-text-muted">{formatTime(message.createdAt)}</span>
+        <span className="text-[11px] text-flow-text-muted">{formatTime(message.createdAt)}</span>
       </div>
     </div>
   )
@@ -247,32 +247,32 @@ function SessionExpired({
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-k3d-primary/15 text-k3d-primary">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-flow-primary/15 text-flow-primary">
         <ShieldCheck size={22} />
       </div>
-      <p className="text-sm font-semibold text-k3d-text">Support session expired</p>
-      <p className="max-w-sm text-sm text-k3d-text-secondary">
+      <p className="text-sm font-semibold text-flow-text">Support session expired</p>
+      <p className="max-w-sm text-sm text-flow-text-secondary">
         The support server doesn&apos;t recognize this PC. Sign out and sign back in with
         Discord on this computer to link it, then reopen Get Help.
       </p>
       <button
         type="button"
         onClick={() => void relogin()}
-        className="rounded-xl bg-k3d-primary px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        className="rounded-xl bg-flow-primary px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
       >
         Sign in again
       </button>
-      <div className="mt-1 flex max-w-sm flex-col items-center gap-1.5 rounded-xl border border-k3d-border bg-k3d-card/40 px-3 py-2">
-        <p className="text-[11px] text-k3d-text-muted">
+      <div className="mt-1 flex max-w-sm flex-col items-center gap-1.5 rounded-xl border border-flow-border bg-flow-card/40 px-3 py-2">
+        <p className="text-[11px] text-flow-text-muted">
           Still failing after re-login? Send these to support:
         </p>
-        <code className="text-[11px] text-k3d-text-secondary break-all">
+        <code className="text-[11px] text-flow-text-secondary break-all">
           hwid={hwid.slice(0, 13)}… · discord={account?.id ?? "—"}
         </code>
         <button
           type="button"
           onClick={() => void copyDiagnostics()}
-          className="rounded-lg border border-k3d-border px-2.5 py-1 text-[11px] text-k3d-text-secondary transition-colors hover:bg-k3d-accent hover:text-k3d-text"
+          className="rounded-lg border border-flow-border px-2.5 py-1 text-[11px] text-flow-text-secondary transition-colors hover:bg-flow-accent hover:text-flow-text"
         >
           {copied ? "Copied!" : "Copy diagnostics"}
         </button>
@@ -343,7 +343,7 @@ function Composer({
   }
 
   return (
-    <div className="flex items-end gap-2 border-t border-k3d-border pt-3">
+    <div className="flex items-end gap-2 border-t border-flow-border pt-3">
       <input
         ref={fileRef}
         type="file"
@@ -359,7 +359,7 @@ function Composer({
         onClick={pickImage}
         disabled={sending || disabled}
         title="Send image"
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-k3d-border text-k3d-text-secondary transition-colors hover:bg-k3d-accent hover:text-k3d-text disabled:opacity-40"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-flow-border text-flow-text-secondary transition-colors hover:bg-flow-accent hover:text-flow-text disabled:opacity-40"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -378,13 +378,13 @@ function Composer({
         }}
         rows={1}
         placeholder="Write a message… (Enter to send)"
-        className="max-h-32 min-h-10 flex-1 resize-none rounded-xl border border-k3d-border bg-k3d-accent/40 px-3.5 py-2.5 text-sm text-k3d-text placeholder:text-k3d-text-muted focus:outline-none focus:border-k3d-border-secondary"
+        className="max-h-32 min-h-10 flex-1 resize-none rounded-xl border border-flow-border bg-flow-accent/40 px-3.5 py-2.5 text-sm text-flow-text placeholder:text-flow-text-muted focus:outline-none focus:border-flow-border-secondary"
       />
       <button
         type="button"
         onClick={() => void submit()}
         disabled={sending || disabled || !draft.trim()}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-k3d-primary text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-flow-primary text-white transition-opacity hover:opacity-90 disabled:opacity-40"
       >
         {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
       </button>
@@ -455,16 +455,16 @@ function UserChat({
     <div className="flex h-full flex-col">
       <div
         ref={listRef}
-        className="no-scrollbar mb-3 flex-1 space-y-4 overflow-y-auto rounded-2xl border border-k3d-border bg-k3d-card/40 p-4"
+        className="no-scrollbar mb-3 flex-1 space-y-4 overflow-y-auto rounded-2xl border border-flow-border bg-flow-card/40 p-4"
       >
         {loading ? (
           <div className="flex h-full items-center justify-center">
-            <Loader2 size={24} className="animate-spin text-k3d-text-secondary" />
+            <Loader2 size={24} className="animate-spin text-flow-text-secondary" />
           </div>
         ) : messages.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-            <p className="text-sm font-medium text-k3d-text">No messages yet</p>
-            <p className="text-sm text-k3d-text-secondary">
+            <p className="text-sm font-medium text-flow-text">No messages yet</p>
+            <p className="text-sm text-flow-text-secondary">
               Ask anything — attach a screenshot or paste a link if it helps.
             </p>
           </div>
@@ -481,7 +481,7 @@ function UserChat({
                   mine ? (account?.displayName ?? "You") : (m.displayName ?? "Support")
                 }
                 avatarUrl={
-                  mine ? (account?.avatarUrl ?? null) : (m.avatarUrl ?? k3dTweaksLogo)
+                  mine ? (account?.avatarUrl ?? null) : (m.avatarUrl ?? flowOptimizationsLogo)
                 }
               />
             )
@@ -640,22 +640,22 @@ function AdminChat({
     <div className="flex h-full flex-col">
       <div className="flex min-h-0 flex-1 gap-4">
         {/* Thread list */}
-        <div className="no-scrollbar w-72 shrink-0 overflow-y-auto rounded-2xl border border-k3d-border bg-k3d-card/40 p-2">
+        <div className="no-scrollbar w-72 shrink-0 overflow-y-auto rounded-2xl border border-flow-border bg-flow-card/40 p-2">
           {closedCount > 0 && (
             <button
               type="button"
               onClick={() => setShowClosed((v) => !v)}
-              className="mb-1 flex w-full items-center justify-center rounded-xl px-2 py-1.5 text-[11px] text-k3d-text-muted transition-colors hover:bg-k3d-accent hover:text-k3d-text"
+              className="mb-1 flex w-full items-center justify-center rounded-xl px-2 py-1.5 text-[11px] text-flow-text-muted transition-colors hover:bg-flow-accent hover:text-flow-text"
             >
               {showClosed ? "Hide closed" : `Show closed (${closedCount})`}
             </button>
           )}
           {loading ? (
             <div className="flex h-32 items-center justify-center">
-              <Loader2 size={20} className="animate-spin text-k3d-text-secondary" />
+              <Loader2 size={20} className="animate-spin text-flow-text-secondary" />
             </div>
           ) : visibleThreads.length === 0 ? (
-            <p className="p-4 text-center text-sm text-k3d-text-secondary">No conversations yet.</p>
+            <p className="p-4 text-center text-sm text-flow-text-secondary">No conversations yet.</p>
           ) : (
             visibleThreads.map((t) => {
               const closed = t.status === "closed"
@@ -665,7 +665,7 @@ function AdminChat({
                     key={t.discordId}
                     type="button"
                     onClick={() => void toggleTicket(t.discordId, !closed)}
-                    className="flex w-full items-center justify-center rounded-xl bg-k3d-primary/15 p-2.5 text-sm font-medium text-k3d-primary transition-opacity hover:opacity-90"
+                    className="flex w-full items-center justify-center rounded-xl bg-flow-primary/15 p-2.5 text-sm font-medium text-flow-primary transition-opacity hover:opacity-90"
                   >
                     {closed ? "Reopen ticket" : "Close ticket"}
                   </button>
@@ -683,8 +683,8 @@ function AdminChat({
                   }}
                   className={`flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors ${
                     selected === t.discordId
-                      ? "bg-k3d-accent text-k3d-text"
-                      : "text-k3d-text-secondary hover:bg-k3d-accent/50 hover:text-k3d-text"
+                      ? "bg-flow-accent text-flow-text"
+                      : "text-flow-text-secondary hover:bg-flow-accent/50 hover:text-flow-text"
                   } ${closed ? "opacity-60" : ""}`}
                 >
                   {t.avatarUrl ? (
@@ -695,7 +695,7 @@ function AdminChat({
                       referrerPolicy="no-referrer"
                     />
                   ) : (
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-k3d-primary/15 text-sm font-bold text-k3d-primary">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flow-primary/15 text-sm font-bold text-flow-primary">
                       {(t.displayName ?? "U").slice(0, 1).toUpperCase()}
                     </div>
                   )}
@@ -704,16 +704,16 @@ function AdminChat({
                       <span className="truncate text-sm font-semibold">{t.displayName}</span>
                       <span className="flex shrink-0 items-center gap-1.5">
                         {closed && (
-                          <span className="rounded-full border border-k3d-border px-1.5 py-0.5 text-[10px] text-k3d-text-muted">
+                          <span className="rounded-full border border-flow-border px-1.5 py-0.5 text-[10px] text-flow-text-muted">
                             Closed
                           </span>
                         )}
                         {t.unread && (
-                          <span className="h-2 w-2 shrink-0 rounded-full bg-k3d-primary" />
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-flow-primary" />
                         )}
                       </span>
                     </div>
-                    <p className="truncate text-xs text-k3d-text-muted">
+                    <p className="truncate text-xs text-flow-text-muted">
                       {t.lastMessage
                         ? `${t.lastMessage.from === "admin" ? "You: " : ""}${t.lastMessage.preview}`
                         : "—"}
@@ -730,10 +730,10 @@ function AdminChat({
             <>
               <div
                 ref={listRef}
-                className="no-scrollbar mb-3 flex-1 space-y-4 overflow-y-auto rounded-2xl border border-k3d-border bg-k3d-card/40 p-4"
+                className="no-scrollbar mb-3 flex-1 space-y-4 overflow-y-auto rounded-2xl border border-flow-border bg-flow-card/40 p-4"
               >
                 {messages.length === 0 ? (
-                  <p className="flex h-full items-center justify-center text-sm text-k3d-text-secondary">
+                  <p className="flex h-full items-center justify-center text-sm text-flow-text-secondary">
                     No messages in this conversation.
                   </p>
                 ) : (
@@ -762,15 +762,15 @@ function AdminChat({
                 )}
               </div>
               {isClosed && selected && (
-                <p className="mb-2 rounded-xl border border-k3d-border bg-k3d-card/40 px-3 py-2 text-center text-xs text-k3d-text-muted">
+                <p className="mb-2 rounded-xl border border-flow-border bg-flow-card/40 px-3 py-2 text-center text-xs text-flow-text-muted">
                   Ticket closed — reopen it from the list (right-click) to reply.
                 </p>
               )}
               <Composer onSend={send} disabled={isClosed} />
             </>
           ) : (
-            <div className="flex h-full items-center justify-center rounded-2xl border border-k3d-border bg-k3d-card/40">
-              <p className="text-sm text-k3d-text-secondary">Select a conversation on the left.</p>
+            <div className="flex h-full items-center justify-center rounded-2xl border border-flow-border bg-flow-card/40">
+              <p className="text-sm text-flow-text-secondary">Select a conversation on the left.</p>
             </div>
           )}
         </div>
@@ -791,8 +791,8 @@ function Help() {
     return (
       <RootDiv>
         <div className="flex h-full flex-col items-center justify-center gap-2">
-          <Loader2 size={24} className="animate-spin text-k3d-text-secondary" />
-          <p className="text-xs text-k3d-text-muted">Loading...</p>
+          <Loader2 size={24} className="animate-spin text-flow-text-secondary" />
+          <p className="text-xs text-flow-text-muted">Loading...</p>
         </div>
       </RootDiv>
     )

@@ -5,7 +5,7 @@ function Greeting() {
   const [name, setName] = useState("")
 
   useEffect(() => {
-    localStorage.removeItem("k3d:user")
+    localStorage.removeItem("flow:user")
     const loadName = () => {
       invoke({ channel: "auth:get-session" })
         .then((account) => {
@@ -49,7 +49,7 @@ function Greeting() {
   return (
     <h1 className="text-2xl font-bold mb-4">
       {randomGreeting},{" "}
-      <span className="text-k3d-primary">{name || "friend"}</span>
+      <span className="text-flow-primary">{name || "friend"}</span>
     </h1>
   )
 }

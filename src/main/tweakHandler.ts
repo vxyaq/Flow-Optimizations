@@ -100,9 +100,9 @@ async function loadTweaks(): Promise<Tweak[]> {
 
 const getNipPath = (): string => {
   if (isDev) {
-    return path.resolve(process.cwd(), "resources", "k3dtweaks.nip")
+    return path.resolve(process.cwd(), "resources", "flow-optimizations.nip")
   }
-  return path.join(process.resourcesPath, "k3dtweaks.nip")
+  return path.join(process.resourcesPath, "flow-optimizations.nip")
 }
 
 function isGPUTweak(tweak: Tweak): boolean {
@@ -160,11 +160,11 @@ const parseApplyPayload = (payload: string | ApplyPayload): ParsedApplyPayload =
       assignments.push(`$${variable} = 0`)
   }
 
-  assign("K3D_RAM_GB", payload.ramGb, 1, 1024)
-  assign("K3D_PF_INITIAL", payload.pfInitial, 64, 1048576)
-  assign("K3D_PF_MAXIMUM", payload.pfMaximum, 64, 1048576)
-  assignFlag("K3D_KEEP_KERNEL", payload.keepKernel)
-  assignFlag("K3D_DISABLE_SYSMAIN", payload.disableSysMain)
+  assign("FLOW_RAM_GB", payload.ramGb, 1, 1024)
+  assign("FLOW_PF_INITIAL", payload.pfInitial, 64, 1048576)
+  assign("FLOW_PF_MAXIMUM", payload.pfMaximum, 64, 1048576)
+  assignFlag("FLOW_KEEP_KERNEL", payload.keepKernel)
+  assignFlag("FLOW_DISABLE_SYSMAIN", payload.disableSysMain)
 
   return {
     name: payload.name,
@@ -178,12 +178,12 @@ function NvidiaProfileInspector(): Promise<string> {
 
   if (!fsSync.existsSync(exePath)) {
     throw new Error(
-      `NVIDIA Profile Inspector is missing (${exePath}). Reinstall K3d Tweaks to restore it.`,
+      `NVIDIA Profile Inspector is missing (${exePath}). Reinstall Flow Optimizations to restore it.`,
     )
   }
   if (!fsSync.existsSync(nipPath)) {
     throw new Error(
-      `NVIDIA profile is missing (${nipPath}). Reinstall K3d Tweaks to restore it.`,
+      `NVIDIA profile is missing (${nipPath}). Reinstall Flow Optimizations to restore it.`,
     )
   }
 
@@ -324,7 +324,7 @@ export const setupTweaksHandlers = (): void => {
   ipcMain.handle("tweak:active", (): string[] => {
     return getActiveTweaks()
   })
-  console.log("[K3d Tweaks main/tweakHandler.ts]: Tweak handlers setup complete")
+  console.log("[Flow Optimizations main/tweakHandler.ts]: Tweak handlers setup complete")
 }
 
 const getActiveTweaks = (): string[] => {

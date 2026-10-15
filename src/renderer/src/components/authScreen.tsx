@@ -4,7 +4,7 @@ import Button from "./ui/button"
 import Card from "./ui/Card"
 import { invoke } from "@/lib/electron"
 import { applyBackgroundImage, getBackgroundStyle } from "@/lib/background"
-import k3dTweaksLogo from "../assets/k3dtweaks-logo.svg"
+import flowOptimizationsLogo from "../assets/flow-optimizations-logo.svg"
 import discordLogo from "../assets/discord-logo.svg"
 
 export interface AccountProfile {
@@ -54,10 +54,10 @@ export default function AuthScreen({ onAuthenticated }: AuthScreenProps): React.
   return (
     <main className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden px-5 py-10">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/55 to-black/65" />
-      <Card className="relative w-full max-w-[360px] overflow-hidden rounded-2xl border border-k3d-border bg-[#070707] px-7 py-10 sm:px-8">
+      <Card className="relative w-full max-w-[360px] overflow-hidden rounded-2xl border border-flow-border bg-[#070707] px-7 py-10 sm:px-8">
         <div className="flex flex-col items-center text-center">
-          <img src={k3dTweaksLogo} alt="K3d Tweaks" className="h-14 w-14" />
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-white">Login to K3d Tweaks</h1>
+          <img src={flowOptimizationsLogo} alt="Flow Optimizations" className="h-14 w-14" />
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-white">Login to Flow Optimizations</h1>
           <p className="mt-8 max-w-[250px] text-sm leading-5 text-zinc-400">
             Choose one of the following to authorize:
           </p>
@@ -82,7 +82,7 @@ export default function AuthScreen({ onAuthenticated }: AuthScreenProps): React.
         </div>
 
         <p className="mt-7 text-center text-xs font-medium text-zinc-300">
-          Auth handled by <span className="text-k3d-primary">K3d Tweaks</span>
+          Auth handled by <span className="text-flow-primary">Flow Optimizations</span>
         </p>
         <p className="mt-1 text-center text-xs text-zinc-500">
           Authentication opens in your browser

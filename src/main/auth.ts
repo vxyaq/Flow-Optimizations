@@ -79,7 +79,7 @@ function waitForDiscordCallback(state: string): Promise<string> {
       response.end(
         `<html><body style="font-family: sans-serif; text-align: center; padding: 40px;"><h2>${
           error ? "Sign-in was cancelled" : "Sign-in complete"
-        }</h2><p>You can close this window and return to K3d Tweaks.</p></body></html>`,
+        }</h2><p>You can close this window and return to Flow Optimizations.</p></body></html>`,
       )
 
       void closeServer(server)

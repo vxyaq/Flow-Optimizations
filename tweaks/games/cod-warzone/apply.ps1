@@ -29,7 +29,7 @@ New-ItemProperty -Path $gameBarPath -Name "AppCaptureEnabled" -PropertyType DWor
 
 $configPath = Join-Path $env:USERPROFILE "Documents\Call of Duty\players\options.ini"
 if (Test-Path $configPath) {
-  Copy-Item $configPath "$configPath.k3d.bak" -Force -ErrorAction SilentlyContinue
+  Copy-Item $configPath "$configPath.flow.bak" -Force -ErrorAction SilentlyContinue
   $content = Get-Content $configPath -Raw
   $content = $content -replace '(?m)^VideoMemoryScale =.*', 'VideoMemoryScale = 0.85'
   $content = $content -replace '(?m)^ThreadedOptimization =.*', 'ThreadedOptimization = 1'

@@ -11,9 +11,9 @@ export const getBackgroundPath = (index = 0): string | null => {
     userDataDir = app.getPath("userData")
   } catch {
     userDataDir = process.env.APPDATA
-      ? path.join(process.env.APPDATA, "K3d Tweaks")
+      ? path.join(process.env.APPDATA, "Flow Optimizations")
       : process.env.HOME
-        ? path.join(process.env.HOME, ".k3d")
+        ? path.join(process.env.HOME, ".flow")
         : null
   }
 
@@ -64,7 +64,7 @@ export const registerBackgroundIpc = () => {
             : "image/png"
       return `data:${mime};base64,${data.toString("base64")}`
     } catch (err) {
-      console.error("[K3d Tweaks]: Failed to read background image:", err)
+      console.error("[Flow Optimizations]: Failed to read background image:", err)
       return null
     }
   })

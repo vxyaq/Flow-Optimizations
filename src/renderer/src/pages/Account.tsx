@@ -62,7 +62,7 @@ function Account() {
     return (
       <RootDiv>
         <div className="flex min-h-64 items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-k3d-border border-t-k3d-primary" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-flow-border border-t-flow-primary" />
         </div>
       </RootDiv>
     )
@@ -72,9 +72,9 @@ function Account() {
     return (
       <RootDiv>
         <Card className="mx-auto flex max-w-xl flex-col items-center gap-3 p-8 text-center">
-          <LogIn className="h-10 w-10 text-k3d-primary" />
+          <LogIn className="h-10 w-10 text-flow-primary" />
           <h1 className="text-xl font-semibold">No account signed in</h1>
-          <p className="text-sm text-k3d-text-secondary">
+          <p className="text-sm text-flow-text-secondary">
             Sign in to view your account information.
           </p>
         </Card>
@@ -88,9 +88,9 @@ function Account() {
     <RootDiv>
       <div className="mx-auto flex max-w-3xl flex-col gap-6 pb-12">
         <div>
-          <h1 className="text-2xl font-semibold text-k3d-text">Account</h1>
-          <p className="mt-1 text-sm text-k3d-text-secondary">
-            Information about the account connected to K3d Tweaks.
+          <h1 className="text-2xl font-semibold text-flow-text">Account</h1>
+          <p className="mt-1 text-sm text-flow-text-secondary">
+            Information about the account connected to Flow Optimizations.
           </p>
         </div>
 
@@ -103,15 +103,15 @@ function Account() {
               referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-k3d-primary/15 text-2xl font-semibold text-k3d-primary">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-flow-primary/15 text-2xl font-semibold text-flow-primary">
               {account.displayName.slice(0, 1).toUpperCase()}
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <h2 className="truncate text-xl font-semibold text-k3d-text">
+            <h2 className="truncate text-xl font-semibold text-flow-text">
               {account.displayName}
             </h2>
-            <p className="truncate text-sm text-k3d-text-secondary">
+            <p className="truncate text-sm text-flow-text-secondary">
               {account.email ?? `Connected via ${providerName}`}
             </p>
           </div>
@@ -173,10 +173,10 @@ function InfoCard({
       className={`flex min-w-0 items-start gap-3 p-4 ${onClick ? "cursor-pointer" : ""}`}
       onClick={onClick}
     >
-      <div className="rounded-full bg-k3d-primary/10 p-2 text-k3d-primary">{icon}</div>
+      <div className="rounded-full bg-flow-primary/10 p-2 text-flow-primary">{icon}</div>
       <div className="min-w-0">
-        <p className="text-xs text-k3d-text-muted">{label}</p>
-        <p className={`mt-1 text-sm font-medium text-k3d-text ${valueClassName}`}>{value}</p>
+        <p className="text-xs text-flow-text-muted">{label}</p>
+        <p className={`mt-1 text-sm font-medium text-flow-text ${valueClassName}`}>{value}</p>
       </div>
     </Card>
   )

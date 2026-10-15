@@ -1,9 +1,9 @@
 {
-  "name": "k3d-auth-server",
+  "name": "flow-auth-server",
   "version": "1.1.0",
   "private": true,
   "type": "module",
-  "description": "Hosting backend for K3d Tweaks login + license (HWID + plan) + support chat.",
+  "description": "Hosting backend for Flow Optimizations login + license (HWID + plan) + support chat.",
   "scripts": {
     "start": "node server.js"
   }

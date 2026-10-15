@@ -8,7 +8,7 @@ if ($processes) {
   }
 }
 $configFile = Join-Path $env:USERPROFILE "Documents\My Games\Rocket League\TAGame\Config\TASystemSettings.ini"
-$backupFile = "$configFile.k3d.bak"
+$backupFile = "$configFile.flow.bak"
 if (Test-Path $backupFile) {
     Copy-Item $backupFile $configFile -Force -ErrorAction SilentlyContinue
 }

@@ -50,7 +50,7 @@ async function buildRegistry() {
         addedversion: meta.addedversion,
         updatedversion: meta.updatedversion,
         docsurl: `https://docs.getk3d.net/tweaks/${folder}`,
-        source: `https://github.com/vxyaq/k3d-tweaks Tweaks/blob/v2/tweaks/${folder}/meta.json`,
+        source: `https://github.com/vxyaq/Flow-Optimizations/blob/v2/tweaks/${folder}/meta.json`,
       }
 
       registryNormal.push(baseTweak)

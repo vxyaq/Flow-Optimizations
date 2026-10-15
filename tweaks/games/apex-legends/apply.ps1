@@ -29,7 +29,7 @@ New-ItemProperty -Path $gameBarPath -Name "AppCaptureEnabled" -PropertyType DWor
 
 $videoConfigPath = Join-Path $env:USERPROFILE "Saved Games\Respawn\Apex\local\videoconfig.txt"
 if (Test-Path $videoConfigPath) {
-  Copy-Item $videoConfigPath "$videoConfigPath.k3d.bak" -Force -ErrorAction SilentlyContinue
+  Copy-Item $videoConfigPath "$videoConfigPath.flow.bak" -Force -ErrorAction SilentlyContinue
   $content = Get-Content $videoConfigPath -Raw
   $content = $content -replace '(?m)^"setting.cl_gib_allow".*', '"setting.cl_gib_allow" "0"'
   $content = $content -replace '(?m)^"setting.cl_particle_fallback_base".*', '"setting.cl_particle_fallback_base" "0"'

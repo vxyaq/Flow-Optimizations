@@ -84,7 +84,7 @@ const GameCard = memo(function GameCard({ game, isInstalled, isBusy, onRun }: Ga
     : BACKGROUNDS[game.background]
   return (
     <Card
-      className="relative h-52 overflow-hidden border border-k3d-border bg-cover bg-center p-0 [content-visibility:auto] [contain-intrinsic-size:auto_208px]"
+      className="relative h-52 overflow-hidden border border-flow-border bg-cover bg-center p-0 [content-visibility:auto] [contain-intrinsic-size:auto_208px]"
       style={{
         borderRadius: "13px",
         ...(bg ? { backgroundImage: `url(${bg})` } : {}),
@@ -202,7 +202,7 @@ export default function Games(): React.ReactElement {
     return (
       <RootDiv>
         <div className="flex min-h-64 items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-k3d-border border-t-k3d-primary" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-flow-border border-t-flow-primary" />
         </div>
       </RootDiv>
     )
@@ -213,8 +213,8 @@ export default function Games(): React.ReactElement {
       <div className="w-full">
         {games.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <h3 className="text-sm font-medium mb-2 text-k3d-text">No games yet</h3>
-            <p className="text-k3d-text-secondary">Request a game in Settings.</p>
+            <h3 className="text-sm font-medium mb-2 text-flow-text">No games yet</h3>
+            <p className="text-flow-text-secondary">Request a game in Settings.</p>
           </div>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">

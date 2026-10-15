@@ -84,12 +84,12 @@ function Nav() {
     clsx(
       "flex w-full items-center gap-3.5 rounded-xl px-3.5 py-2.5 text-[15px] font-medium transition-colors",
       active
-        ? "bg-k3d-accent text-k3d-text"
-        : "text-k3d-text-secondary hover:bg-k3d-accent/50 hover:text-k3d-text",
+        ? "bg-flow-accent text-flow-text"
+        : "text-flow-text-secondary hover:bg-flow-accent/50 hover:text-flow-text",
     )
 
   return (
-    <nav className="text-k3d-text fixed left-2 top-2 bottom-2 z-40 flex w-56 flex-col rounded-2xl border border-k3d-border bg-k3d-card/70 px-3 py-4 no-scrollbar overflow-y-auto">
+    <nav className="text-flow-text fixed left-2 top-2 bottom-2 z-40 flex w-56 flex-col rounded-2xl border border-flow-border bg-flow-card/70 px-3 py-4 no-scrollbar overflow-y-auto">
       {/* Primary items */}
       <div className="flex flex-col gap-1">
         <button type="button" onClick={() => navigate(tabs.home.path)} className={itemClass(activeTab === "home")}>
@@ -116,7 +116,7 @@ function Nav() {
           <button
             type="button"
             onClick={() => setMoreOpen((o) => !o)}
-            className="flex w-full items-center justify-between rounded-xl px-3.5 py-2 text-[15px] font-medium text-k3d-text-secondary transition-colors hover:text-k3d-text"
+            className="flex w-full items-center justify-between rounded-xl px-3.5 py-2 text-[15px] font-medium text-flow-text-secondary transition-colors hover:text-flow-text"
           >
             More
             <ChevronDown size={16} className={clsx("transition-transform duration-300", moreOpen && "rotate-180")} />
@@ -152,7 +152,7 @@ function Nav() {
 
       {needsRestart && (
         <button
-          className="mb-3 flex items-center justify-center gap-2 rounded-xl border border-k3d-border-secondary bg-k3d-accent px-3 py-2 text-sm text-red-500 transition-colors hover:bg-k3d-border-secondary"
+          className="mb-3 flex items-center justify-center gap-2 rounded-xl border border-flow-border-secondary bg-flow-accent px-3 py-2 text-sm text-red-500 transition-colors hover:bg-flow-border-secondary"
           onClick={() => setShowRestartModal(true)}
           title="Restart Windows to apply some changes"
         >
@@ -164,7 +164,7 @@ function Nav() {
       <button
         type="button"
         onClick={() => navigate(tabs.account.path)}
-        className="mb-1 flex w-full items-center gap-3 rounded-xl bg-k3d-accent/40 p-2.5 text-left transition-colors hover:bg-k3d-accent"
+        className="mb-1 flex w-full items-center gap-3 rounded-xl bg-flow-accent/40 p-2.5 text-left transition-colors hover:bg-flow-accent"
       >
         {avatarUrl ? (
           <img
@@ -174,13 +174,13 @@ function Nav() {
             referrerPolicy="no-referrer"
           />
         ) : (
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-k3d-primary/15 text-sm font-bold text-k3d-primary">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flow-primary/15 text-sm font-bold text-flow-primary">
             {(accountName ?? "K").slice(0, 1).toUpperCase()}
           </div>
         )}
         <div className="min-w-0 flex-1 leading-tight">
           <div className="truncate text-sm font-semibold">{accountName ?? "Account"}</div>
-          <div className="text-xs capitalize text-k3d-text-secondary">
+          <div className="text-xs capitalize text-flow-text-secondary">
             {accountPlan === "pro" ? "Pro" : "Free"}
           </div>
         </div>
@@ -193,7 +193,7 @@ function Nav() {
       </button>
 
       <Modal open={showRestartModal} onOpenChange={setShowRestartModal}>
-        <div className="bg-k3d-card p-4 rounded-2xl border border-k3d-border text-k3d-text w-[90vw] max-w-md">
+        <div className="bg-flow-card p-4 rounded-2xl border border-flow-border text-flow-text w-[90vw] max-w-md">
           <h2 className="text-lg font-semibold">Confirm Restart</h2>
           <p>Are you sure you want to restart your computer now?</p>
           <div className="flex gap-2 justify-end">

@@ -7,7 +7,7 @@ out
 .DS_Store
 .eslintcache
 *.log*
-firstk3d2build.zip
+firstflow2build.zip
 .env
 .mutagen.yml
 *.nupkg

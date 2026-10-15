@@ -25,7 +25,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
-          name: k3d-windows-setup
+          name: flow-windows-setup
           path: |
             dist/*-setup.exe
             dist/latest.yml

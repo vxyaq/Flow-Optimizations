@@ -358,23 +358,23 @@ export async function getSystemUuid(): Promise<string> {
 }
 
 export async function getAdminStatus(): Promise<boolean> {
-  console.log("[K3d Tweaks]: Checking admin status...")
+  console.log("[Flow Optimizations]: Checking admin status...")
   try {
     if (!platform.windows) {
       const isRoot = typeof process.getuid === "function" && process.getuid() === 0
-      console.log(`[K3d Tweaks]: Admin status: ${isRoot}`)
+      console.log(`[Flow Optimizations]: Admin status: ${isRoot}`)
       return isRoot
     }
     const { execSync } = await import("child_process")
     execSync("net session", { stdio: "pipe" })
-    console.log("[K3d Tweaks]: Admin status: true")
+    console.log("[Flow Optimizations]: Admin status: true")
     return true
   } catch (error) {
-    console.log("[K3d Tweaks]: Not running as admin")
+    console.log("[Flow Optimizations]: Not running as admin")
     return false
   }
 }
-function clearK3dCache(): ClearCacheResult {
+function clearFlowCache(): ClearCacheResult {
   systemInfoCache.clear()
   clearGpuCache()
   try {
@@ -400,9 +400,9 @@ function clearK3dCache(): ClearCacheResult {
       }
 
       scriptsCleared = true
-      console.log("K3d Tweaks scripts directory files cleared successfully.")
+      console.log("Flow Optimizations scripts directory files cleared successfully.")
     } else {
-      console.warn("K3d Tweaks scripts directory does not exist.")
+      console.warn("Flow Optimizations scripts directory does not exist.")
       errors.push("Scripts directory does not exist.")
     }
 
@@ -419,9 +419,9 @@ function clearK3dCache(): ClearCacheResult {
         }
       }
       logsCleared = true
-      console.log("K3d Tweaks logs directory files cleared successfully.")
+      console.log("Flow Optimizations logs directory files cleared successfully.")
     } else {
-      console.warn("K3d Tweaks logs directory does not exist.")
+      console.warn("Flow Optimizations logs directory does not exist.")
       errors.push("Logs directory does not exist.")
     }
 
@@ -434,7 +434,7 @@ function clearK3dCache(): ClearCacheResult {
       }
     }
   } catch (error: any) {
-    console.error("Failed to clear K3d Tweaks scripts or logs directory:", error)
+    console.error("Failed to clear Flow Optimizations scripts or logs directory:", error)
     return { success: false, error: error.message }
   }
 }
@@ -445,7 +445,7 @@ function openLogFolder(): { success: boolean; error?: string } {
     shell.openPath(logPath)
     return { success: true }
   } else {
-    console.warn("K3d Tweaks logs directory does not exist.")
+    console.warn("Flow Optimizations logs directory does not exist.")
     return { success: false, error: "Logs directory does not exist." }
   }
 }
@@ -467,12 +467,12 @@ function Show-InstallerGUI {
     Add-Type -AssemblyName System.Drawing
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = "K3d Tweaks: Winget Installer"
+    $form.Text = "Flow Optimizations: Winget Installer"
     $form.Size = New-Object System.Drawing.Size(600,400)
     $form.StartPosition = "CenterScreen"
 
     $label = New-Object System.Windows.Forms.Label
-    $label.Text = "Welcome! K3d Tweaks needs Winget to install apps."
+    $label.Text = "Welcome! Flow Optimizations needs Winget to install apps."
     $label.AutoSize = $true
     $label.Location = New-Object System.Drawing.Point(20,20)
     $form.Controls.Add($label)
@@ -531,7 +531,7 @@ function Show-InstallerGUI {
             $wingetInstalled = Check-Winget
 
             if ($TestMode -or -not $wingetInstalled) {
-                $result.Messages += "Winget not found. Installing for K3d Tweaks..."
+                $result.Messages += "Winget not found. Installing for Flow Optimizations..."
 
                 try {
                     $result.Messages += "Attempting to register App Installer..."
@@ -620,7 +620,7 @@ function Show-InstallerGUI {
                     }
                 }
             } else {
-                $result.Messages += "Winget is already installed. K3d Tweaks is ready to install apps!"
+                $result.Messages += "Winget is already installed. Flow Optimizations is ready to install apps!"
                 $result.Success = $true
             }
         } catch {
@@ -680,7 +680,7 @@ function Show-InstallerGUI {
 if ($TestMode -or -not (Check-Winget)) {
     Show-InstallerGUI
 } else {
-    Write-Output "Winget is already installed. K3d Tweaks can install apps!"
+    Write-Output "Winget is already installed. Flow Optimizations can install apps!"
 }
 `
 
@@ -716,7 +716,7 @@ function autoClearCache(): void {
       last = 0
     }
     if (Date.now() - last < 24 * 60 * 60 * 1000) return
-    clearK3dCache()
+    clearFlowCache()
     try {
       fs.writeFileSync(stampPath, String(Date.now()), "utf8")
     } catch {
@@ -780,7 +780,7 @@ export const setupSystemHandlers = (): void => {
   ipcMain.handle("request:send", (_event, game: unknown) => sendGameRequest(game))
   ipcMain.handle("restart", restartSystem)
   ipcMain.handle("open-log-folder", openLogFolder)
-  ipcMain.handle("clear-k3d-cache", clearK3dCache)
+  ipcMain.handle("clear-flow-cache", clearFlowCache)
   ipcMain.handle("get-system-info", getSystemInfo)
   ipcMain.handle("restart-explorer", restartExplorer)
   ipcMain.handle("check-winget", async () => checkWinget())
@@ -790,14 +790,14 @@ export const setupSystemHandlers = (): void => {
   ipcMain.handle("bios:status", getBiosFacts)
   ipcMain.handle("games:detect", detectGames)
   ipcMain.handle("install-winget", ensureWinget)
-  console.log("[K3d Tweaks main/system.ts]: System handlers setup complete")
+  console.log("[Flow Optimizations main/system.ts]: System handlers setup complete")
 }
 
 export const cleanupSystemHandlers = (): void => {
   ipcMain.removeHandler("request:send")
   ipcMain.removeHandler("restart")
   ipcMain.removeHandler("open-log-folder")
-  ipcMain.removeHandler("clear-k3d-cache")
+  ipcMain.removeHandler("clear-flow-cache")
   ipcMain.removeHandler("get-system-info")
   ipcMain.removeHandler("get-platform")
   ipcMain.removeHandler("restart-explorer")

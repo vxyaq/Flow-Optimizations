@@ -8,7 +8,7 @@ $userdataDir = Join-Path $steamPath "userdata"
 if (Test-Path $userdataDir) {
     Get-ChildItem -Path $userdataDir -Directory -ErrorAction SilentlyContinue | ForEach-Object {
         $videoFile = Join-Path $_.FullName "730\local\cfg\cs2_video.txt"
-        $backupFile = "$videoFile.k3d.bak"
+        $backupFile = "$videoFile.flow.bak"
         if (Test-Path $backupFile) {
             Copy-Item $backupFile $videoFile -Force -ErrorAction SilentlyContinue
         }

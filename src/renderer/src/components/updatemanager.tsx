@@ -71,16 +71,16 @@ export default function UpdateManager(): React.ReactElement {
 
   return (
     <Modal open={updateOpen} onClose={() => {}}>
-      <div className="bg-k3d-card border border-k3d-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
-        <h2 className="text-xl font-semibold mb-2 text-k3d-primary">
+      <div className="bg-flow-card border border-flow-border rounded-2xl p-4 shadow-xl max-w-lg w-full mx-4">
+        <h2 className="text-xl font-semibold mb-2 text-flow-primary">
           Update available{updateVersion ? ` (${updateVersion})` : ""}
         </h2>
-        <p className="mb-6 text-k3d-text">
+        <p className="mb-6 text-flow-text">
           {isDownloaded
             ? "The update has been downloaded. Restart to install now."
             : isDownloading
               ? `Downloading update… ${Math.floor(downloadPercent)}%`
-              : "A new version is available. Please update to ensure K3d Tweaks keeps working properly."}
+              : "A new version is available. Please update to ensure Flow Optimizations keeps working properly."}
         </p>
         <div className="flex justify-end gap-3">
           {!isDownloading && (
