@@ -25,6 +25,16 @@ console.warn = log.warn
 
 log.initialize()
 
+app.commandLine.appendSwitch("disk-cache-size", String(64 * 1024 * 1024))
+app.commandLine.appendSwitch("disable-gpu-shader-disk-cache")
+app.commandLine.appendSwitch(
+  "disable-features",
+  "MediaRouter,GlobalMediaControls,Translate,HardwareMediaKeyHandling,AutofillServerCommunication",
+)
+app.commandLine.appendSwitch("enable-features", "CalculateNativeWinOcclusion")
+app.commandLine.appendSwitch("enable-low-end-device-mode")
+app.commandLine.appendSwitch("js-flags", "--max-old-space-size=512")
+
 const store = new Store()
 
 let trayInstance: Tray | null = null
@@ -102,6 +112,8 @@ function createWindow(): void {
     console.log("[Flow Optimizations]: BrowserWindow created")
     setMainWindow(mainWindow)
     mainWindow.webContents.setZoomFactor(0.9)
+    mainWindow.on("maximize", () => mainWindow?.webContents.send("window-maximized"))
+    mainWindow.on("unmaximize", () => mainWindow?.webContents.send("window-unmaximized"))
   } catch (err: any) {
     console.error("[Flow Optimizations]: BrowserWindow creation failed:", err)
     throw err
@@ -188,6 +200,8 @@ app
         }
       }
     })
+
+    ipcMain.handle("window-is-maximized", () => mainWindow?.isMaximized() ?? false)
 
     ipcMain.handle("open-devtools", () => {
       if (mainWindow && !app.isPackaged) {
