@@ -531,6 +531,10 @@ function AdminChat({
         const updatedSelectedThread = newThreads.find((t) => t.discordId === selected)
         if (updatedSelectedThread) {
           setChatClosed(updatedSelectedThread.status === "closed")
+        } else {
+          setSelected(null)
+          setMessages([])
+          setChatClosed(null)
         }
       }
     } else if (isSignInError(res.error)) {
@@ -563,14 +567,18 @@ function AdminChat({
 
   useEffect(() => {
     if (!menu) return
-    const close = () => setMenu(null)
+    const close = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest('[data-ticket-menu="true"]')) return
+      setMenu(null)
+    }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenu(null)
     }
-    window.addEventListener("click", close, true)
+    window.addEventListener("mousedown", close)
     window.addEventListener("keydown", onKey)
     return () => {
-      window.removeEventListener("click", close, true)
+      window.removeEventListener("mousedown", close)
       window.removeEventListener("keydown", onKey)
     }
   }, [menu])
@@ -591,12 +599,14 @@ function AdminChat({
       )
       return
     }
-    if (target === selected) {
-      setChatClosed(closed)
+    if (closed && target === selected) {
+      setSelected(null)
+      setMessages([])
+      setChatClosed(null)
     }
-    toast.success(closed ? "Ticket closed." : "Ticket reopened.")
+    toast.success(closed ? "Ticket closed and deleted." : "Ticket reopened.")
     await refreshThreads()
-    await refreshMessages()
+    if (!closed) await refreshMessages()
   }
 
   useEffect(() => {
@@ -664,6 +674,7 @@ function AdminChat({
                   <button
                     key={t.discordId}
                     type="button"
+                    data-ticket-menu="true"
                     onClick={() => void toggleTicket(t.discordId, !closed)}
                     className="flex w-full items-center justify-center rounded-xl bg-flow-primary/15 p-2.5 text-sm font-medium text-flow-primary transition-opacity hover:opacity-90"
                   >

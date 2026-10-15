@@ -647,11 +647,15 @@ const server = createServer(async (req, res) => {
     const target = typeof body.target === "string" ? body.target.trim().slice(0, 64) : ""
     if (!target || !chats[target]) return chatJson(res, 404, { error: "Conversation not found." })
     const closed = body.closed !== false
-    chats[target].status = closed ? "closed" : "open"
-    chats[target].unread = false
+    if (closed) {
+      delete chats[target]
+      saveSupport()
+      return chatJson(res, 200, { ok: true, status: "closed", deleted: true })
+    }
+    chats[target].status = "open"
     chats[target].updatedAt = Date.now()
     saveSupport()
-    return chatJson(res, 200, { ok: true, status: chats[target].status })
+    return chatJson(res, 200, { ok: true, status: "open" })
   }
 
   return json(res, 404, { error: "Not found." })

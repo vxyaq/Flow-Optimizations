@@ -36,13 +36,13 @@ import { Tweak } from "@/types/index"
 const CATEGORY_ALIASES: Record<string, string> = { AI: "General" }
 
 const tweakCategories = (tweak: any): string[] => {
-  const raw = Array.isArray(tweak?.category)
+  const raw: string[] = Array.isArray(tweak?.category)
     ? tweak.category
     : tweak?.category
       ? [tweak.category]
       : []
-  const mapped = raw.filter(Boolean).map((cat: string) => CATEGORY_ALIASES[cat] ?? cat)
-  return [...new Set(mapped)]
+  const mapped = raw.filter(Boolean).map((cat: string): string => CATEGORY_ALIASES[cat] ?? cat)
+  return [...new Set<string>(mapped)]
 }
 
 const isReversible = (tweak: any) => tweak.reversible == null || tweak.reversible === true
@@ -65,15 +65,31 @@ const presets = [
     description: "A balanced set of tweaks for everyday use.",
     tweaks: [
       "disable-telemetry",
-      "revert-context-menu",
-      "hide-taskview-and-widgets",
-      "set-win32-priority-separation",
-      "disable-copilot",
-      "enable-end-task-right-click",
-      "disable-location-tracking",
+      "disable-consumer-features",
+      "disable-windows-tips",
       "disable-lockscreen-tips",
+      "disable-location-tracking",
+      "disable-copilot",
+      "disable-recall",
+      "disable-background-apps",
+      "disable-notifications",
+      "disable-windows-search-indexing",
+      "hide-taskview-and-widgets",
+      "enable-end-task-right-click",
+      "menu-show-delay-zero",
+      "disable-transparency-effects",
+      "disable-windows-animations",
+      "enable-game-mode",
+      "disable-fullscreen-optimizations",
+      "disable-gamebar",
       "optimize-network-settings",
-      "set-services-to-manual",
+      "disable-nagle",
+      "fast-dns",
+      "disable-prefetch-superfetch",
+      "disable-hibernation",
+      "disable-nvidia-telemetry",
+      "disable-error-reporting",
+      "optimize-csrss-priority",
     ],
   },
 ]
