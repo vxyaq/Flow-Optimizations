@@ -54,12 +54,12 @@ function Settings() {
     try {
       setChecking(true)
       const res = await invoke({ channel: "updater:check" })
-      if (res?.ok && !res.updateInfo) {
-        toast.success("You're up to date")
-      } else if (res?.updateInfo) {
+      if (!res?.ok) {
+        toast.error(res?.error ?? "Unable to check for updates")
+      } else if (res.updateAvailable && res.updateInfo) {
         toast.info(`Update available: ${res.updateInfo.version}`)
       } else {
-        toast.error(res?.error ?? "Unable to check for updates")
+        toast.success("You're up to date")
       }
     } catch (e) {
       toast.error(String(e))

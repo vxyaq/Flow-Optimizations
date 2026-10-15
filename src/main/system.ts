@@ -347,14 +347,27 @@ try { $fw = (Get-ComputerInfo -Property BiosFirmwareType).BiosFirmwareType } cat
   }
 }
 
+let cachedSystemUuid: string | null = null
+let inflightSystemUuid: Promise<string> | null = null
+
 export async function getSystemUuid(): Promise<string> {
-  try {
-    const uuidData = await si.uuid()
-    return uuidData.os || uuidData.hardware || "Unknown"
-  } catch (error) {
-    console.error("Failed to get system UUID:", error)
-    return "Unknown"
+  if (cachedSystemUuid) return cachedSystemUuid
+  if (!inflightSystemUuid) {
+    inflightSystemUuid = (async () => {
+      try {
+        const uuidData = await si.uuid()
+        const value = uuidData.os || uuidData.hardware || "Unknown"
+        if (value && value !== "Unknown") cachedSystemUuid = value
+        return value
+      } catch (error) {
+        console.error("Failed to get system UUID:", error)
+        return "Unknown"
+      } finally {
+        inflightSystemUuid = null
+      }
+    })()
   }
+  return inflightSystemUuid
 }
 
 export async function getAdminStatus(): Promise<boolean> {

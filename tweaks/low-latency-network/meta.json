@@ -1,0 +1,10 @@
+{
+  "title": "Low Latency Network",
+  "name": "low-latency-network",
+  "risk": "safe",
+  "modal": "This tunes the Windows network stack for the lowest possible ping: it removes the network throttling cap, prioritises networking over background tasks, disables receive-side coalescing and speeds up TCP handshakes. Revert restores Windows defaults.",
+  "reversible": true,
+  "category": ["Network", "Gaming"],
+  "description": "Aggressive but safe network tuning for the lowest ping and smoothest online play",
+  "deepDescription": "A focused, fully reversible set of network tweaks aimed squarely at latency:\n\n- NetworkThrottlingIndex → Unlimited (removes the 10 packets/ms cap)\n- SystemResponsiveness → 10 (gives networking/multimedia priority over background work)\n- Receive Segment Coalescing → Disabled (less buffering, lower latency)\n- TCP Initial RTO → 1000 ms (faster connection setup and retransmits)\n- Nagle's algorithm disabled (TcpAckFrequency=1, TCPNoDelay=1, TcpDelAckTicks=0)\n- TCP Autotuning → Normal, RSS + ECN enabled, timestamps disabled\n\nRevert restores every value to its Windows default. Nothing here can break your connection — it only changes how packets are handled."
+}

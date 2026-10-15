@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback, memo } from "react"
-import { LoaderCircle } from "lucide-react"
 import { toast } from "react-toastify"
 import { invoke } from "@/lib/electron"
 import Card from "@/components/ui/Card"
@@ -111,8 +110,7 @@ const GameCard = memo(function GameCard({
           {game.description}
         </div>
         {isInstalled && (
-          <div className="absolute bottom-4 right-4 flex items-center gap-2.5 rounded-xl border border-white/15 bg-black/60 px-3 py-1.5">
-            {isBusy && <LoaderCircle size={14} className="animate-spin text-white/80" />}
+          <div className="absolute bottom-4 right-4">
             <Toggle
               checked={isApplied}
               disabled={isBusy}
@@ -188,6 +186,11 @@ export default function Games(): React.ReactElement {
         return
       }
       setBusy((prev) => ({ ...prev, [game.id]: true }))
+      // Optimistic: flip immediately like the Tweaks page does.
+      persistApplied(game.id, apply)
+      const toastId = toast.loading(
+        apply ? `Applying ${game.title}…` : `Reverting ${game.title}…`,
+      )
       try {
         const result = await Promise.race([
           invoke({
@@ -207,18 +210,42 @@ export default function Games(): React.ReactElement {
         }
 
         if (apply && game.notRunningMarker && result.output?.includes(game.notRunningMarker)) {
-          toast.info(game.notRunningText || "Launch the game and click the button again.")
+          // The persistent tweaks still applied; keep the switch on and just hint.
+          toast.update(toastId, {
+            render: game.notRunningText || `${game.title} optimization enabled.`,
+            type: "info",
+            isLoading: false,
+            autoClose: 4500,
+          })
           return
         }
 
         if (apply && game.missingMarker && result.output?.includes(game.missingMarker)) {
-          toast.success(game.missingText || game.successText)
+          toast.update(toastId, {
+            render: game.missingText || game.successText,
+            type: "success",
+            isLoading: false,
+            autoClose: 4000,
+          })
         } else {
-          toast.success(apply ? game.successText : `${game.title} optimization reverted.`)
+          toast.update(toastId, {
+            render: apply
+              ? game.successText
+              : `${game.title} optimization reverted.`,
+            type: "success",
+            isLoading: false,
+            autoClose: 4000,
+          })
         }
-        persistApplied(game.id, apply)
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : String(error))
+        // Real failure: put the switch back where it was.
+        persistApplied(game.id, !apply)
+        toast.update(toastId, {
+          render: error instanceof Error ? error.message : String(error),
+          type: "error",
+          isLoading: false,
+          autoClose: 4500,
+        })
       } finally {
         setBusy((prev) => ({ ...prev, [game.id]: false }))
       }

@@ -68,9 +68,16 @@ export function initAutoUpdater(getMainWindow: () => BrowserWindow | null): void
   ipcMain.handle("updater:check", async () => {
     try {
       const result = await checkForUpdatesWithTimeout()
-      return { ok: true, updateInfo: result?.updateInfo ?? null }
+      const info = result?.updateInfo
+      return {
+        ok: true,
+        updateAvailable: !!result?.isUpdateAvailable,
+        updateInfo: info
+          ? { version: info.version, releaseNotes: info.releaseNotes ?? undefined }
+          : null,
+      }
     } catch (error: any) {
-      return { ok: false, error: String(error) }
+      return { ok: false, error: friendlyUpdateError(error) }
     }
   })
 
@@ -95,9 +102,28 @@ export function initAutoUpdater(getMainWindow: () => BrowserWindow | null): void
   setTimeout(() => triggerAutoUpdateCheck(), 3000)
 }
 
-const UPDATE_CHECK_TIMEOUT_MS = 15000
+const UPDATE_CHECK_TIMEOUT_MS = 20000
 
-async function checkForUpdatesWithTimeout() {
+let inflightUpdateCheck: Promise<Awaited<ReturnType<typeof autoUpdater.checkForUpdates>>> | null = null
+
+function friendlyUpdateError(error: unknown): string {
+  const msg = error instanceof Error ? error.message : String(error)
+  if (/timed out|timeout/i.test(msg)) {
+    return "Update check timed out. Check your internet connection and try again."
+  }
+  if (/404|not found|latest\.yml|no published versions/i.test(msg)) {
+    return "Update feed not found on GitHub. Please try again in a moment."
+  }
+  if (/net::|ENOTFOUND|ECONNRESET|ETIMEDOUT|EAI_AGAIN|getaddrinfo|socket hang up/i.test(msg)) {
+    return "Couldn't reach GitHub. Check your internet connection."
+  }
+  if (/check ?for ?updates|in progress|already|locked/i.test(msg)) {
+    return "An update check is already running. Please wait a moment."
+  }
+  return msg
+}
+
+async function runUpdateCheck() {
   let timer: NodeJS.Timeout | undefined
   try {
     return await Promise.race([
@@ -109,6 +135,15 @@ async function checkForUpdatesWithTimeout() {
   } finally {
     if (timer) clearTimeout(timer)
   }
+}
+
+function checkForUpdatesWithTimeout() {
+  if (!inflightUpdateCheck) {
+    inflightUpdateCheck = runUpdateCheck().finally(() => {
+      inflightUpdateCheck = null
+    })
+  }
+  return inflightUpdateCheck
 }
 
 export async function triggerAutoUpdateCheck(): Promise<void> {
