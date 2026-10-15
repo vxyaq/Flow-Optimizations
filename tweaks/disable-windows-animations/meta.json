@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Animations",
+  "description": "Disables all Windows animations for snappier UI response.",
+  "category": ["Performance", "Appearance"],
+  "recommended": true,
+  "reversible": true
+}

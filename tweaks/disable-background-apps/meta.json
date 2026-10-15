@@ -1,0 +1,7 @@
+{
+  "title": "Disable Background Apps",
+  "description": "Prevents apps from running in the background to save resources.",
+  "category": ["Performance"],
+  "recommended": true,
+  "reversible": true
+}

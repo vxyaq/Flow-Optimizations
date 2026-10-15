@@ -1,0 +1,9 @@
+{
+  "id": "minecraft",
+  "title": "Minecraft (Java Edition)",
+  "background": "minecraft-background.webp",
+  "description": "Focus on reducing chunk loading stutters, maximizing render distance performance, and freeing up CPU threads for smoother gameplay.",
+  "notRunningMarker": "MINECRAFT_NOT_RUNNING",
+  "notRunningText": "Launch Minecraft (Java Edition) and click the button again.",
+  "successText": "Minecraft (Java Edition) FPS boost applied successfully."
+}

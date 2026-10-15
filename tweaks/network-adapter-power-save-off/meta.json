@@ -1,0 +1,7 @@
+{
+  "title": "Disable Network Adapter Power Saving",
+  "description": "Prevents network adapter from entering power saving mode for stable connection.",
+  "category": ["Network", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

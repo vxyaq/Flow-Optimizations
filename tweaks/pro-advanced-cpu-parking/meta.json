@@ -1,0 +1,7 @@
+{
+  "title": "Advanced CPU Core Parking",
+  "description": "Advanced CPU core parking control with per-core optimization (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

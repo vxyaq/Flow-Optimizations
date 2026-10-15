@@ -1,0 +1,9 @@
+{
+  "title": "Disable Memory Compression",
+  "description": "Disables Windows memory compression to reduce CPU overhead.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

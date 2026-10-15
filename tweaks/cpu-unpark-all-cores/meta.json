@@ -1,0 +1,9 @@
+{
+  "title": "Unpark All CPU Cores",
+  "description": "Forces all CPU cores to stay active for maximum performance.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

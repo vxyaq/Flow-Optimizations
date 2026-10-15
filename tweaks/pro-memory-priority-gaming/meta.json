@@ -1,0 +1,8 @@
+{
+  "title": "Memory Priority for Gaming",
+  "description": "Optimizes memory management specifically for gaming workloads (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

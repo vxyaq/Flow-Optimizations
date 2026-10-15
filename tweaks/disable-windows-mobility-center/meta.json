@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Mobility Center",
+  "description": "Disables Mobility Center for desktop PCs.",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

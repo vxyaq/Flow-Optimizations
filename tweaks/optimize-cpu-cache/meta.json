@@ -1,0 +1,9 @@
+{
+  "title": "Optimize CPU Cache Settings",
+  "description": "Optimizes Windows CPU cache settings for better gaming performance.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

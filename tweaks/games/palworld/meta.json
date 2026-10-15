@@ -1,0 +1,9 @@
+{
+  "id": "palworld",
+  "title": "Palworld",
+  "background": "palworld-background.webp",
+  "description": "Focus on reducing server-side simulation stutters, maximizing FPS during large Pal raids and base construction, and improving open-world streaming performance.",
+  "notRunningMarker": "PALWORLD_NOT_RUNNING",
+  "notRunningText": "Launch Palworld and click the button again.",
+  "successText": "Palworld FPS boost applied successfully."
+}

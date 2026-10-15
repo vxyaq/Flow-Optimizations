@@ -1,0 +1,7 @@
+{
+  "title": "Advanced Network Optimization",
+  "description": "Deep network stack optimization for lowest latency gaming (Pro only).",
+  "category": ["Pro", "Network"],
+  "recommended": true,
+  "reversible": true
+}

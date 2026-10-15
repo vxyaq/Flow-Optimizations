@@ -1,0 +1,9 @@
+{
+  "id": "hunt-showdown",
+  "title": "Hunt: Showdown",
+  "background": "hunt-showdown-background.webp",
+  "description": "Focus on reducing CryEngine stutters in Louisiana bayou environments, maximizing FPS during intense 3-way bounty fights.",
+  "notRunningMarker": "HUNT_NOT_RUNNING",
+  "notRunningText": "Launch Hunt: Showdown and click the button again.",
+  "successText": "Hunt: Showdown FPS boost applied successfully."
+}

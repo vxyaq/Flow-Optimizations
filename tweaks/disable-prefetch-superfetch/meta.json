@@ -1,0 +1,7 @@
+{
+  "title": "Disable Prefetch and Superfetch",
+  "description": "Disables Windows prefetch and superfetch for SSDs and gaming performance.",
+  "category": ["Performance", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

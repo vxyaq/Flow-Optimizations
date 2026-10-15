@@ -1,0 +1,7 @@
+{
+  "title": "Disable NVIDIA Telemetry",
+  "description": "Disables NVIDIA telemetry and data collection services.",
+  "category": ["GPU", "Privacy"],
+  "recommended": true,
+  "reversible": true
+}

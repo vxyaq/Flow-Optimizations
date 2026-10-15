@@ -1,0 +1,9 @@
+{
+  "title": "Disable SATA AHCI Link Power Management",
+  "description": "Disables SATA power saving for maximum storage performance.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

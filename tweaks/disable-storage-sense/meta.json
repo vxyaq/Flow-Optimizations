@@ -1,0 +1,7 @@
+{
+  "title": "Disable Storage Sense",
+  "description": "Disables automatic cleanup of temporary files.",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

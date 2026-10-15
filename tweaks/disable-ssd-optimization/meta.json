@@ -1,0 +1,9 @@
+{
+  "title": "Disable Scheduled Defrag for SSD",
+  "description": "Disables scheduled defragmentation which is unnecessary for SSDs.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

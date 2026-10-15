@@ -1,0 +1,8 @@
+{
+  "title": "Optimize System Timer Resolution",
+  "description": "Optimizes Windows timer resolution for better frame pacing in games (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

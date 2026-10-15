@@ -1,0 +1,9 @@
+{
+  "title": "Extreme RAM Tweaks",
+  "description": "Advanced memory timings and cache optimization (Pro only, expert level).",
+  "category": ["Pro", "Performance"],
+  "recommended": false,
+  "reversible": true,
+  "restart": true,
+  "warning": "Expert tweaks - may cause instability"
+}

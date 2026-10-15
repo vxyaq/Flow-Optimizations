@@ -1,0 +1,5 @@
+Stop-Service -Name "NvTelemetryContainer" -Force -ErrorAction SilentlyContinue
+Set-Service -Name "NvTelemetryContainer" -StartupType Disabled -ErrorAction SilentlyContinue
+Disable-ScheduledTask -TaskName "NvTmRep*" -ErrorAction SilentlyContinue
+Disable-ScheduledTask -TaskName "NvProfileUpdater*" -ErrorAction SilentlyContinue
+Write-Output "NVIDIA telemetry disabled"

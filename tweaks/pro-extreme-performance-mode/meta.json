@@ -1,0 +1,8 @@
+{
+  "title": "Extreme Performance Mode",
+  "description": "Activates Ultimate Performance power plan with extreme CPU boost settings (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": false,
+  "reversible": true,
+  "restart": false
+}

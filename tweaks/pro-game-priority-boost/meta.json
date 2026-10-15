@@ -1,0 +1,7 @@
+{
+  "title": "Game Process Priority Boost",
+  "description": "Automatically boosts priority of game processes (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

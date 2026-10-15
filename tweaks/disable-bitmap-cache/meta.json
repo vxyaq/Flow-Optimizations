@@ -1,0 +1,7 @@
+{
+  "title": "Disable RDP Bitmap Cache",
+  "description": "Disables RDP bitmap caching (not needed if you don't use Remote Desktop).",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

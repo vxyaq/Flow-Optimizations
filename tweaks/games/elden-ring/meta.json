@@ -1,0 +1,9 @@
+{
+  "id": "elden-ring",
+  "title": "Elden Ring",
+  "background": "elden-ring-background.webp",
+  "description": "Focus on reducing the infamous stutters in The Lands Between, maximizing FPS in boss arenas and open-world traversal, improving shader compilation performance.",
+  "notRunningMarker": "ELDENRING_NOT_RUNNING",
+  "notRunningText": "Launch Elden Ring and click the button again.",
+  "successText": "Elden Ring FPS boost applied successfully."
+}

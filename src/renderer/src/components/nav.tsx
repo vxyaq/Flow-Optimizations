@@ -2,7 +2,8 @@ import { invoke } from "@/lib/electron"
 import { broom } from "@lucide/lab"
 import { clsx } from "clsx"
 import {
-  CircleUserRound,
+  ChevronDown,
+  CircleHelp,
   DatabaseBackup,
   Gamepad2,
   Icon,
@@ -11,21 +12,20 @@ import {
   SlidersHorizontal,
   Wrench,
 } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import useRestartStore from "../store/restartState"
 import Button from "./ui/button"
 import Modal from "./ui/modal"
 
-import Tooltip from "./ui/tooltip"
-
 const tabIcons = {
   home: <LayoutDashboard size={20} />,
+  backup: <DatabaseBackup size={20} />,
   tweaks: <Wrench size={20} />,
   clean: <Icon iconNode={broom} size={20} />,
   games: <Gamepad2 size={20} />,
-  backup: <DatabaseBackup size={20} />,
-  account: <CircleUserRound size={20} />,
+  vpn: <Icon iconNode={broom} size={20} />,
+  help: <CircleHelp size={20} />,
   settings: <SlidersHorizontal size={20} />,
 }
 
@@ -35,31 +35,41 @@ const tabs = {
   tweaks: { label: "Tweaks", path: "/tweaks" },
   clean: { label: "Cleanup", path: "/clean" },
   games: { label: "Games", path: "/games" },
+  vpn: { label: "VPN", path: "/vpn" },
+  help: { label: "Get Help", path: "/help" },
   account: { label: "Account", path: "/account" },
   settings: { label: "Settings", path: "/settings" },
 }
 
-function Nav({ collapsed }) {
+function Nav() {
   const location = useLocation()
   const navigate = useNavigate()
   const { needsRestart } = useRestartStore()
   const [isPro, setIsPro] = useState(false)
+  const [accountName, setAccountName] = useState<string | null>(null)
+  const [accountPlan, setAccountPlan] = useState<string>("free")
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [moreOpen, setMoreOpen] = useState(true)
+  const [showRestartModal, setShowRestartModal] = useState(false)
 
   useEffect(() => {
     const loadPlan = () => {
       invoke({ channel: "auth:get-session" })
-        .then((account) => setIsPro(account?.plan === "pro"))
-        .catch(() => setIsPro(false))
+        .then((account) => {
+          setIsPro(account?.plan === "pro")
+          setAccountName(account?.displayName ?? null)
+          setAccountPlan(account?.plan ?? "free")
+          setAvatarUrl(account?.avatarUrl ?? null)
+        })
+        .catch(() => {
+          setIsPro(false)
+          setAccountName(null)
+        })
     }
     loadPlan()
     window.addEventListener("auth:changed", loadPlan)
     return () => window.removeEventListener("auth:changed", loadPlan)
   }, [])
-
-  const tabRefs = useRef<Record<string, HTMLElement | null>>({})
-  const containerRef = useRef<HTMLDivElement | null>(null)
-
-  const [showRestartModal, setShowRestartModal] = useState(false)
 
   const getActiveTab = () => {
     const path = location.pathname
@@ -70,105 +80,118 @@ function Nav({ collapsed }) {
 
   const activeTab = getActiveTab()
 
-  useEffect(() => {
-
-  }, [collapsed])
+  const itemClass = (active: boolean) =>
+    clsx(
+      "flex w-full items-center gap-3.5 rounded-xl px-3.5 py-2.5 text-[15px] font-medium transition-colors",
+      active
+        ? "bg-k3d-accent text-k3d-text"
+        : "text-k3d-text-secondary hover:bg-k3d-accent/50 hover:text-k3d-text",
+    )
 
   return (
-    <nav
-      className={`h-screen text-k3d-text fixed left-0 top-0 flex flex-col py-6 z-40  transition-all duration-300 ease-in-out ${collapsed ? "w-16" : "w-52"}`}
-    >
-      <div className="flex-1 flex flex-col gap-2 px-3 mt-10 relative" ref={containerRef}>
-
-        {Object.entries(tabs)
-          .filter(([id]) => id !== "settings" && id !== "account" && (isPro || id !== "games"))
-          .map(([id, { label, path }]) => {
-            return (
-              <Tooltip  content={!collapsed ? "" : label} side="right" delay={0} key={id}>
-              <Button
-                variant=""
-                key={id}
-                ref={(el) => (tabRefs.current[id] = el)}
-                onClick={() => {
-                  navigate(path)
-                }}
-                className={clsx(
-                  `flex items-center gap-3 py-2.5 rounded-lg transition-all duration-200 border relative ${collapsed ? "px-2 justify-center" : "px-3"}`,
-                  activeTab === id
-                    ? "border-transparent text-k3d-primary bg-k3d-primary/10"
-                    : "text-k3d-text-secondary hover:bg-k3d-border-secondary hover:text-k3d-text border-transparent",
-                )}
-              >
-                <div>{tabIcons[id]}</div>
-                {!collapsed && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{label}</span>
-                  </div>
-                )}
-              </Button>
-              </Tooltip>
-            )
-          })}
+    <nav className="text-k3d-text fixed left-2 top-2 bottom-2 z-40 flex w-56 flex-col rounded-2xl border border-k3d-border bg-k3d-card/70 px-3 py-4 no-scrollbar overflow-y-auto">
+      {/* Primary items */}
+      <div className="flex flex-col gap-1">
+        <button type="button" onClick={() => navigate(tabs.home.path)} className={itemClass(activeTab === "home")}>
+          <span className="flex items-center justify-center">{tabIcons.home}</span>
+          {tabs.home.label}
+        </button>
+        <button type="button" onClick={() => navigate(tabs.backup.path)} className={itemClass(activeTab === "backup")}>
+          <span className="flex items-center justify-center">{tabIcons.backup}</span>
+          {tabs.backup.label}
+        </button>
+        <button type="button" onClick={() => navigate(tabs.tweaks.path)} className={itemClass(activeTab === "tweaks")}>
+          <span className="flex items-center justify-center">{tabIcons.tweaks}</span>
+          {tabs.tweaks.label}
+        </button>
+        <button type="button" onClick={() => navigate(tabs.clean.path)} className={itemClass(activeTab === "clean")}>
+          <span className="flex items-center justify-center">{tabIcons.clean}</span>
+          {tabs.clean.label}
+        </button>
       </div>
+
+      {/* More section — Pro only: Games, VPN, Get Help */}
+      {isPro && (
+        <div className="mt-5">
+          <button
+            type="button"
+            onClick={() => setMoreOpen((o) => !o)}
+            className="flex w-full items-center justify-between rounded-xl px-3.5 py-2 text-[15px] font-medium text-k3d-text-secondary transition-colors hover:text-k3d-text"
+          >
+            More
+            <ChevronDown size={16} className={clsx("transition-transform duration-300", moreOpen && "rotate-180")} />
+          </button>
+          {moreOpen && (
+            <div className="mt-1 flex flex-col gap-1">
+              <button type="button" onClick={() => navigate(tabs.games.path)} className={itemClass(activeTab === "games")}>
+                <span className="flex items-center justify-center">{tabIcons.games}</span>
+                {tabs.games.label}
+              </button>
+              <button type="button" onClick={() => navigate(tabs.vpn.path)} className={itemClass(activeTab === "vpn")}>
+                <span className="flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 20h.01" />
+                    <path d="M2 8.82a15 15 0 0 1 20 0" />
+                    <path d="M5 12.859a10 10 0 0 1 14 0" />
+                    <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+                  </svg>
+                </span>
+                {tabs.vpn.label}
+              </button>
+              <button type="button" onClick={() => navigate(tabs.help.path)} className={itemClass(activeTab === "help")}>
+                <span className="flex items-center justify-center">{tabIcons.help}</span>
+                {tabs.help.label}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
       {needsRestart && (
         <button
-          className={clsx(
-            "flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 border m-3",
-            "bg-k3d-card text-k3d-text border-k3d-border-secondary hover:bg-k3d-border-secondary hover:text-k3d-text",
-          )}
+          className="mb-3 flex items-center justify-center gap-2 rounded-xl border border-k3d-border-secondary bg-k3d-accent px-3 py-2 text-sm text-red-500 transition-colors hover:bg-k3d-border-secondary"
           onClick={() => setShowRestartModal(true)}
+          title="Restart Windows to apply some changes"
         >
-          <span
-            className={`flex text-center items-center gap-2 text-red-500 ${collapsed ? "justify-center" : ""}`}
-            title="Restart Windows to apply some changes"
-          >
-            <RotateCw size={16} /> {!collapsed && "Restart Required"}
-          </span>
+          <RotateCw size={16} /> Restart Required
         </button>
       )}
-      {}
-      <div className="px-3 pt-3 mt-1 flex flex-col gap-2">
-        <Tooltip content={!collapsed ? "" : tabs.account.label} side="right" delay={0}>
-          <Button
-            variant=""
-            ref={(el) => (tabRefs.current["account"] = el)}
-            onClick={() => navigate(tabs.account.path)}
-            className={clsx(
-              `flex items-center gap-3 py-2.5 rounded-lg transition-all duration-200 border relative ${collapsed ? "px-2 justify-center" : "px-3"}`,
-              activeTab === "account"
-                ? "border-transparent text-k3d-primary bg-k3d-primary/10"
-                : "text-k3d-text-secondary hover:bg-k3d-border-secondary hover:text-k3d-text border-transparent",
-            )}
-          >
-            <div>{tabIcons.account}</div>
-            {!collapsed && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">{tabs.account.label}</span>
-              </div>
-            )}
-          </Button>
-        </Tooltip>
-        <Tooltip content={!collapsed ? "" : tabs.settings.label} side="right" delay={0}>
-          <Button
-            variant=""
-            ref={(el) => (tabRefs.current["settings"] = el)}
-            onClick={() => navigate(tabs.settings.path)}
-            className={clsx(
-              `flex items-center gap-3 py-2.5 rounded-lg transition-all duration-200 border relative ${collapsed ? "px-2 justify-center" : "px-3"}`,
-              activeTab === "settings"
-                ? "border-transparent text-k3d-primary bg-k3d-primary/10"
-                : "text-k3d-text-secondary hover:bg-k3d-border-secondary hover:text-k3d-text border-transparent",
-            )}
-          >
-            <div>{tabIcons.settings}</div>
-            {!collapsed && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">{tabs.settings.label}</span>
-              </div>
-            )}
-          </Button>
-        </Tooltip>
-      </div>
+
+      {/* Account */}
+      <button
+        type="button"
+        onClick={() => navigate(tabs.account.path)}
+        className="mb-1 flex w-full items-center gap-3 rounded-xl bg-k3d-accent/40 p-2.5 text-left transition-colors hover:bg-k3d-accent"
+      >
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt=""
+            className="h-9 w-9 shrink-0 rounded-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-k3d-primary/15 text-sm font-bold text-k3d-primary">
+            {(accountName ?? "K").slice(0, 1).toUpperCase()}
+          </div>
+        )}
+        <div className="min-w-0 flex-1 leading-tight">
+          <div className="truncate text-sm font-semibold">{accountName ?? "Account"}</div>
+          <div className="text-xs capitalize text-k3d-text-secondary">
+            {accountPlan === "pro" ? "Pro" : "Free"}
+          </div>
+        </div>
+      </button>
+
+      {/* Settings — bottom */}
+      <button type="button" onClick={() => navigate(tabs.settings.path)} className={itemClass(activeTab === "settings")}>
+        <span className="flex items-center justify-center">{tabIcons.settings}</span>
+        {tabs.settings.label}
+      </button>
+
       <Modal open={showRestartModal} onOpenChange={setShowRestartModal}>
         <div className="bg-k3d-card p-4 rounded-2xl border border-k3d-border text-k3d-text w-[90vw] max-w-md">
           <h2 className="text-lg font-semibold">Confirm Restart</h2>
@@ -189,7 +212,6 @@ function Nav({ collapsed }) {
           </div>
         </div>
       </Modal>
-
     </nav>
   )
 }

@@ -1,6 +1,6 @@
 import { invoke } from "./electron"
 
-export type BackgroundStyle = "image" | "image2" | "gray"
+export type BackgroundStyle = "image" | "image2" | "image3" | "gray"
 
 declare global {
   interface Window {
@@ -20,7 +20,7 @@ export const getBackgroundStyle = (): BackgroundStyle => {
     localStorage.setItem(STYLE_V2_KEY, "1")
   }
   const saved = localStorage.getItem(STYLE_KEY)
-  return saved === "gray" ? "gray" : saved === "image2" ? "image2" : "image"
+  return saved === "gray" ? "gray" : saved === "image2" ? "image2" : saved === "image3" ? "image3" : "image"
 }
 
 export const setBackgroundStyle = (style: BackgroundStyle): void => {
@@ -37,10 +37,27 @@ export const applyPlainGray = (): void => {
   document.body.style.removeProperty("--k3d-bg-image")
   document.body.classList.add("bg-gray")
   document.body.classList.remove("bg-image", "bg-none")
+  resetAccent()
 }
 
-export const applyBackgroundImage = async (style: "image" | "image2" = "image"): Promise<boolean> => {
-  const index = style === "image2" ? 1 : 0
+const BLUE_ACCENT = "#2563eb"
+
+export const syncAccent = (style: BackgroundStyle): void => {
+  if (style === "image3") {
+    document.documentElement.style.setProperty("--color-k3d-primary", BLUE_ACCENT)
+    document.documentElement.style.setProperty("--color-primary", BLUE_ACCENT)
+  } else {
+    resetAccent()
+  }
+}
+
+export const resetAccent = (): void => {
+  document.documentElement.style.removeProperty("--color-k3d-primary")
+  document.documentElement.style.removeProperty("--color-primary")
+}
+
+export const applyBackgroundImage = async (style: BackgroundStyle = "image"): Promise<boolean> => {
+  const index = style === "image2" ? 1 : style === "image3" ? 2 : 0
   try {
     let image: string | null = null
     try {
@@ -66,6 +83,7 @@ export const applyBackgroundImage = async (style: "image" | "image2" = "image"):
     document.body.style.setProperty("--k3d-bg-image", `url("${image}")`)
     document.body.classList.add("bg-image")
     document.body.classList.remove("bg-gray", "bg-none")
+    syncAccent(style)
     return true
   } catch {
     applyPlainGray()
@@ -75,7 +93,7 @@ export const applyBackgroundImage = async (style: "image" | "image2" = "image"):
 
 export const loadSavedBackground = async (): Promise<void> => {
   const style = getBackgroundStyle()
-  if (style === "image" || style === "image2") {
+  if (style === "image" || style === "image2" || style === "image3") {
     await applyBackgroundImage(style)
   } else {
     applyPlainGray()

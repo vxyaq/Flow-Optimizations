@@ -13,6 +13,8 @@ const Games = lazy(() => import("./pages/Games"))
 const Settings = lazy(() => import("./pages/Settings"))
 const Account = lazy(() => import("./pages/Account"))
 const Backup = lazy(() => import("./pages/Backup"))
+const Help = lazy(() => import("./pages/Help"))
+const Vpn = lazy(() => import("./pages/Vpn"))
 import UpdateManager from "./components/updatemanager"
 import useOnlineStore from "./store/online"
 
@@ -26,9 +28,6 @@ import { invoke } from "./lib/electron"
 import AuthScreen, { type AccountProfile } from "./components/authScreen"
 
 function App() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(
-    localStorage.getItem("sidebarCollapsed") === "true",
-  )
   const [adminStatus, setAdminStatus] = useState<boolean | null>(null)
   const [platformName, setPlatformName] = useState<string | null>(null)
   const [account, setAccount] = useState<AccountProfile | null>(null)
@@ -153,11 +152,6 @@ function App() {
     }
   }, [signedIn])
 
-  const toggleSidebar = () => {
-    const newCollapsed = !sidebarCollapsed
-    setSidebarCollapsed(newCollapsed)
-    localStorage.setItem("sidebarCollapsed", newCollapsed.toString())
-  }
   useEffect(() => {
     const handleOnline = () => setOnline(true)
     const handleOffline = () => setOnline(false)
@@ -195,19 +189,16 @@ function App() {
         <AuthScreen onAuthenticated={setAccount} />
       ) : (
         <>
-          <TitleBar
-            onToggleSidebar={toggleSidebar}
-            sidebarCollapsed={sidebarCollapsed}
-          />
+          <TitleBar />
           <NoAdmin
             open={adminStatus === false && platformName === "win32"}
             onClose={() => setAdminStatus(true)}
             platform={platformName}
           />
-          <Nav collapsed={sidebarCollapsed} />
+          <Nav />
           <div className="relative flex min-h-0 flex-1 pt-[50px]">
             <main
-              className={`min-h-0 flex-1 rounded-tl-2xl border-l border-t border-k3d-border p-6 ${sidebarCollapsed ? "ml-16" : "ml-52"}`}
+              className="min-h-0 flex-1 p-6 ml-60"
             >
               <Suspense
                 fallback={
@@ -227,6 +218,18 @@ function App() {
                     }
                   />
                   <Route path="/backup" element={<Backup />} />
+                  <Route
+                    path="/help"
+                    element={
+                      account?.plan === "pro" ? <Help /> : <Navigate to="/" replace />
+                    }
+                  />
+                  <Route
+                    path="/vpn"
+                    element={
+                      account?.plan === "pro" ? <Vpn /> : <Navigate to="/" replace />
+                    }
+                  />
                   <Route path="/account" element={<Account />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<Navigate to="/" replace />} />

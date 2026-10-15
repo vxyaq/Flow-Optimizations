@@ -1,0 +1,7 @@
+{
+  "title": "Disable Notifications",
+  "description": "Disables Windows notifications and action center popups.",
+  "category": ["Gaming", "General"],
+  "recommended": true,
+  "reversible": true
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Audio Exclusive Mode Optimization",
+  "description": "Configures audio for exclusive mode with minimum latency (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

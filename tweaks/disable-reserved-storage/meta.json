@@ -1,0 +1,7 @@
+{
+  "title": "Disable Reserved Storage",
+  "description": "Prevents Windows from reserving 7GB of disk space for updates.",
+  "category": ["Performance"],
+  "recommended": true,
+  "reversible": true
+}

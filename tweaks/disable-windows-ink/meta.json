@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Ink Workspace",
+  "description": "Disables Windows Ink Workspace for systems without touch/pen input.",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

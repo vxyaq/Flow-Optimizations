@@ -1,0 +1,11 @@
+{
+  "id": "rocket-league",
+  "title": "Rocket League",
+  "background": "rocket-league-background.webp",
+  "description": "Focus on achieving 250+ FPS for maximum input responsiveness, eliminating frame drops during boost-heavy aerial plays, and reducing tick-rate jitter.",
+  "notRunningMarker": "RL_NOT_RUNNING",
+  "notRunningText": "Launch Rocket League and click the button again.",
+  "missingMarker": "RL_CONFIG_MISSING",
+  "missingText": "Rocket League config file not found. Launch the game at least once to generate the config file.",
+  "successText": "Rocket League FPS boost applied successfully."
+}

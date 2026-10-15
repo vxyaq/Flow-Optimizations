@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "SilentlyContinue"
 
 $memKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
 
@@ -12,9 +12,16 @@ if ($ramGb -lt 1) {
 }
 $ramGb = [Math]::Min([Math]::Max($ramGb, 1), 1024)
 
-$pfInitial = [Math]::Min([Math]::Max($ramGb * 128, 1024), 8192)
-$pfMaximum = [Math]::Min([Math]::Max($ramGb * 3072, 4096), 16384)
-if ($pfMaximum -lt ($pfInitial * 2)) { $pfMaximum = $pfInitial * 2 }
+if ($ramGb -le 8) {
+    $pfInitial = $ramGb * 1024
+    $pfMaximum = $ramGb * 2048
+} elseif ($ramGb -le 16) {
+    $pfInitial = $ramGb * 512
+    $pfMaximum = $ramGb * 1536
+} else {
+    $pfInitial = 4096
+    $pfMaximum = 8192
+}
 
 if (Get-Variable -Name K3D_PF_INITIAL -Scope Script -ErrorAction SilentlyContinue) {
     $p = 0
@@ -24,21 +31,22 @@ if (Get-Variable -Name K3D_PF_MAXIMUM -Scope Script -ErrorAction SilentlyContinu
     $p = 0
     if ([int]::TryParse([string]$K3D_PF_MAXIMUM, [ref]$p) -and $p -ge 64) { $pfMaximum = $p }
 }
-if ($pfMaximum -lt $pfInitial) { $pfMaximum = $pfInitial }
+if ($pfMaximum -lt $pfInitial) { $pfMaximum = $pfInitial * 2 }
 
-$keepKernel = 0
+$keepKernel = if ($ramGb -ge 16) { 1 } else { 0 }
 if (Get-Variable -Name K3D_KEEP_KERNEL -Scope Script -ErrorAction SilentlyContinue) {
     if ([string]$K3D_KEEP_KERNEL -eq "1") { $keepKernel = 1 }
+    elseif ([string]$K3D_KEEP_KERNEL -eq "0") { $keepKernel = 0 }
 }
-$disableSysMain = 0
+
+$disableSysMain = 1
 if (Get-Variable -Name K3D_DISABLE_SYSMAIN -Scope Script -ErrorAction SilentlyContinue) {
-    if ([string]$K3D_DISABLE_SYSMAIN -eq "1") { $disableSysMain = 1 }
+    if ([string]$K3D_DISABLE_SYSMAIN -eq "0") { $disableSysMain = 0 }
 }
 
 $computerSystem = Get-CimInstance -ClassName Win32_ComputerSystem
 if ($computerSystem.AutomaticManagedPagefile) {
     $computerSystem | Set-CimInstance -Property @{ AutomaticManagedPagefile = $false }
-    Write-Host "Disabled automatic pagefile management."
 }
 
 $entry = "{0} {1} {2}" -f "$env:SystemDrive\pagefile.sys", $pfInitial, $pfMaximum
@@ -47,24 +55,25 @@ if (Get-ItemProperty -Path $memKey -Name "PagingFiles" -ErrorAction SilentlyCont
 } else {
     New-ItemProperty -Path $memKey -Name "PagingFiles" -PropertyType MultiString -Value @($entry) -Force | Out-Null
 }
-Write-Host ("RAM profile: {0} GB -> pagefile {1} MB / {2} MB" -f $ramGb, $pfInitial, $pfMaximum)
+
+Set-ItemProperty -Path $memKey -Name "LargeSystemCache" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path $memKey -Name "SystemPages" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path $memKey -Name "SecondLevelDataCache" -Value 0 -Type DWord -Force
+Set-ItemProperty -Path $memKey -Name "IoPageLockLimit" -Value ([int]($ramGb * 1024 * 1024 * 1024 * 0.5)) -Type DWord -Force
 
 if ($keepKernel -eq 1) {
     Set-ItemProperty -Path $memKey -Name "DisablePagingExecutive" -Value 1 -Type DWord -Force
-    Write-Host "DisablePagingExecutive = 1 (kernel stays in RAM)."
 } else {
     Set-ItemProperty -Path $memKey -Name "DisablePagingExecutive" -Value 0 -Type DWord -Force
-    Write-Host "DisablePagingExecutive = 0."
 }
 
 if ($disableSysMain -eq 1) {
-    Stop-Service -Name "SysMain" -Force -ErrorAction SilentlyContinue
+    Stop-Service -Name "SysMain" -Force
     Set-Service -Name "SysMain" -StartupType Disabled
-    Write-Host "SysMain disabled."
 } else {
-    Set-Service -Name "SysMain" -StartupType Automatic -ErrorAction SilentlyContinue
-    Start-Service -Name "SysMain" -ErrorAction SilentlyContinue
-    Write-Host "SysMain left enabled."
+    Set-Service -Name "SysMain" -StartupType Automatic
+    Start-Service -Name "SysMain"
 }
 
-Write-Host "Restart Windows to activate the new memory settings."
+Write-Output "RAM optimized: ${ramGb}GB -> Pagefile ${pfInitial}MB-${pfMaximum}MB | Kernel in RAM: $($keepKernel -eq 1) | SysMain: $($disableSysMain -eq 0)"
+Write-Output "Restart required for changes to take effect"

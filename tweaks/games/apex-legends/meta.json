@@ -1,0 +1,11 @@
+{
+  "id": "apex-legends",
+  "title": "Apex Legends",
+  "background": "apex-legends-background.webp",
+  "description": "Apex Legends performance optimization focused on maximum FPS and lowest input lag. Sets high process priority, optimizes GPU settings, disables unnecessary overlays, and fine-tunes game config for competitive battle royale advantage.",
+  "notRunningMarker": "APEX_NOT_RUNNING",
+  "notRunningText": "Launch Apex Legends and click the button again.",
+  "missingMarker": "APEX_CONFIG_MISSING",
+  "missingText": "Apex optimization applied. Video config skipped.",
+  "successText": "Apex Legends mega FPS boost applied successfully."
+}

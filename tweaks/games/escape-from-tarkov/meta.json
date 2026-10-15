@@ -1,0 +1,9 @@
+{
+  "id": "escape-from-tarkov",
+  "title": "Escape from Tarkov",
+  "background": "escape-from-tarkov-background.webp",
+  "description": "Focus on maximizing FPS in demanding raid maps, reducing Unity engine stutters, improving RAM and CPU utilization for faster loot-room rendering.",
+  "notRunningMarker": "EFT_NOT_RUNNING",
+  "notRunningText": "Launch Escape from Tarkov and click the button again.",
+  "successText": "Escape from Tarkov FPS boost applied successfully."
+}

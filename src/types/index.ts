@@ -12,6 +12,7 @@ export interface SystemInfo {
   cpu_model?: string
   cpu_cores?: number
   cpu_threads?: number
+  cpu_load?: number | null
   gpu_model?: string
   vram?: string
   hasGPU?: boolean
@@ -19,11 +20,14 @@ export interface SystemInfo {
   integrated_gpu?: string
   hasIntegratedGPU?: boolean
   memory_total?: number
+  memory_used?: number | null
   memory_type?: string
   os?: string
   os_version?: string
   disk_model?: string
   disk_size?: string
+  disk_used?: number | null
+  disk_total?: number | null
 }
 
 export interface Tweak {

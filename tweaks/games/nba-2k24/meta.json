@@ -1,0 +1,9 @@
+{
+  "id": "nba-2k24",
+  "title": "NBA 2K24",
+  "background": "nba-2k24-background.webp",
+  "description": "Focus on maximizing FPS for fluid player animations, reducing input delay for precise dribbling and shooting mechanics.",
+  "notRunningMarker": "NBA2K24_NOT_RUNNING",
+  "notRunningText": "Launch NBA 2K24 and click the button again.",
+  "successText": "NBA 2K24 FPS boost applied successfully."
+}

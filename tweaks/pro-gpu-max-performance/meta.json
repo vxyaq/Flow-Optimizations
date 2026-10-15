@@ -1,0 +1,8 @@
+{
+  "title": "GPU Maximum Performance Mode",
+  "description": "Forces GPU to run at maximum performance with no throttling (Pro only).",
+  "category": ["Pro", "GPU"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

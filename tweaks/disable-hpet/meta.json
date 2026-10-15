@@ -1,0 +1,8 @@
+{
+  "title": "Disable HPET (High Precision Event Timer)",
+  "description": "Disables HPET which can cause frame pacing issues in games. Test before/after for your system.",
+  "category": ["Gaming", "Performance"],
+  "recommended": false,
+  "reversible": true,
+  "restart": true
+}

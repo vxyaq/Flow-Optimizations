@@ -77,11 +77,23 @@ function Settings() {
   )
 
   const backgroundLabel = (style: BackgroundStyle): string =>
-    style === "image2" ? "Second image" : style === "gray" ? "Plain gray" : "Blurred image"
+    style === "image2"
+      ? "Second image"
+      : style === "image3"
+        ? "Blue Flow"
+        : style === "gray"
+          ? "Plain gray"
+          : "Blurred image"
 
   const handleBackgroundChange = (value: string) => {
     const style: BackgroundStyle =
-      value === "Second image" ? "image2" : value === "Plain gray" ? "gray" : "image"
+      value === "Second image"
+        ? "image2"
+        : value === "Blue Flow"
+          ? "image3"
+          : value === "Plain gray"
+            ? "gray"
+            : "image"
     setBackgroundStyleState(style)
     persistBackgroundStyle(style)
     if (style === "gray") {
@@ -174,7 +186,7 @@ function Settings() {
                     </div>
                     <Dropdown
                       value={backgroundLabel(backgroundStyle)}
-                      options={["Blurred image", "Second image", "Plain gray"]}
+                      options={["Blurred image", "Second image", "Blue Flow", "Plain gray"]}
                       onChange={handleBackgroundChange}
                     />
                   </div>
@@ -296,7 +308,7 @@ const SettingCard = ({ children, className = "" }) => (
 
 const SettingSection = ({ title, children }) => (
   <div className="space-y-4">
-    <h2 className="text-xl font-semibold text-k3d-primary">{title}</h2>
+    <h2 className="text-xl font-semibold text-white">{title}</h2>
     {children}
   </div>
 )

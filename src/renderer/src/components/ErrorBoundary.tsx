@@ -43,7 +43,6 @@ class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div className="flex flex-col h-screen bg-k3d-bg text-k3d-text items-center justify-center p-8">
-          {/* @ts-expect-error */}
           <TitleBar />
           <div className="max-w-xl w-full rounded-2xl border border-k3d-border bg-k3d-card p-8">
             <h1 className="text-2xl font-semibold text-red-500 mb-2">Something went wrong</h1>

@@ -41,7 +41,7 @@ function normalizeServerUrl(url: string): string | null {
   return trimmed
 }
 
-function getAuthServerUrl(): string {
+export function getAuthServerUrl(): string {
   const saved = store.get("authServerUrl")
   return saved || DEFAULT_AUTH_SERVER_URL
 }

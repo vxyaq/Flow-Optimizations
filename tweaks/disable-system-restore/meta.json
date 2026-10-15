@@ -1,0 +1,7 @@
+{
+  "title": "Disable System Restore",
+  "description": "Disables System Restore to free up disk space (WARNING: removes backup safety net).",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

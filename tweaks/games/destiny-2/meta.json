@@ -1,0 +1,9 @@
+{
+  "id": "destiny-2",
+  "title": "Destiny 2",
+  "background": "destiny-2-background.webp",
+  "description": "Focus on eliminating frame drops during Guardian abilities and raid encounters, maximizing FPS in the Crucible for competitive play.",
+  "notRunningMarker": "DESTINY2_NOT_RUNNING",
+  "notRunningText": "Launch Destiny 2 and click the button again.",
+  "successText": "Destiny 2 FPS boost applied successfully."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Disable Fullscreen Optimizations",
+  "description": "Disables Windows fullscreen optimizations that can cause stuttering and input lag in games (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

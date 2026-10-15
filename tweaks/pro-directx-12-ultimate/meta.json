@@ -1,0 +1,7 @@
+{
+  "title": "DirectX 12 Ultimate Optimization",
+  "description": "Optimizes DirectX 12 settings for maximum gaming performance (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Disable PCIe Link State Power Management",
+  "description": "Prevents PCIe devices from entering low power states for maximum performance.",
+  "category": ["Performance", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

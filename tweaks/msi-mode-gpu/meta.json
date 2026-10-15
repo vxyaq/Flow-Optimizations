@@ -1,0 +1,8 @@
+{
+  "title": "Enable MSI Mode for GPU",
+  "description": "Enables Message Signaled Interrupts for GPU to reduce latency (Pro only).",
+  "category": ["Pro", "GPU"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

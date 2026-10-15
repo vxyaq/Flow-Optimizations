@@ -1,0 +1,7 @@
+{
+  "title": "Optimize DirectX Performance",
+  "description": "Applies DirectX optimizations for better gaming performance.",
+  "category": ["Gaming", "GPU"],
+  "recommended": true,
+  "reversible": true
+}

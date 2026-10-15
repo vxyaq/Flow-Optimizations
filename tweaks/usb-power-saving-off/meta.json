@@ -1,0 +1,7 @@
+{
+  "title": "Disable USB Selective Suspend",
+  "description": "Prevents USB devices from entering power saving mode (important for gaming mice/keyboards).",
+  "category": ["Gaming", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

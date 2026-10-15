@@ -1,0 +1,9 @@
+{
+  "id": "fifa-24",
+  "title": "EA Sports FC 24",
+  "background": "fifa-24-background.webp",
+  "description": "Focus on achieving consistent frame rates during matches, reducing input lag for precise player control, and eliminating stutters in stadium environments.",
+  "notRunningMarker": "FIFA24_NOT_RUNNING",
+  "notRunningText": "Launch EA Sports FC 24 and click the button again.",
+  "successText": "EA Sports FC 24 FPS boost applied successfully."
+}

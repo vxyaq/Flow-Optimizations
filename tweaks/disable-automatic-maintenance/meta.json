@@ -1,0 +1,7 @@
+{
+  "title": "Disable Automatic Maintenance",
+  "description": "Disables Windows Automatic Maintenance that can run during gaming.",
+  "category": ["Performance", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

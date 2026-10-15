@@ -1,0 +1,9 @@
+{
+  "id": "hell-let-loose",
+  "title": "Hell Let Loose",
+  "background": "hell-let-loose-background.webp",
+  "description": "Focus on maximizing FPS on large 100-player WW2 battlefields, reducing Unreal Engine streaming stutters and improving squad coordination responsiveness.",
+  "notRunningMarker": "HLL_NOT_RUNNING",
+  "notRunningText": "Launch Hell Let Loose and click the button again.",
+  "successText": "Hell Let Loose FPS boost applied successfully."
+}

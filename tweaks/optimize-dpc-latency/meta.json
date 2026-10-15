@@ -1,0 +1,7 @@
+{
+  "title": "Optimize DPC/ISR Latency",
+  "description": "Reduces Deferred Procedure Call latency for better audio and gaming performance.",
+  "category": ["Performance", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

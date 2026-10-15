@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Error Reporting",
+  "description": "Disables Windows Error Reporting service.",
+  "category": ["Performance", "Privacy"],
+  "recommended": true,
+  "reversible": true
+}

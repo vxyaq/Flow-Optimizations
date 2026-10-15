@@ -1,0 +1,8 @@
+{
+  "title": "Interrupt Affinity Optimization",
+  "description": "Optimizes hardware interrupt distribution across CPU cores (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

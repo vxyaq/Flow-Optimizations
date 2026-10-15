@@ -1,0 +1,9 @@
+{
+  "title": "Disable Processor Idle States",
+  "description": "Prevents CPU from entering idle states for consistent performance (increases temps/power).",
+  "category": [
+    "Performance"
+  ],
+  "recommended": false,
+  "reversible": true
+}

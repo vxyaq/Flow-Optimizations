@@ -1,0 +1,7 @@
+{
+  "title": "Disable Pen and Touch Features",
+  "description": "Disables pen flicks and touch features for non-touch PCs.",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

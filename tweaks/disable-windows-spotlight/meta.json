@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Spotlight",
+  "description": "Disables Windows Spotlight lock screen images.",
+  "category": ["Privacy", "Performance"],
+  "recommended": false,
+  "reversible": true
+}

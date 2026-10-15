@@ -1,0 +1,9 @@
+{
+  "title": "Disable Windows Search Indexing",
+  "description": "Completely disables Windows Search indexing service.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

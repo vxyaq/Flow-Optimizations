@@ -78,7 +78,7 @@ export default function RamModal({ open, onClose, onApply, detectedRamBytes }: R
     <Modal open={open} onClose={onClose}>
       <div className="bg-k3d-card border border-k3d-border rounded-2xl p-5 max-w-md w-full mx-4 shadow-xl">
         <div className="flex items-center gap-3 mb-1">
-          <div className="p-2 rounded-lg bg-k3d-accent text-k3d-primary">
+          <div className="p-2 rounded-full bg-k3d-accent text-k3d-primary">
             <MemoryStick className="w-5 h-5" />
           </div>
           <div className="min-w-0">

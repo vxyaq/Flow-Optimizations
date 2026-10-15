@@ -1,6 +1,6 @@
 process.env.UV_THREADPOOL_SIZE = "32"
 
-import { app, BrowserWindow, ipcMain, Tray } from "electron"
+import { app, BrowserWindow, ipcMain, Tray, shell } from "electron"
 import { join } from "path"
 import log from "electron-log"
 import { createTray } from "@main/tray"
@@ -10,6 +10,7 @@ import { setupTweaksHandlers } from "@main/tweakHandler"
 import { setupGamesHandlers } from "@main/games"
 import { setupBackupHandlers } from "@main/backup"
 import { setupCleanerHandlers } from "@main/cleaner"
+import { setupChatHandlers } from "@main/chat"
 import { initAutoUpdater } from "@main/updates"
 import { setMainWindow } from "@main/windowState"
 import Store from "electron-store"
@@ -33,6 +34,13 @@ if (store.get("showTray") === undefined) {
 
 ipcMain.handle("tray:get", () => {
   return store.get("showTray")
+})
+
+ipcMain.handle("open-external", (_event, url: unknown): { ok: boolean; error?: string } => {
+  if (typeof url !== "string" || !/^https?:\/\//.test(url))
+    return { ok: false, error: "Only http(s) links can be opened." }
+  void shell.openExternal(url)
+  return { ok: true }
 })
 ipcMain.handle("tray:set", (_event: Electron.IpcMainInvokeEvent, value: boolean) => {
   store.set("showTray", value)
@@ -67,11 +75,7 @@ if (!gotTheLock) {
 let mainWindow: BrowserWindow | null = null
 
 function createWindow(): void {
-  console.log("[K3d Tweaks]: createWindow called")
-  console.log("[K3d Tweaks]: __dirname =", __dirname)
-  console.log("[K3d Tweaks]: icon path =", getAppIcon())
-  console.log("[K3d Tweaks]: preload path =", join(__dirname, "../preload/index.js"))
-  console.log("[K3d Tweaks]: renderer path =", join(__dirname, "../renderer/index.html"))
+
 
   try {
     mainWindow = new BrowserWindow({
@@ -97,6 +101,7 @@ function createWindow(): void {
     })
     console.log("[K3d Tweaks]: BrowserWindow created")
     setMainWindow(mainWindow)
+    mainWindow.webContents.setZoomFactor(0.9)
   } catch (err: any) {
     console.error("[K3d Tweaks]: BrowserWindow creation failed:", err)
     throw err
@@ -153,6 +158,7 @@ app
     setupGamesHandlers()
     setupBackupHandlers()
     setupCleanerHandlers()
+    setupChatHandlers()
     registerBackgroundIpc()
     if (store.get("rpcEnabled") !== false) {
       startDiscordRPC()

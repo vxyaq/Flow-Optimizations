@@ -1,0 +1,7 @@
+{
+  "title": "Disable Remote Assistance",
+  "description": "Disables Windows Remote Assistance for security and performance.",
+  "category": ["Privacy", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

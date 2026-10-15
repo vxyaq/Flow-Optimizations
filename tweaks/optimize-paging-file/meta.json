@@ -1,0 +1,8 @@
+{
+  "title": "Optimize Paging File",
+  "description": "Sets optimal paging file size based on RAM for gaming systems.",
+  "category": ["Performance", "Gaming"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

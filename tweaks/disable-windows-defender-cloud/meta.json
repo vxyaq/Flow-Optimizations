@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Defender Cloud Features",
+  "description": "Disables cloud-based protection and automatic sample submission.",
+  "category": ["Privacy", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

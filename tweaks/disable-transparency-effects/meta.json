@@ -1,0 +1,7 @@
+{
+  "title": "Disable Transparency Effects",
+  "description": "Disables transparency effects in Windows UI for better performance.",
+  "category": ["Performance", "Appearance"],
+  "recommended": true,
+  "reversible": true
+}

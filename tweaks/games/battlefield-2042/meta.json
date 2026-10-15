@@ -1,0 +1,9 @@
+{
+  "id": "battlefield-2042",
+  "title": "Battlefield 2042",
+  "background": "battlefield-2042-background.webp",
+  "description": "Focus on reducing CPU bottleneck from 128-player servers, maximizing FPS during large-scale vehicle-infantry battles, and smoothing streaming stutters.",
+  "notRunningMarker": "BF2042_NOT_RUNNING",
+  "notRunningText": "Launch Battlefield 2042 and click the button again.",
+  "successText": "Battlefield 2042 FPS boost applied successfully."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "SSD TRIM Optimization",
+  "description": "Optimizes TRIM and filesystem settings for maximum SSD performance (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

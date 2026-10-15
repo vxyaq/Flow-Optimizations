@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Update Delivery Optimization",
+  "description": "Stops Windows from uploading updates to other PCs on the internet.",
+  "category": ["Network", "Privacy"],
+  "recommended": true,
+  "reversible": true
+}

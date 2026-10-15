@@ -1,0 +1,8 @@
+{
+  "title": "Kernel DPC Optimization",
+  "description": "Deep kernel-level DPC and timer optimization for minimal latency (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

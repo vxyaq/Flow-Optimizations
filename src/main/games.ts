@@ -9,7 +9,8 @@ console.error = log.error
 console.warn = log.warn
 
 const isDev = !app.isPackaged
-const gamesDir = isDev ? path.join(process.cwd(), "games") : path.join(app.getAppPath(), "games")
+// Games are now in tweaks/games folder
+const gamesDir = isDev ? path.join(process.cwd(), "tweaks", "games") : path.join(app.getAppPath(), "tweaks", "games")
 
 interface GameEntry {
   id: string
@@ -39,6 +40,12 @@ async function loadGames(): Promise<GameEntry[]> {
     try {
       meta = JSON.parse(await fs.readFile(metaPath, "utf8"))
     } catch {
+      continue
+    }
+    
+    // Only load entries that have game-specific fields (id, background, etc.)
+    // This filters out regular tweaks and only loads game optimizations
+    if (!meta.id || !meta.background) {
       continue
     }
     let psapply = ""

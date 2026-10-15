@@ -1,0 +1,11 @@
+{
+  "id": "valorant",
+  "title": "Valorant",
+  "background": "valorant-background.webp",
+  "description": "Maximum FPS optimization for Valorant. Sets process priority to high, forces GPU high performance mode, disables GameDVR, optimizes CPU affinity, and reduces input delay for competitive advantage with ultra-low latency and smoother gameplay.",
+  "notRunningMarker": "VALORANT_NOT_RUNNING",
+  "notRunningText": "Launch Valorant and click the button again.",
+  "missingMarker": "VALORANT_CONFIG_MISSING",
+  "missingText": "Valorant optimization applied. Config adjustments skipped.",
+  "successText": "Valorant mega FPS boost applied successfully."
+}

@@ -1,7 +1,0 @@
-{
-  "title": "Disable Lockscreen Tips",
-  "name": "disable-lockscreen-tips",
-  "risk": "safe",
-  "description": "Disables tips on the lockscreen.",
-  "category": ["General"]
-}

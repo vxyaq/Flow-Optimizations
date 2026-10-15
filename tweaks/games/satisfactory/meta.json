@@ -1,0 +1,9 @@
+{
+  "id": "satisfactory",
+  "title": "Satisfactory",
+  "background": "satisfactory-background.webp",
+  "description": "Focus on reducing CPU bottleneck from factory automation logic, maximizing FPS in large factory builds, and smoothing conveyor-heavy area rendering.",
+  "notRunningMarker": "SATISFACTORY_NOT_RUNNING",
+  "notRunningText": "Launch Satisfactory and click the button again.",
+  "successText": "Satisfactory FPS boost applied successfully."
+}

@@ -1,0 +1,9 @@
+{
+  "id": "rust",
+  "title": "Rust",
+  "background": "rust-background.webp",
+  "description": "Focus on reducing the notorious Rust stutters during monument exploration and base raids, maximizing FPS in high-player-count servers.",
+  "notRunningMarker": "RUST_NOT_RUNNING",
+  "notRunningText": "Launch Rust and click the button again.",
+  "successText": "Rust FPS boost applied successfully."
+}

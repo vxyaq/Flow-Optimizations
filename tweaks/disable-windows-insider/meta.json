@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Insider Program",
+  "description": "Disables Windows Insider telemetry and preview builds.",
+  "category": ["Privacy"],
+  "recommended": true,
+  "reversible": true
+}

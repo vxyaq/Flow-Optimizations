@@ -1,0 +1,9 @@
+{
+  "id": "dota-2",
+  "title": "Dota 2",
+  "background": "dota-2-background.webp",
+  "description": "Focus on maintaining stable FPS during teamfights with heavy particle effects, reducing CPU load from complex ability interactions.",
+  "notRunningMarker": "DOTA2_NOT_RUNNING",
+  "notRunningText": "Launch Dota 2 and click the button again.",
+  "successText": "Dota 2 FPS boost applied successfully."
+}

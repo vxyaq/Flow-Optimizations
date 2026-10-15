@@ -1,0 +1,7 @@
+{
+  "title": "Disable Sticky Keys Popup",
+  "description": "Disables annoying Sticky Keys popup when pressing Shift 5 times in games.",
+  "category": ["Gaming", "General"],
+  "recommended": true,
+  "reversible": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "warframe",
+  "title": "Warframe",
+  "background": "warframe-background.webp",
+  "description": "Focus on maximizing FPS during fast-paced Tenno combat missions, reducing CPU overhead from particle-heavy abilities and large tile sets.",
+  "notRunningMarker": "WARFRAME_NOT_RUNNING",
+  "notRunningText": "Launch Warframe and click the button again.",
+  "successText": "Warframe FPS boost applied successfully."
+}

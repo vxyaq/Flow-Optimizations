@@ -1,0 +1,7 @@
+{
+  "title": "Optimize GPU Timeout Detection",
+  "description": "Increases GPU timeout to prevent driver crashes during heavy loads.",
+  "category": ["GPU", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

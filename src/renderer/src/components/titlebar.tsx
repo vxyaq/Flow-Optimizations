@@ -1,17 +1,9 @@
-import { Menu, Minimize, Maximize, X, Search } from "lucide-react"
+import { Minimize, Maximize, X, Search } from "lucide-react"
 import { useLocation, useNavigate } from "react-router-dom"
 import useSearchStore from "@/store/search"
 import { close, minimize, toggleMaximize } from "../lib/electron"
 
-interface TitleBarProps {
-  onToggleSidebar: () => void
-  sidebarCollapsed: boolean
-}
-
-function TitleBar({
-  onToggleSidebar,
-  sidebarCollapsed: _sidebarCollapsed,
-}: TitleBarProps): React.ReactElement {
+function TitleBar(): React.ReactElement {
   const navigate = useNavigate()
   const location = useLocation()
   const searchQuery = useSearchStore((state) => state.query)
@@ -21,25 +13,19 @@ function TitleBar({
     setSearchQuery(value)
     if (location.pathname !== "/tweaks") navigate("/tweaks")
   }
+
   return (
     <div
       style={{ WebkitAppRegion: "drag" } as any}
-      className="h-[50px] fixed top-0 left-0 right-0 flex justify-between items-center pl-3 pr-2 bg-transparent border-b border-k3d-border z-50"
+      className="h-[50px] fixed top-0 left-60 right-0 flex justify-between items-center pr-2 bg-transparent z-50"
     >
-      <div className="flex flex-1 items-center gap-2.5 h-full pr-4">
-        <button
-          onClick={onToggleSidebar}
-          title="Toggle sidebar"
-          className="h-8 w-8 inline-flex items-center justify-center text-k3d-text-secondary hover:bg-k3d-accent hover:text-k3d-text transition-colors rounded-lg"
-          style={{ WebkitAppRegion: "no-drag" } as any}
-        >
-          <Menu size={16} />
-        </button>
-      </div>
-      <div className="flex-1 flex items-center justify-center gap-3 px-4 min-w-0">
+      <div className="flex-1 flex items-center h-full min-w-0" />
+      <div
+        className="flex flex-none items-center gap-2 h-full"
+        style={{ WebkitAppRegion: "no-drag" } as any}
+      >
         <div
-          className="flex items-center gap-2 h-8 w-full max-w-80 rounded-lg bg-k3d-accent/60 border border-k3d-border px-2.5 transition-colors hover:border-k3d-border-secondary"
-          style={{ WebkitAppRegion: "no-drag" } as any}
+            className="flex items-center gap-2 h-8 w-96 max-w-[40vw] rounded-lg bg-k3d-accent/60 border border-k3d-border px-2.5 transition-colors hover:border-k3d-border-secondary"
         >
           <Search size={14} className="text-k3d-text-secondary shrink-0" />
           <input

@@ -1,0 +1,9 @@
+{
+  "title": "Disable Superfetch Service",
+  "description": "Disables Superfetch (SysMain) service for better SSD performance.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

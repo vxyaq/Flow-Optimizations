@@ -1,0 +1,9 @@
+{
+  "title": "Disable Intel Speed Shift",
+  "description": "Disables Intel Speed Shift for more consistent CPU performance (Intel 6th gen+).",
+  "category": [
+    "Performance"
+  ],
+  "recommended": false,
+  "reversible": true
+}

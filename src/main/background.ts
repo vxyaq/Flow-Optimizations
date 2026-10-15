@@ -2,7 +2,7 @@ import { app, ipcMain } from "electron"
 import path from "path"
 import fs from "fs"
 
-const BG_FILENAMES = ["background.webp", "background2.webp", "background.png"]
+const BG_FILENAMES = ["background.webp", "background2.webp", "background3.webp", "background.png"]
 
 export const getBackgroundPath = (index = 0): string | null => {
   const fileName = BG_FILENAMES[index] || BG_FILENAMES[0]

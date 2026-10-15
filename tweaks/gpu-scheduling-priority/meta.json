@@ -1,0 +1,7 @@
+{
+  "title": "Optimize GPU Scheduling Priority",
+  "description": "Sets GPU scheduling priority to high for better gaming performance (Pro only).",
+  "category": ["Pro", "GPU"],
+  "recommended": true,
+  "reversible": true
+}

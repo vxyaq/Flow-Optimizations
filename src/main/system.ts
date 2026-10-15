@@ -41,11 +41,13 @@ async function getSystemInfo(): Promise<SystemInfo> {
         })
       : Promise.resolve(null)
 
-    const [cpuData, osInfo, memLayout, versionPsResult] = await Promise.all([
+    const [cpuData, osInfo, memLayout, versionPsResult, cpuLoad, memInfo] = await Promise.all([
       si.cpu(),
       si.osInfo(),
       si.memLayout(),
       versionPromise,
+      si.currentLoad().catch(() => null),
+      si.mem().catch(() => null),
     ])
 
     const totalMemory = os.totalmem()
@@ -65,7 +67,9 @@ async function getSystemInfo(): Promise<SystemInfo> {
       cpu_model: (cpuData as any).brand,
       cpu_cores: (cpuData as any).physicalCores,
       cpu_threads: (cpuData as any).threads || (cpuData as any).physicalCores,
+      cpu_load: cpuLoad ? Math.round((cpuLoad as any).currentLoad || 0) : null,
       memory_total: totalMemory,
+      memory_used: memInfo ? (memInfo as any).active || (memInfo as any).used || null : null,
       memory_type: memoryType,
       os: osInfo.distro || (platform.windows ? "Windows" : os.type()),
       os_version: osVersion || "Unknown",
@@ -118,10 +122,16 @@ async function getSystemInfo(): Promise<SystemInfo> {
         }
 
         mainWindow?.webContents.send("system-info-extra", {
-          disk_model: primaryDisk?.name || primaryDisk?.device || "Unknown Storage",
+          disk_model:
+            primaryDisk?.name ||
+            primaryDisk?.device ||
+            (cDrive?.mount ? `${cDrive.mount} drive` : null) ||
+            "Unknown Storage",
           disk_size: cDrive?.size
             ? `${Math.round(cDrive.size / 1024 / 1024 / 1024).toFixed(1)} GB`
             : "Unknown",
+          disk_used: cDrive?.used ?? null,
+          disk_total: cDrive?.size ?? null,
         })
       } catch (error) {
         console.error("Failed to fetch disk info:", error)
@@ -201,45 +211,79 @@ async function getSteamLibraries(): Promise<string[]> {
 }
 
 async function detectGames(): Promise<{ id: string; installed: boolean }[]> {
+  const allIds = [
+    "fortnite", "minecraft", "cs2", "valorant",
+    "gta-v", "apex-legends", "rocket-league", "overwatch-2", "pubg", "dota-2",
+    "rainbow-six-siege", "elden-ring", "cod-warzone", "fifa-24", "nba-2k24",
+    "battlefield-2042", "destiny-2", "red-dead-redemption-2", "cyberpunk-2077",
+    "witcher-3", "rust", "palworld", "hell-let-loose", "hunt-showdown",
+    "escape-from-tarkov", "dark-souls-3", "forza-horizon-5", "satisfactory",
+    "spider-man-remastered", "warframe",
+  ]
+  const none = allIds.map((id) => ({ id, installed: false }))
   if (!platform.windows) {
-    return [
-      { id: "cs2", installed: false },
-      { id: "fortnite", installed: false },
-    ]
+    return none
   }
+  const steamAppIds: Record<string, number> = {
+    "cs2": 730, "apex-legends": 1172470, "rocket-league": 252950,
+    "overwatch-2": 2357570, "pubg": 578080, "dota-2": 570,
+    "rainbow-six-siege": 359550, "elden-ring": 1245620, "cod-warzone": 1938090,
+    "fifa-24": 2195250, "nba-2k24": 2338770, "battlefield-2042": 1517290,
+    "destiny-2": 1085660, "red-dead-redemption-2": 1174180,
+    "cyberpunk-2077": 1091500, "witcher-3": 292030, "rust": 252490,
+    "palworld": 1623730, "hell-let-loose": 686810, "hunt-showdown": 594650,
+    "dark-souls-3": 374320, "forza-horizon-5": 1551360, "satisfactory": 526870,
+    "spider-man-remastered": 1817070, "gta-v": 271590, "warframe": 230410,
+  }
+  const found = new Set<string>()
   const libraries = await getSteamLibraries()
-  let cs2Installed = false
-  for (const lib of libraries) {
-    const cs2 = path.join(
-      lib,
-      "steamapps",
-      "common",
-      "Counter-Strike Global Offensive",
-      "game",
-      "bin",
-      "win64",
-      "cs2.exe",
-    )
+  await Promise.all(
+    Object.entries(steamAppIds).map(async ([id, appId]) => {
+      for (const lib of libraries) {
+        try {
+          await fs.promises.access(
+            path.join(lib, "steamapps", `appmanifest_${appId}.acf`),
+          )
+          found.add(id)
+          break
+        } catch {
+          continue
+        }
+      }
+    }),
+  )
+  const exists = async (p: string): Promise<boolean> => {
     try {
-      await fs.promises.access(cs2)
-      cs2Installed = true
-      break
+      await fs.promises.access(p)
+      return true
     } catch {
-      continue
+      return false
     }
   }
-  let fortniteInstalled = false
-  const epicExe = "C:\\Program Files\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"
-  try {
-    await fs.promises.access(epicExe)
-    fortniteInstalled = true
-  } catch {
-    fortniteInstalled = false
+  const appData = process.env.APPDATA || ""
+  if (await exists(path.join(libraries[0] || "", "steamapps", "common", "Counter-Strike Global Offensive", "game", "bin", "win64", "cs2.exe"))) {
+    found.add("cs2")
   }
-  return [
-    { id: "cs2", installed: cs2Installed },
-    { id: "fortnite", installed: fortniteInstalled },
-  ]
+  if (
+    await exists(
+      "C:\\Program Files\\Epic Games\\Fortnite\\FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe",
+    )
+  ) {
+    found.add("fortnite")
+  }
+  if (appData && (await exists(path.join(appData, ".minecraft")))) {
+    found.add("minecraft")
+  }
+  if (await exists("C:\\Riot Games\\VALORANT")) {
+    found.add("valorant")
+  }
+  if (await exists("C:\\Riot Games\\League of Legends")) {
+    found.add("league-of-legends")
+  }
+  if (await exists("C:\\Battlestate Games\\EFT")) {
+    found.add("escape-from-tarkov")
+  }
+  return allIds.map((id) => ({ id, installed: found.has(id) }))
 }
 
 interface BiosFacts {

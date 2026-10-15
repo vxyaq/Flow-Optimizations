@@ -1,0 +1,9 @@
+{
+  "title": "Disable Windows Search Indexing",
+  "description": "Stops Windows Search service to reduce background disk and CPU usage.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

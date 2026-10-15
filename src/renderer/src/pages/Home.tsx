@@ -5,9 +5,8 @@ import Button from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import useSystemStore from "@/store/systemInfo"
 import log from "electron-log/renderer"
-import Greeting from "@/components/greeting"
 import { Wrench } from "lucide-react"
-import { ChevronRight, Folder, Trash2, type LucideIcon } from "lucide-react"
+import { ChevronRight, Shield, Trash2, type LucideIcon } from "lucide-react"
 import Card from "@/components/ui/Card"
 
 interface StatCardProps {
@@ -22,7 +21,7 @@ function StatCard({ icon: Icon, value, label, action, onAction }: StatCardProps)
   return (
     <Card className="p-5 bg-k3d-card rounded-xl border border-k3d-border hover:shadow-xs">
       <div className="flex items-start justify-between gap-3 mb-5">
-        <div className="p-2.5 rounded-lg bg-k3d-accent ring-1 ring-inset ring-k3d-border">
+        <div className="p-2.5 rounded-full bg-k3d-accent ring-1 ring-inset ring-k3d-border">
           <Icon className="text-k3d-primary" size={20} />
         </div>
         <Button
@@ -41,6 +40,7 @@ function StatCard({ icon: Icon, value, label, action, onAction }: StatCardProps)
 }
 function Home() {
   const setSystemInfo = useSystemStore((state) => state.setSystemInfo)
+  const [userName, setUserName] = useState("")
   const [loading, setLoading] = useState(() => {
     try {
       return !localStorage.getItem("k3d:systemInfo")
@@ -77,6 +77,17 @@ function Home() {
     const cached = localStorage.getItem("k3d:junkSize")
     return cached ? Number(cached) || 0 : 0
   })
+
+  useEffect(() => {
+    const loadName = () => {
+      invoke({ channel: "auth:get-session" })
+        .then((account) => setUserName(account?.displayName || ""))
+        .catch(() => {})
+    }
+    loadName()
+    window.addEventListener("auth:changed", loadName)
+    return () => window.removeEventListener("auth:changed", loadName)
+  }, [])
 
   useEffect(() => {
     const idleHandle = requestIdleCallback(() => {
@@ -193,11 +204,14 @@ function Home() {
   return (
     <RootDiv>
       <div className="max-w-[1800px] mx-auto ">
-        <Greeting />
+        <h1 className="text-3xl font-bold text-k3d-text">
+          Welcome back{userName ? `, ${userName}` : ""}!
+        </h1>
+        <p className="text-sm text-k3d-text-secondary mt-1 mb-5">How's your PC running today?</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           <StatCard
-            icon={Folder}
+            icon={Shield}
             value={String(restoreCount)}
             label={restoreCount === 1 ? "backup found" : "backups found"}
             action="Create a Backup"

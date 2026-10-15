@@ -1,0 +1,7 @@
+{
+  "title": "Optimize CSRSS Process Priority",
+  "description": "Increases Client/Server Runtime Subsystem priority for better responsiveness.",
+  "category": ["Performance"],
+  "recommended": true,
+  "reversible": true
+}

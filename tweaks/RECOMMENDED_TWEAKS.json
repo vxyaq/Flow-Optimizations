@@ -1,0 +1,26 @@
+{
+  "recommended": [
+    "debloat-windows",
+    "disable-telemetry",
+    "disable-gamebar",
+    "disable-background-apps",
+    "disable-visual-effects",
+    "disable-windows-search",
+    "disable-prefetch-superfetch",
+    "disable-transparency-effects",
+    "disable-windows-animations",
+    "disable-windows-tips",
+    "disable-notifications",
+    "disable-sticky-keys",
+    "network-adapter-power-save-off",
+    "usb-power-saving-off",
+    "pcie-link-state-off",
+    "disable-automatic-maintenance",
+    "disable-windows-update-delivery-optimization",
+    "disable-tracking-services",
+    "disable-nvidia-telemetry",
+    "disable-windows-defender-cloud",
+    "optimize-paging-file"
+  ],
+  "description": "Safe and tested tweaks that can be applied together for maximum performance without risk."
+}

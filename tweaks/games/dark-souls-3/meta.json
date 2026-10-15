@@ -1,0 +1,9 @@
+{
+  "id": "dark-souls-3",
+  "title": "Dark Souls 3",
+  "background": "dark-souls-3-background.webp",
+  "description": "Focus on achieving smooth 60 FPS in Lothric's demanding environments, eliminating frame drops during intense boss fights and particle-heavy areas.",
+  "notRunningMarker": "DS3_NOT_RUNNING",
+  "notRunningText": "Launch Dark Souls 3 and click the button again.",
+  "successText": "Dark Souls 3 FPS boost applied successfully."
+}

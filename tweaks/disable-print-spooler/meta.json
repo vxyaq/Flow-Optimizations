@@ -1,0 +1,7 @@
+{
+  "title": "Disable Print Spooler",
+  "description": "Disables Print Spooler service if you don't use printers (also security benefit).",
+  "category": ["Performance", "Privacy"],
+  "recommended": false,
+  "reversible": true
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Reduce Audio Latency",
+  "description": "Optimizes audio service for lower latency (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true
+}

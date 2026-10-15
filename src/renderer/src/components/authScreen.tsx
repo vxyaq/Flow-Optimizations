@@ -25,7 +25,7 @@ export default function AuthScreen({ onAuthenticated }: AuthScreenProps): React.
 
   useEffect(() => {
     const style = getBackgroundStyle()
-    if (style === "image" || style === "image2") {
+    if (style === "image" || style === "image2" || style === "image3") {
       void applyBackgroundImage(style)
     }
   }, [])

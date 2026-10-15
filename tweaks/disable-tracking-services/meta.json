@@ -1,0 +1,7 @@
+{
+  "title": "Disable Tracking Services",
+  "description": "Disables diagnostic tracking, push service, and WMP network sharing.",
+  "category": ["Privacy", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Disable Windows Tips and Suggestions",
+  "description": "Disables Windows tips, suggestions and ads.",
+  "category": ["Privacy", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

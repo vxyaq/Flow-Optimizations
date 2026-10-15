@@ -1,0 +1,9 @@
+{
+  "title": "Disable NTFS Last Access Time",
+  "description": "Stops tracking last access time for files to improve disk performance.",
+  "category": [
+    "Performance"
+  ],
+  "recommended": true,
+  "reversible": true
+}

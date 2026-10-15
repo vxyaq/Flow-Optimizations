@@ -1,0 +1,8 @@
+{
+  "title": "BCD Edit Gaming Optimizations",
+  "description": "Optimizes boot configuration for gaming: disables debug, increases data chunk size, removes boot timeout (Pro only).",
+  "category": ["Pro", "Gaming"],
+  "recommended": true,
+  "reversible": true,
+  "restart": true
+}

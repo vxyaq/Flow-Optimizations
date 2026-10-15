@@ -1,0 +1,9 @@
+{
+  "id": "spider-man-remastered",
+  "title": "Marvel's Spider-Man Remastered",
+  "background": "spider-man-remastered-background.webp",
+  "description": "Focus on maximizing FPS during web-swinging across New York City, reducing CPU load from crowd simulation, and eliminating traversal stutters.",
+  "notRunningMarker": "SPIDERMAN_NOT_RUNNING",
+  "notRunningText": "Launch Marvel's Spider-Man Remastered and click the button again.",
+  "successText": "Marvel's Spider-Man Remastered FPS boost applied successfully."
+}

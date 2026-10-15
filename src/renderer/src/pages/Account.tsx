@@ -173,7 +173,7 @@ function InfoCard({
       className={`flex min-w-0 items-start gap-3 p-4 ${onClick ? "cursor-pointer" : ""}`}
       onClick={onClick}
     >
-      <div className="rounded-lg bg-k3d-primary/10 p-2 text-k3d-primary">{icon}</div>
+      <div className="rounded-full bg-k3d-primary/10 p-2 text-k3d-primary">{icon}</div>
       <div className="min-w-0">
         <p className="text-xs text-k3d-text-muted">{label}</p>
         <p className={`mt-1 text-sm font-medium text-k3d-text ${valueClassName}`}>{value}</p>

@@ -1,0 +1,7 @@
+{
+  "title": "Disable HomeGroup Services",
+  "description": "Disables deprecated HomeGroup services (removed in Win 10 1803+).",
+  "category": ["Performance"],
+  "recommended": false,
+  "reversible": true
+}

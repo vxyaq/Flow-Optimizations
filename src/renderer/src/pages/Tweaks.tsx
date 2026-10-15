@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useDeferredValue } from "react"
+import { useState, useEffect, useMemo, useRef, useDeferredValue, memo, useCallback } from "react"
 import {
   Wrench,
   Search,
@@ -41,8 +41,192 @@ const tweakCategories = (tweak: any): string[] => {
     : tweak?.category
       ? [tweak.category]
       : []
-  return raw.filter(Boolean).map((cat: string) => CATEGORY_ALIASES[cat] ?? cat)
+  const mapped = raw.filter(Boolean).map((cat: string) => CATEGORY_ALIASES[cat] ?? cat)
+  return [...new Set(mapped)]
 }
+
+const isReversible = (tweak: any) => tweak.reversible == null || tweak.reversible === true
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  Performance: <Zap className="w-4 h-4  text-k3d-primary" />,
+  GPU: <Gpu className="w-4 h-4 text-k3d-primary" />,
+  Privacy: <Shield className="w-4 h-4 text-k3d-primary" />,
+  Network: <Network className="w-4 h-4 text-k3d-primary" />,
+  Appearance: <Paintbrush className="w-4 h-4 text-k3d-primary" />,
+  Gaming: <Gamepad className="w-4 h-4 text-k3d-primary" />,
+  General: <Wrench className="w-4 h-4 text-k3d-primary" />,
+  BIOS: <HardDrive className="w-4 h-4 text-k3d-primary" />,
+  Pro: <Lock className="w-4 h-4 text-amber-400" />,
+}
+
+const presets = [
+  {
+    name: "Apply Recommended Tweaks",
+    description: "A balanced set of tweaks for everyday use.",
+    tweaks: [
+      "disable-telemetry",
+      "revert-context-menu",
+      "hide-taskview-and-widgets",
+      "set-win32-priority-separation",
+      "disable-copilot",
+      "enable-end-task-right-click",
+      "disable-location-tracking",
+      "disable-lockscreen-tips",
+      "optimize-network-settings",
+      "set-services-to-manual",
+    ],
+  },
+]
+
+interface TweakMeta {
+  index: number
+  cats: string[]
+  compatible: boolean
+  reason?: string
+}
+
+interface TweakCardProps {
+  tweak: any
+  meta?: TweakMeta
+  isApplied: boolean
+  isAltHeld: boolean
+  isPro: boolean
+  onToggle: (index: number) => void
+  onReapply: (tweak: any) => void
+}
+
+const TweakCard = memo(function TweakCard({
+  tweak,
+  meta,
+  isApplied,
+  isAltHeld,
+  isPro,
+  onToggle,
+  onReapply,
+}: TweakCardProps) {
+  const originalIndex = meta?.index ?? -1
+  const cats = meta?.cats ?? tweakCategories(tweak)
+  const compatible = meta?.compatible ?? true
+  const compatReason = meta?.reason
+  const reversible = isReversible(tweak)
+  const hint = !compatible
+    ? compatReason
+    : !reversible
+      ? isApplied
+        ? "One-way tweak — applied, it can't be reverted"
+        : "One-way tweak — it can't be reverted once applied"
+      : null
+  const cardBody = (
+    <div className="p-4 flex flex-col h-full">
+      <h2 className="font-semibold text-k3d-text text-sm leading-tight mb-2">{tweak.title}</h2>
+      <p className="text-k3d-text-secondary text-xs leading-relaxed flex-1 overflow-y-auto custom-scrollbar pr-1">
+        {tweak.description}
+      </p>
+      <div className="mt-auto flex items-start justify-between gap-2">
+        <div className="flex items-start gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {[...cats]
+              .sort((a, b) => {
+                if (a === "Pro") return -1
+                if (b === "Pro") return 1
+                return 0
+              })
+              .map((cat) => (
+                <Tooltip
+                  key={cat}
+                  content={`${cat} Optimization`}
+                  delay={0.3}
+                  side="top"
+                >
+                  <div className="p-1 bg-k3d-accent rounded-md hover:bg-k3d-border-secondary transition-colors text-k3d-text-secondary">
+                    {categoryIcons[cat] || categoryIcons["General"]}
+                  </div>
+                </Tooltip>
+              ))}
+            {cats.includes("Pro") && !isPro && (
+              <Tooltip content="Requires Pro plan" delay={0.3} side="top">
+                <div className="flex items-center gap-1 px-1.5 py-1 rounded-md bg-amber-400/15 text-amber-400 text-[10px] font-bold">
+                  <Lock className="w-3 h-3" /> PRO
+                </div>
+              </Tooltip>
+            )}
+            {tweak.warning && (
+              <Tooltip content={tweak.warning} delay={0.3} side="top">
+                <div className="p-1 rounded-md bg-red-900/30 text-red-400 hover:bg-red-900/50 transition-colors">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                </div>
+              </Tooltip>
+            )}
+            {tweak.recommended && (
+              <Tooltip content={"Recommended Tweak"} delay={0.3} side="top">
+                <div className="p-1 rounded-md bg-green-900/30 text-green-400 hover:bg-green-900/50 transition-colors">
+                  <Star className="w-3.5 h-3.5 text-green-400" />
+                </div>
+              </Tooltip>
+            )}
+            {tweak.addedversion &&
+              isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
+                <Tooltip
+                  content={`New in K3d Tweaks ${tweak.addedversion}`}
+                  delay={0.3}
+                  side="top"
+                >
+                  <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
+                    <Plus className="w-3.5 h-3.5" />
+                  </div>
+                </Tooltip>
+              )}
+            {tweak.updatedversion &&
+              isUpdatedInCurrentVersion(tweak.updatedversion, CURRENT_VERSION) && (
+                <Tooltip
+                  content={`Updated in K3d Tweaks ${tweak.updatedversion}`}
+                  delay={0.3}
+                  side="top"
+                >
+                  <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
+                    <RotateCw className="w-3.5 h-3.5" />
+                  </div>
+                </Tooltip>
+              )}
+          </div>
+        </div>
+        {isApplied && isAltHeld ? (
+          <Tooltip content={!compatible ? compatReason : "Force reapply"}>
+            <Button
+              variant="outline"
+              className="h-7 px-2.5 text-[11px] flex items-center justify-center gap-1 rounded-md border-k3d-border shrink-0"
+              onClick={() => onReapply(tweak)}
+              disabled={!compatible}
+            >
+              <RotateCw className="w-3 h-3" /> Reapply
+            </Button>
+          </Tooltip>
+        ) : (
+          <Tooltip content={hint} delay={0.3}>
+            <Toggle
+              checked={isApplied}
+              onChange={() => onToggle(originalIndex)}
+              disabled={!compatible}
+            />
+          </Tooltip>
+        )}
+      </div>
+    </div>
+  )
+  return tweak.name === "debloat-windows" ? (
+    <div
+      className="rounded-xl p-[1px]"
+      style={{
+        background:
+          "linear-gradient(135deg, var(--color-k3d-primary) 0%, color-mix(in srgb, var(--color-k3d-primary) 55%, white) 55%, color-mix(in srgb, var(--color-k3d-primary) 75%, black) 100%)",
+      }}
+    >
+      <Card className="border-0 p-0 h-52">{cardBody}</Card>
+    </div>
+  ) : (
+    <Card className=" p-0 h-52">{cardBody}</Card>
+  )
+})
 
 function Tweaks() {
   const [tweaks, setTweaks] = useState<Tweak[]>([])
@@ -214,7 +398,7 @@ function Tweaks() {
     }
   }
 
-  const saveToggleStates = async (newStates) => {
+  const saveToggleStates = useCallback(async (newStates) => {
     try {
       await invoke({
         channel: "tweak-states:save",
@@ -224,17 +408,20 @@ function Tweaks() {
       console.error("Error saving toggle states:", error)
       log.error("Error saving toggle states:", error)
     }
-  }
+  }, [])
 
-  const applyTweak = async (tweak, _) => {
-    toast.dismiss()
-    const newState = !toggleStates[tweak.name]
-    const newStates = {
-      ...toggleStates,
-      [tweak.name]: newState,
-    }
+  const applyTweak = useCallback(
+    async (tweak) => {
+      const { toggleStates } = stateRef.current
+      const { setNeedsRestart } = useRestartStore.getState()
+      toast.dismiss()
+      const newState = !toggleStates[tweak.name]
+      const newStates = {
+        ...toggleStates,
+        [tweak.name]: newState,
+      }
 
-    setToggleStates(newStates)
+      setToggleStates(newStates)
 
     const loadingToastId = toast.loading(
       `${newState ? "Applying" : "Unapplying"} tweak: ${tweak.title}`,
@@ -303,18 +490,21 @@ function Tweaks() {
         log.error("Error reverting toggle state:", err)
       }
     }
-  }
+    },
+    [saveToggleStates],
+  )
 
-  const isReversible = (tweak: any) => tweak.reversible == null || tweak.reversible === true
-
-  const applyRamProfile = async ({
-    ramGb,
-    pfInitial,
-    pfMaximum,
-    keepKernel,
-    disableSysMain,
-  }: RamApplyProfile) => {
-    const tweak: any = tweaks.find((t) => t.name === "optimize-ram")
+  const applyRamProfile = useCallback(
+    async ({
+      ramGb,
+      pfInitial,
+      pfMaximum,
+      keepKernel,
+      disableSysMain,
+    }: RamApplyProfile) => {
+      const { tweaks, toggleStates } = stateRef.current
+      const { setNeedsRestart } = useRestartStore.getState()
+      const tweak: any = tweaks.find((t) => t.name === "optimize-ram")
     if (!tweak) throw new Error("Optimize RAM is not available.")
 
     toast.dismiss()
@@ -359,34 +549,42 @@ function Tweaks() {
 
       throw error
     }
-  }
+    },
+    [saveToggleStates],
+  )
 
-  const handleToggle = async (index) => {
-    const tweak: any = tweaks[index]
+  const handleToggle = useCallback(
+    async (index) => {
+      const { tweaks, toggleStates } = stateRef.current
+      const tweak: any = tweaks[index]
+      if (!tweak) return
 
-    if (tweak.name === "optimize-ram" && !toggleStates[tweak.name]) {
-      setSelectedTweak(tweak)
-      setIsRamOpen(true)
-      return
-    }
+      if (tweak.name === "optimize-ram" && !toggleStates[tweak.name]) {
+        setSelectedTweak(tweak)
+        setIsRamOpen(true)
+        return
+      }
 
-    if (tweak.modal && !toggleStates[tweak.name]) {
-      setSelectedTweak(tweak)
-      setModalContent(tweak.modal)
-      setBiosAccepted(false)
-      setIsModalOpen(true)
-      return
-    }
+      if (tweak.modal && !toggleStates[tweak.name]) {
+        setSelectedTweak(tweak)
+        setModalContent(tweak.modal)
+        setBiosAccepted(false)
+        setIsModalOpen(true)
+        return
+      }
 
-    if (toggleStates[tweak.name] && !isReversible(tweak)) {
-      toast.info(`"${tweak.title}" is a one-way tweak and can't be reverted.`)
-      return
-    }
+      if (toggleStates[tweak.name] && !isReversible(tweak)) {
+        toast.info(`"${tweak.title}" is a one-way tweak and can't be reverted.`)
+        return
+      }
 
-    await applyTweak(tweak, index)
-  }
+      await applyTweak(tweak)
+    },
+    [applyTweak],
+  )
 
-  const forceReapplyTweak = async (tweak: Tweak) => {
+  const forceReapplyTweak = useCallback(async (tweak: Tweak) => {
+    const { setNeedsRestart } = useRestartStore.getState()
     toast.dismiss()
     const loadingToastId = toast.loading(`Reapplying tweak: ${tweak.title}`)
 
@@ -417,7 +615,7 @@ function Tweaks() {
         autoClose: 3000,
       })
     }
-  }
+  }, [])
 
   const handleApplyRecommended = async () => {
     const preset = presets[0]
@@ -498,6 +696,7 @@ function Tweaks() {
         tweakCategories(tweak).some((cat) => cat.toLowerCase().includes(term))
 
       if (!isPro && tweakCategories(tweak).includes("BIOS")) return false
+      if (!isPro && tweakCategories(tweak).includes("Pro")) return false
 
       const matchesCategory =
         activeCategory === "All" || tweakCategories(tweak).includes(activeCategory)
@@ -509,8 +708,16 @@ function Tweaks() {
   const categories = useMemo(() => {
     const all = [...new Set(tweaks.flatMap((t: any) => tweakCategories(t)))]
     const rest = all.filter((c) => c !== "BIOS" && c !== "Pro")
-    const ordered = [...rest, ...(all.includes("BIOS") ? ["BIOS"] : [])]
-    return ["All", ...ordered.filter((c) => isPro || c !== "BIOS")]
+    const hasBIOS = all.includes("BIOS")
+    
+    // Order: All, ...rest, BIOS (last) - Pro removed from tabs
+    const ordered = [
+      "All",
+      ...rest,
+      ...(hasBIOS && isPro ? ["BIOS"] : [])
+    ]
+    
+    return ordered
   }, [tweaks, isPro])
 
   const sortedTweaks = useMemo(() => {
@@ -537,37 +744,6 @@ function Tweaks() {
     })
     return map
   }, [tweaks, systemInfo, biosFacts, isPro])
-
-  const categoryIcons = {
-    Performance: <Zap className="w-4 h-4  text-k3d-primary" />,
-    GPU: <Gpu className="w-4 h-4 text-k3d-primary" />,
-    Privacy: <Shield className="w-4 h-4 text-k3d-primary" />,
-    Network: <Network className="w-4 h-4 text-k3d-primary" />,
-    Appearance: <Paintbrush className="w-4 h-4 text-k3d-primary" />,
-    Gaming: <Gamepad className="w-4 h-4 text-k3d-primary" />,
-    General: <Wrench className="w-4 h-4 text-k3d-primary" />,
-    BIOS: <HardDrive className="w-4 h-4 text-k3d-primary" />,
-    Pro: <Lock className="w-4 h-4 text-amber-400" />,
-  }
-
-  const presets = [
-    {
-      name: "Apply Recommended Tweaks",
-      description: "A balanced set of tweaks for everyday use.",
-      tweaks: [
-        "disable-telemetry",
-        "revert-context-menu",
-        "hide-taskview-and-widgets",
-        "set-win32-priority-separation",
-        "disable-copilot",
-        "enable-end-task-right-click",
-        "disable-location-tracking",
-        "disable-lockscreen-tips",
-        "optimize-network-settings",
-        "set-services-to-manual",
-      ],
-    },
-  ]
 
   if (isLoading) {
     return (
@@ -773,141 +949,18 @@ function Tweaks() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
             {sortedTweaks.length > 0 ? (
-              sortedTweaks.map((tweak, _) => {
-                const meta = tweakMeta.get(tweak.name)
-                const originalIndex = meta?.index ?? tweaks.indexOf(tweak)
-                const cats = meta?.cats ?? tweakCategories(tweak)
-                const compatible = meta?.compatible ?? true
-                const compatReason = meta?.reason
-                const cardBody = (
-                  <div className="p-4 flex flex-col h-full">
-                    <h2 className="font-semibold text-k3d-text text-sm leading-tight mb-2">{tweak.title}</h2>
-                    <p className="text-k3d-text-secondary text-xs leading-relaxed flex-1 overflow-y-auto custom-scrollbar pr-1">
-                      {tweak.description}
-                    </p>
-                    <div className="mt-auto flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-1.5 flex-wrap">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          {cats.map((cat) => (
-                            <Tooltip
-                              key={cat}
-                              content={`${cat} Optimization`}
-                              delay={0.3}
-                              side="top"
-                            >
-                              <div className="p-1 bg-k3d-accent rounded-md hover:bg-k3d-border-secondary transition-colors text-k3d-text-secondary">
-                                {categoryIcons[cat] || categoryIcons["General"]}
-                              </div>
-                            </Tooltip>
-                          ))}
-                          {cats.includes("Pro") && !isPro && (
-                            <Tooltip content="Requires Pro plan" delay={0.3} side="top">
-                              <div className="flex items-center gap-1 px-1.5 py-1 rounded-md bg-amber-400/15 text-amber-400 text-[10px] font-bold">
-                                <Lock className="w-3 h-3" /> PRO
-                              </div>
-                            </Tooltip>
-                          )}
-                          {tweak.warning && (
-                            <Tooltip content={tweak.warning} delay={0.3} side="top">
-                              <div className="p-1 rounded-md bg-red-900/30 text-red-400 hover:bg-red-900/50 transition-colors">
-                                <AlertTriangle className="w-3.5 h-3.5" />
-                              </div>
-                            </Tooltip>
-                          )}
-                          {tweak.recommended && (
-                            <Tooltip content={"Recommended Tweak"} delay={0.3} side="top">
-                              <div className="p-1 rounded-md bg-green-900/30 text-green-400 hover:bg-green-900/50 transition-colors">
-                                <Star className="w-3.5 h-3.5 text-green-400" />
-                              </div>
-                            </Tooltip>
-                          )}
-                          {tweak.addedversion &&
-                            isNewInCurrentVersion(tweak.addedversion, CURRENT_VERSION) && (
-                              <Tooltip
-                                content={`New in K3d Tweaks ${tweak.addedversion}`}
-                                delay={0.3}
-                                side="top"
-                              >
-                                <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
-                                  <Plus className="w-3.5 h-3.5" />
-                                </div>
-                              </Tooltip>
-                            )}
-                          {tweak.updatedversion &&
-                            isUpdatedInCurrentVersion(tweak.updatedversion, CURRENT_VERSION) && (
-                              <Tooltip
-                                content={`Updated in K3d Tweaks ${tweak.updatedversion}`}
-                                delay={0.3}
-                                side="top"
-                              >
-                                <div className="p-1 rounded-md bg-k3d-accent text-k3d-text-secondary hover:bg-k3d-border-secondary transition-colors">
-                                  <RotateCw className="w-3.5 h-3.5" />
-                                </div>
-                              </Tooltip>
-                            )}
-                        </div>
-                      </div>
-                      {(() => {
-                        const reversible = isReversible(tweak)
-                        const isApplied = !!toggleStates[tweak.name]
-                        const hint = !compatible
-                          ? compatReason
-                          : !reversible
-                            ? isApplied
-                              ? "One-way tweak — applied, it can't be reverted"
-                              : "One-way tweak — it can't be reverted once applied"
-                            : null
-                        return (
-                          <>
-                            {isApplied && isAltHeld ? (
-                              <Tooltip
-                                content={
-                                  !compatible
-                                    ? compatReason
-                                    : "Force reapply"
-                                }
-                              >
-                                <Button
-                                  variant="outline"
-                                  className="h-7 px-2.5 text-[11px] flex items-center justify-center gap-1 rounded-md border-k3d-border shrink-0"
-                                  onClick={() => forceReapplyTweak(tweak)}
-                                  disabled={!compatible}
-                                >
-                                  <RotateCw className="w-3 h-3" /> Reapply
-                                </Button>
-                              </Tooltip>
-                            ) : (
-                              <Tooltip content={hint} delay={0.3}>
-                                <Toggle
-                                  checked={isApplied}
-                                  onChange={() => handleToggle(originalIndex)}
-                                  disabled={!compatible}
-                                />
-                              </Tooltip>
-                            )}
-                          </>
-                        )
-                      })()}
-                    </div>
-                  </div>
-                )
-                return tweak.name === "debloat-windows" ? (
-                  <div
-                    key={originalIndex}
-                    className="rounded-xl p-[1px]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #16a34a 0%, #22c55e 55%, #15803d 100%)",
-                    }}
-                  >
-                    <Card className="border-0 p-0 h-52">{cardBody}</Card>
-                  </div>
-                ) : (
-                  <Card key={originalIndex} className=" p-0 h-52">
-                    {cardBody}
-                  </Card>
-                )
-              })
+              sortedTweaks.map((tweak) => (
+                <TweakCard
+                  key={tweak.name}
+                  tweak={tweak}
+                  meta={tweakMeta.get(tweak.name)}
+                  isApplied={!!toggleStates[tweak.name]}
+                  isAltHeld={isAltHeld}
+                  isPro={isPro}
+                  onToggle={handleToggle}
+                  onReapply={forceReapplyTweak}
+                />
+              ))
             ) : (
               <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
                 <div className="bg-k3d-card p-6 rounded-xl mb-4">

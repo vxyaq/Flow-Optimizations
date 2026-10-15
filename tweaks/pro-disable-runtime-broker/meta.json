@@ -1,0 +1,7 @@
+{
+  "title": "Disable Runtime Broker",
+  "description": "Completely disables Runtime Broker process that consumes RAM (Pro only).",
+  "category": ["Pro", "Performance"],
+  "recommended": true,
+  "reversible": true
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Disable Spectre/Meltdown Mitigations",
+  "description": "Disables CPU vulnerability mitigations for ~5-10% performance gain (SECURITY RISK).",
+  "category": [
+    "Performance"
+  ],
+  "recommended": false,
+  "reversible": true,
+  "restart": true,
+  "warning": "This reduces security!"
+}
