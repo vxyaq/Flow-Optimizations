@@ -76,8 +76,8 @@ function buildActivity() {
     .setDetails(`${accountName()} is optimizing`)
     .setState(`${count} ${count === 1 ? "tweak" : "tweaks"} enabled`)
     .setStartTimestamp(Date.now())
-    .addButton("Download Flow Optimizations", "https://github.com/vxyaq/Flow-Optimizations")
-    .addButton("Join Discord", "https://discord.com/invite/En5YJYWj3Z")
+    .addButton("Download Flow Optimizations", "https://discord.gg/R9GQmr3fyF")
+    .addButton("Join Discord", "https://discord.gg/R9GQmr3fyF")
     .build()
 }
 

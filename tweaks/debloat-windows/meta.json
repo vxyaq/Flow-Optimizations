@@ -21,7 +21,7 @@
     },
     {
       "name": "Flow Optimizations Debloat Script",
-      "url": "https://github.com/vxyaq/flow-optimizations Tweaks/blob/v2/resources/tweaks/debloat-windows/apply.ps1"
+      "url": "https://github.com/vxyaq/Flow-Optimizations/blob/v2/resources/tweaks/debloat-windows/apply.ps1"
     }
   ]
 }

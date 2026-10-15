@@ -19,6 +19,13 @@ export function initAutoUpdater(getMainWindow: () => BrowserWindow | null): void
   autoUpdater.disableWebInstaller = false
   autoUpdater.autoInstallOnAppQuit = true
 
+  autoUpdater.setFeedURL({
+    provider: "github",
+    owner: "vxyaq",
+    repo: "Flow-Optimizations",
+    releaseType: "release",
+  })
+
   if (!app.isPackaged) {
     autoUpdater.forceDevUpdateConfig = true
   }
